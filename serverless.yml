@@ -1,0 +1,41 @@
+service: event-booking-app
+frameworkVersion: '4'
+
+provider:
+  name: aws
+  runtime: nodejs20.x
+  region: us-east-1
+  environment:
+    EVENTS_TABLE: Events           # Updated to match your actual table name
+    BOOKINGS_TABLE: Registrations  # Updated to match your actual table name
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - dynamodb:GetItem
+            - dynamodb:PutItem
+            - dynamodb:UpdateItem
+            - dynamodb:Scan
+            - dynamodb:Query
+          Resource: arn:aws:dynamodb:us-east-1:*:table/*
+
+functions:
+  getEvents:
+    handler: aws/lambdas/getEvents.handler
+    events:
+      - http:
+          path: events
+          method: get
+  bookEvent:
+    handler: aws/lambdas/bookEvent.handler
+    events:
+      - http:
+          path: book
+          method: post
+  getRegistrations:
+    handler: aws/lambdas/getRegistrations.handler
+    events:
+      - http:
+          path: registrations
+          method: get
