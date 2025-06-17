@@ -36,7 +36,8 @@ var handler = async (event) => {
     }
     const command = new import_client_dynamodb.QueryCommand({
       TableName: "Registrations",
-      // Make sure this matches your table name
+      IndexName: "userId-index",
+      // <-- Make sure this matches your GSI name!
       KeyConditionExpression: "userId = :uid",
       ExpressionAttributeValues: {
         ":uid": { S: userId }

@@ -13,9 +13,9 @@ export const handler: APIGatewayProxyHandler = async (event) => {
       };
     }
 
-    // Query Registrations table for all events for this user
     const command = new QueryCommand({
-      TableName: 'Registrations', // Make sure this matches your table name
+      TableName: 'Registrations',
+      IndexName: 'userId-index', // <-- Must match your GSI name exactly!
       KeyConditionExpression: 'userId = :uid',
       ExpressionAttributeValues: {
         ':uid': { S: userId },
@@ -25,7 +25,6 @@ export const handler: APIGatewayProxyHandler = async (event) => {
 
     const result = await client.send(command);
 
-    // Extract eventIds from the result
     const eventIds = (result.Items || []).map(item => item.eventId.S);
 
     return {

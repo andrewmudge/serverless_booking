@@ -114,7 +114,7 @@
       "Properties": {
         "Code": {
           "S3Bucket": "serverless-framework-deployments-us-east-1-e3c07911-961a",
-          "S3Key": "serverless/event-booking-app/dev/1750129503839-2025-06-17T03:05:03.839Z/event-booking-app.zip"
+          "S3Key": "serverless/event-booking-app/dev/1750157584607-2025-06-17T10:53:04.607Z/event-booking-app.zip"
         },
         "Handler": "aws/lambdas/getEvents.handler",
         "Runtime": "nodejs20.x",
@@ -144,7 +144,7 @@
       "Properties": {
         "Code": {
           "S3Bucket": "serverless-framework-deployments-us-east-1-e3c07911-961a",
-          "S3Key": "serverless/event-booking-app/dev/1750129503839-2025-06-17T03:05:03.839Z/event-booking-app.zip"
+          "S3Key": "serverless/event-booking-app/dev/1750157584607-2025-06-17T10:53:04.607Z/event-booking-app.zip"
         },
         "Handler": "aws/lambdas/bookEvent.handler",
         "Runtime": "nodejs20.x",
@@ -174,7 +174,7 @@
       "Properties": {
         "Code": {
           "S3Bucket": "serverless-framework-deployments-us-east-1-e3c07911-961a",
-          "S3Key": "serverless/event-booking-app/dev/1750129503839-2025-06-17T03:05:03.839Z/event-booking-app.zip"
+          "S3Key": "serverless/event-booking-app/dev/1750157584607-2025-06-17T10:53:04.607Z/event-booking-app.zip"
         },
         "Handler": "aws/lambdas/getRegistrations.handler",
         "Runtime": "nodejs20.x",
@@ -199,34 +199,34 @@
         "GetRegistrationsLogGroup"
       ]
     },
-    "GetEventsLambdaVersionR5fp6n4k6M2iYOwECsjqAhqSRcT4j7tJl2J0IjMLDY": {
+    "GetEventsLambdaVersionZe5N0itJoSuGyqzkJgEDkpI4utjG5MoExdOPxBTqMw": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "GetEventsLambdaFunction"
         },
-        "CodeSha256": "4d8hOpxPWB2MmpaRkyH5TD6sJLO3yzko1Z0gU8aTR9A="
+        "CodeSha256": "nMK3ENh9PdgCt+Ne4DDT0H9XTSOv8w2eAQH3RW6Pb3Q="
       }
     },
-    "BookEventLambdaVersiongB2QpMst9n3IIRxMMHkjgw1otfzSXL8tym238Cbxtc": {
+    "BookEventLambdaVersiondjeHvr11Zo7DaPzvi0tV7Y4DDHiwlDoE5vC7bcIzF4": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "BookEventLambdaFunction"
         },
-        "CodeSha256": "4d8hOpxPWB2MmpaRkyH5TD6sJLO3yzko1Z0gU8aTR9A="
+        "CodeSha256": "nMK3ENh9PdgCt+Ne4DDT0H9XTSOv8w2eAQH3RW6Pb3Q="
       }
     },
-    "GetRegistrationsLambdaVersionfGuV3mnPC17DuVw5CeaU6rW1Qo1GiJ1FZH2QI": {
+    "GetRegistrationsLambdaVersionwm5z2ICkn4YrFX1Uxyxq0BpkuQoNQPh5lQ3LKGNbDc": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "GetRegistrationsLambdaFunction"
         },
-        "CodeSha256": "4d8hOpxPWB2MmpaRkyH5TD6sJLO3yzko1Z0gU8aTR9A="
+        "CodeSha256": "nMK3ENh9PdgCt+Ne4DDT0H9XTSOv8w2eAQH3RW6Pb3Q="
       }
     },
     "ApiGatewayRestApi": {
@@ -424,7 +424,7 @@
         "GetRegistrationsLambdaPermissionApiGateway"
       ]
     },
-    "ApiGatewayDeployment1750129496006": {
+    "ApiGatewayDeployment1750157565738": {
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "RestApiId": {
@@ -560,7 +560,7 @@
     "GetEventsLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "GetEventsLambdaVersionR5fp6n4k6M2iYOwECsjqAhqSRcT4j7tJl2J0IjMLDY"
+        "Ref": "GetEventsLambdaVersionZe5N0itJoSuGyqzkJgEDkpI4utjG5MoExdOPxBTqMw"
       },
       "Export": {
         "Name": "sls-event-booking-app-dev-GetEventsLambdaFunctionQualifiedArn"
@@ -569,7 +569,7 @@
     "BookEventLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "BookEventLambdaVersiongB2QpMst9n3IIRxMMHkjgw1otfzSXL8tym238Cbxtc"
+        "Ref": "BookEventLambdaVersiondjeHvr11Zo7DaPzvi0tV7Y4DDHiwlDoE5vC7bcIzF4"
       },
       "Export": {
         "Name": "sls-event-booking-app-dev-BookEventLambdaFunctionQualifiedArn"
@@ -578,7 +578,7 @@
     "GetRegistrationsLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "GetRegistrationsLambdaVersionfGuV3mnPC17DuVw5CeaU6rW1Qo1GiJ1FZH2QI"
+        "Ref": "GetRegistrationsLambdaVersionwm5z2ICkn4YrFX1Uxyxq0BpkuQoNQPh5lQ3LKGNbDc"
       },
       "Export": {
         "Name": "sls-event-booking-app-dev-GetRegistrationsLambdaFunctionQualifiedArn"
