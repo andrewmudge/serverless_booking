@@ -18,7 +18,10 @@ export async function POST(req: NextRequest) {
       data = { error: 'Invalid response from backend' };
     }
     return NextResponse.json(data, { status: res.status });
-  } catch (error: any) {
-    return NextResponse.json({ error: error.message || 'Internal Server Error' }, { status: 500 });
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      return NextResponse.json({ error: error.message }, { status: 500 });
+    }
+    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
   }
 }

@@ -8,7 +8,7 @@ interface EventItem {
   title: string;
   time: string;
   day: string;
-  seatsRemaining: number; // updated property name
+  seatsRemaining: number;
 }
 
 export default function Events() {
@@ -54,6 +54,7 @@ export default function Events() {
     if (res.ok) {
       alert(result.message);
       setEvents(prev => prev.map(e => e.eventId === eventId ? { ...e, seatsRemaining: e.seatsRemaining - 1 } : e));
+      setRegisteredEventIds(prev => [...prev, eventId]);
     } else {
       alert(result.message);
     }
@@ -70,13 +71,12 @@ export default function Events() {
       router.push('/');
       return;
     }
-    console.log('userId:', userId); // Debug: log userId
 
     const regRes = await fetch(`/api/registrations?userId=${userId}`);
     const regData = await regRes.json();
-    console.log('regData:', regData); // Debug: log registration data
 
     const registeredIds: string[] = regData.eventIds || [];
+    setRegisteredEventIds(registeredIds);
     const registeredEvents = events.filter(e => registeredIds.includes(e.eventId));
     setMyEvents(registeredEvents);
   };
@@ -91,8 +91,6 @@ export default function Events() {
       <p className="text-xl text-gray-700">Loading...</p>
     </div>
   );
-
-  const eventsToDisplay = showMyEvents ? myEvents : events;
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-orange-50 py-10 px-4">
@@ -174,13 +172,13 @@ export default function Events() {
                           <button
                             onClick={() => handleBookNow(e.eventId)}
                             className={`font-semibold px-4 py-2 rounded-lg transition ${
-                              e.seatsRemaining === 0 || myEvents.find(me => me.eventId === e.eventId)
+                              e.seatsRemaining === 0 || registeredEventIds.includes(e.eventId)
                                 ? 'bg-gray-400 text-white cursor-not-allowed'
                                 : 'bg-blue-600 hover:bg-blue-700 text-white'
                             }`}
                             disabled={e.seatsRemaining === 0 || registeredEventIds.includes(e.eventId)}
                           >
-                            {myEvents.find(me => me.eventId === e.eventId)
+                            {registeredEventIds.includes(e.eventId)
                               ? 'Registered'
                               : e.seatsRemaining === 0
                               ? 'Full'

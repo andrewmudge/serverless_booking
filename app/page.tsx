@@ -31,8 +31,12 @@ export default function HomePage() {
       } else {
         setError(data.error || 'Login failed. Please try again.');
       }
-    } catch (err: any) {
-      setError('Unexpected error: ' + err.message);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        setError(error.message);
+      } else {
+        setError('An unknown error occurred');
+      }
     } finally {
       setLoading(false);
     }
@@ -55,8 +59,12 @@ export default function HomePage() {
       } else {
         setError(data.error || 'Registration failed. Please try again.');
       }
-    } catch (err: any) {
-      setError('Unexpected error: ' + err.message);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        setError(error.message);
+      } else {
+        setError('An unknown error occurred');
+      }
     } finally {
       setLoading(false);
     }
@@ -78,8 +86,12 @@ export default function HomePage() {
       } else {
         setError(data.error || 'Confirmation failed. Please try again.');
       }
-    } catch (err: any) {
-      setError('Unexpected error: ' + err.message);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        setError(error.message);
+      } else {
+        setError('An unknown error occurred');
+      }
     } finally {
       setLoading(false);
     }
