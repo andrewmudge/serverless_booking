@@ -24,7 +24,9 @@ __export(getRegistrations_exports, {
 });
 module.exports = __toCommonJS(getRegistrations_exports);
 var import_client_dynamodb = require("@aws-sdk/client-dynamodb");
-var client = new import_client_dynamodb.DynamoDBClient({});
+var client = new import_client_dynamodb.DynamoDBClient({ region: process.env.AWS_REGION || "us-east-1" });
+var REGISTRATIONS_TABLE = process.env.BOOKINGS_TABLE || "Registrations";
+var USER_ID_INDEX = process.env.USER_ID_INDEX || "userId-index";
 var handler = async (event) => {
   try {
     const userId = event.queryStringParameters?.userId;
@@ -36,10 +38,8 @@ var handler = async (event) => {
       };
     }
     const command = new import_client_dynamodb.QueryCommand({
-      TableName: process.env.BOOKINGS_TABLE,
-      // Use env variable
-      IndexName: "userId-index",
-      // Must match your GSI name
+      TableName: REGISTRATIONS_TABLE,
+      IndexName: USER_ID_INDEX,
       KeyConditionExpression: "userId = :uid",
       ExpressionAttributeValues: {
         ":uid": { S: userId }
