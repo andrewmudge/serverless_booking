@@ -32,6 +32,15 @@ export default function Events() {
     }
   };
 
+  // Helper to extract userEmail from JWT
+  const getUserEmail = () => {
+    try {
+      return JSON.parse(atob(session!.split('.')[1])).email;
+    } catch {
+      return '';
+    }
+  };
+
   // Fetch events and registrations on initial load
   useEffect(() => {
     if (!session) {
@@ -74,11 +83,12 @@ export default function Events() {
   const handleBookNow = async (eventId: string) => {
     setError(null);
     const userId = getUserId();
+    const userEmail = getUserEmail(); // <-- add this
 
     try {
       const res = await fetch(`${API_BASE}/book`, {
         method: 'POST',
-        body: JSON.stringify({ eventId, userId }),
+        body: JSON.stringify({ eventId, userId, userEmail }), // <-- include userEmail
         headers: { 'Content-Type': 'application/json' }
       });
 

@@ -12,6 +12,7 @@ provider:
     COGNITO_CLIENT_ID: 4v4qbgptde4v367c05hd4gq2rf
     COGNITO_CLIENT_SECRET: kqh481640kr3jq48g05c96sch22jgokaate4r5ommrpoe6atkbc 
     USER_ID_INDEX: userId-index
+    SENDER_EMAIL: mudge.andrew@gmail.com   # <-- Added for SES
 
   iam:
     role:
@@ -31,6 +32,11 @@ provider:
             - cognito-idp:InitiateAuth
             - cognito-idp:ConfirmSignUp
           Resource: "*"
+        - Effect: Allow
+          Action:
+            - ses:SendEmail
+            - ses:SendRawEmail
+          Resource: "*"   # Allow Lambda to send SES emails
 
 functions:
   getEvents:

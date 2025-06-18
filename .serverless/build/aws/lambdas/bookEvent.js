@@ -24,15 +24,18 @@ __export(bookEvent_exports, {
 });
 module.exports = __toCommonJS(bookEvent_exports);
 var import_client_dynamodb = require("@aws-sdk/client-dynamodb");
+var import_client_ses = require("@aws-sdk/client-ses");
 var client = new import_client_dynamodb.DynamoDBClient({});
+var ses = new import_client_ses.SESClient({});
+var SENDER_EMAIL = process.env.SENDER_EMAIL;
 var handler = async (event) => {
   try {
-    const { eventId, userId } = JSON.parse(event.body || "{}");
-    if (!eventId || !userId) {
+    const { eventId, userId, userEmail } = JSON.parse(event.body || "{}");
+    if (!eventId || !userId || !userEmail) {
       return {
         statusCode: 400,
         headers: { "Access-Control-Allow-Origin": "*" },
-        body: JSON.stringify({ error: "Missing eventId or userId" })
+        body: JSON.stringify({ error: "Missing eventId, userId, or userEmail" })
       };
     }
     const command = new import_client_dynamodb.TransactWriteItemsCommand({
@@ -40,7 +43,6 @@ var handler = async (event) => {
         {
           Update: {
             TableName: process.env.EVENTS_TABLE,
-            // Use env variable
             Key: { eventId: { S: eventId } },
             ConditionExpression: "seatsRemaining > :zero",
             UpdateExpression: "SET seatsRemaining = seatsRemaining - :one",
@@ -53,7 +55,6 @@ var handler = async (event) => {
         {
           Put: {
             TableName: process.env.BOOKINGS_TABLE,
-            // Use env variable
             Item: {
               userId: { S: userId },
               eventId: { S: eventId }
@@ -64,10 +65,26 @@ var handler = async (event) => {
       ]
     });
     await client.send(command);
+    const emailCommand = new import_client_ses.SendEmailCommand({
+      Source: SENDER_EMAIL,
+      Destination: {
+        ToAddresses: [userEmail]
+        // Send to the user who registered
+      },
+      Message: {
+        Subject: { Data: "Event Registration Confirmation" },
+        Body: {
+          Text: {
+            Data: `Thank you for registering for event ${eventId}! Your booking is confirmed.`
+          }
+        }
+      }
+    });
+    await ses.send(emailCommand);
     return {
       statusCode: 200,
       headers: { "Access-Control-Allow-Origin": "*" },
-      body: JSON.stringify({ message: "Booking confirmed" })
+      body: JSON.stringify({ message: "Booking confirmed and email sent" })
     };
   } catch (err) {
     const message = err instanceof Error ? err.message : "Unknown error occurred";
