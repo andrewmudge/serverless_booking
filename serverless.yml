@@ -6,8 +6,13 @@ provider:
   runtime: nodejs20.x
   region: us-east-1
   environment:
-    EVENTS_TABLE: Events           # Updated to match your actual table name
-    BOOKINGS_TABLE: Registrations  # Updated to match your actual table name
+    EVENTS_TABLE: Events
+    BOOKINGS_TABLE: Registrations
+    USER_TABLE: YourUserTable
+    COGNITO_CLIENT_ID: 4v4qbgptde4v367c05hd4gq2rf
+    COGNITO_CLIENT_SECRET: kqh481640kr3jq48g05c96sch22jgokaate4r5ommrpoe6atkbc 
+    USER_ID_INDEX: userId-index
+
   iam:
     role:
       statements:
@@ -19,6 +24,13 @@ provider:
             - dynamodb:Scan
             - dynamodb:Query
           Resource: arn:aws:dynamodb:us-east-1:*:table/*
+        - Effect: Allow
+          Action:
+            - cognito-idp:SignUp
+            - cognito-idp:AdminConfirmSignUp
+            - cognito-idp:InitiateAuth
+            - cognito-idp:ConfirmSignUp
+          Resource: "*"
 
 functions:
   getEvents:
@@ -27,15 +39,52 @@ functions:
       - http:
           path: events
           method: get
+          cors: true
+
   bookEvent:
     handler: aws/lambdas/bookEvent.handler
     events:
       - http:
           path: book
           method: post
+          cors: true
+
   getRegistrations:
     handler: aws/lambdas/getRegistrations.handler
     events:
       - http:
           path: registrations
           method: get
+          cors: true
+
+  signup:
+    handler: aws/lambdas/signup.handler
+    events:
+      - http:
+          path: signup
+          method: post
+          cors: true
+
+  login:
+    handler: aws/lambdas/login.handler
+    events:
+      - http:
+          path: login
+          method: post
+          cors: true
+
+  confirmSignup:
+    handler: aws/lambdas/confirmSignup.handler
+    events:
+      - http:
+          path: confirm-signup
+          method: post
+          cors: true
+
+  saveUser:
+    handler: aws/lambdas/saveUser.handler
+    events:
+      - http:
+          path: saveUser
+          method: post
+          cors: true

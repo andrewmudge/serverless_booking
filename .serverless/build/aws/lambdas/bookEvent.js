@@ -31,6 +31,7 @@ var handler = async (event) => {
     if (!eventId || !userId) {
       return {
         statusCode: 400,
+        headers: { "Access-Control-Allow-Origin": "*" },
         body: JSON.stringify({ error: "Missing eventId or userId" })
       };
     }
@@ -38,8 +39,8 @@ var handler = async (event) => {
       TransactItems: [
         {
           Update: {
-            TableName: "Events",
-            // <-- Use your actual table name
+            TableName: process.env.EVENTS_TABLE,
+            // Use env variable
             Key: { eventId: { S: eventId } },
             ConditionExpression: "seatsRemaining > :zero",
             UpdateExpression: "SET seatsRemaining = seatsRemaining - :one",
@@ -51,14 +52,13 @@ var handler = async (event) => {
         },
         {
           Put: {
-            TableName: "Registrations",
-            // <-- Use your actual table name
+            TableName: process.env.BOOKINGS_TABLE,
+            // Use env variable
             Item: {
               userId: { S: userId },
               eventId: { S: eventId }
             },
             ConditionExpression: "attribute_not_exists(eventId)"
-            // eventId as sort key
           }
         }
       ]
@@ -66,12 +66,15 @@ var handler = async (event) => {
     await client.send(command);
     return {
       statusCode: 200,
+      headers: { "Access-Control-Allow-Origin": "*" },
       body: JSON.stringify({ message: "Booking confirmed" })
     };
   } catch (err) {
+    const message = err instanceof Error ? err.message : "Unknown error occurred";
     return {
       statusCode: 400,
-      body: JSON.stringify({ error: err.message })
+      headers: { "Access-Control-Allow-Origin": "*" },
+      body: JSON.stringify({ error: message })
     };
   }
 };

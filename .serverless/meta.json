@@ -1,6 +1,6 @@
 {
   "C:\\Users\\mudge\\apps\\Serverless_booking\\serverless_booking\\serverless.yml": {
-    "versionFramework": "4.17.0",
+    "versionFramework": "4.17.1",
     "servicePath": "C:\\Users\\mudge\\apps\\Serverless_booking\\serverless_booking\\serverless.yml",
     "serviceConfigFileName": "serverless.yml",
     "service": {
@@ -12,7 +12,11 @@
         "region": "us-east-1",
         "environment": {
           "EVENTS_TABLE": "Events",
-          "BOOKINGS_TABLE": "Registrations"
+          "BOOKINGS_TABLE": "Registrations",
+          "USER_TABLE": "YourUserTable",
+          "COGNITO_CLIENT_ID": "4v4qbgptde4v367c05hd4gq2rf",
+          "COGNITO_CLIENT_SECRET": "<REDACTED>",
+          "USER_ID_INDEX": "userId-index"
         },
         "iam": {
           "role": {
@@ -27,6 +31,16 @@
                   "dynamodb:Query"
                 ],
                 "Resource": "arn:aws:dynamodb:us-east-1:*:table/*"
+              },
+              {
+                "Effect": "Allow",
+                "Action": [
+                  "cognito-idp:SignUp",
+                  "cognito-idp:AdminConfirmSignUp",
+                  "cognito-idp:InitiateAuth",
+                  "cognito-idp:ConfirmSignUp"
+                ],
+                "Resource": "*"
               }
             ]
           }
@@ -53,6 +67,30 @@
               "Type": "AWS::Logs::LogGroup",
               "Properties": {
                 "LogGroupName": "/aws/lambda/event-booking-app-dev-getRegistrations"
+              }
+            },
+            "SignupLogGroup": {
+              "Type": "AWS::Logs::LogGroup",
+              "Properties": {
+                "LogGroupName": "/aws/lambda/event-booking-app-dev-signup"
+              }
+            },
+            "LoginLogGroup": {
+              "Type": "AWS::Logs::LogGroup",
+              "Properties": {
+                "LogGroupName": "/aws/lambda/event-booking-app-dev-login"
+              }
+            },
+            "ConfirmSignupLogGroup": {
+              "Type": "AWS::Logs::LogGroup",
+              "Properties": {
+                "LogGroupName": "/aws/lambda/event-booking-app-dev-confirmSignup"
+              }
+            },
+            "SaveUserLogGroup": {
+              "Type": "AWS::Logs::LogGroup",
+              "Properties": {
+                "LogGroupName": "/aws/lambda/event-booking-app-dev-saveUser"
               }
             },
             "IamRoleLambdaExecution": {
@@ -123,6 +161,16 @@
                             "dynamodb:Query"
                           ],
                           "Resource": "arn:aws:dynamodb:us-east-1:*:table/*"
+                        },
+                        {
+                          "Effect": "Allow",
+                          "Action": [
+                            "cognito-idp:SignUp",
+                            "cognito-idp:AdminConfirmSignUp",
+                            "cognito-idp:InitiateAuth",
+                            "cognito-idp:ConfirmSignUp"
+                          ],
+                          "Resource": "*"
                         }
                       ]
                     }
@@ -149,7 +197,7 @@
               "Properties": {
                 "Code": {
                   "S3Bucket": "serverless-framework-deployments-us-east-1-e3c07911-961a",
-                  "S3Key": "serverless/event-booking-app/dev/1750157584607-2025-06-17T10:53:04.607Z/event-booking-app.zip"
+                  "S3Key": "serverless/event-booking-app/dev/1750207391096-2025-06-18T00:43:11.096Z/event-booking-app.zip"
                 },
                 "Handler": "aws/lambdas/getEvents.handler",
                 "Runtime": "nodejs20.x",
@@ -160,6 +208,10 @@
                   "Variables": {
                     "EVENTS_TABLE": "Events",
                     "BOOKINGS_TABLE": "Registrations",
+                    "USER_TABLE": "YourUserTable",
+                    "COGNITO_CLIENT_ID": "4v4qbgptde4v367c05hd4gq2rf",
+                    "COGNITO_CLIENT_SECRET": "<REDACTED>",
+                    "USER_ID_INDEX": "userId-index",
                     "NODE_OPTIONS": "--enable-source-maps"
                   }
                 },
@@ -179,7 +231,7 @@
               "Properties": {
                 "Code": {
                   "S3Bucket": "serverless-framework-deployments-us-east-1-e3c07911-961a",
-                  "S3Key": "serverless/event-booking-app/dev/1750157584607-2025-06-17T10:53:04.607Z/event-booking-app.zip"
+                  "S3Key": "serverless/event-booking-app/dev/1750207391096-2025-06-18T00:43:11.096Z/event-booking-app.zip"
                 },
                 "Handler": "aws/lambdas/bookEvent.handler",
                 "Runtime": "nodejs20.x",
@@ -190,6 +242,10 @@
                   "Variables": {
                     "EVENTS_TABLE": "Events",
                     "BOOKINGS_TABLE": "Registrations",
+                    "USER_TABLE": "YourUserTable",
+                    "COGNITO_CLIENT_ID": "4v4qbgptde4v367c05hd4gq2rf",
+                    "COGNITO_CLIENT_SECRET": "<REDACTED>",
+                    "USER_ID_INDEX": "userId-index",
                     "NODE_OPTIONS": "--enable-source-maps"
                   }
                 },
@@ -209,7 +265,7 @@
               "Properties": {
                 "Code": {
                   "S3Bucket": "serverless-framework-deployments-us-east-1-e3c07911-961a",
-                  "S3Key": "serverless/event-booking-app/dev/1750157584607-2025-06-17T10:53:04.607Z/event-booking-app.zip"
+                  "S3Key": "serverless/event-booking-app/dev/1750207391096-2025-06-18T00:43:11.096Z/event-booking-app.zip"
                 },
                 "Handler": "aws/lambdas/getRegistrations.handler",
                 "Runtime": "nodejs20.x",
@@ -220,6 +276,10 @@
                   "Variables": {
                     "EVENTS_TABLE": "Events",
                     "BOOKINGS_TABLE": "Registrations",
+                    "USER_TABLE": "YourUserTable",
+                    "COGNITO_CLIENT_ID": "4v4qbgptde4v367c05hd4gq2rf",
+                    "COGNITO_CLIENT_SECRET": "<REDACTED>",
+                    "USER_ID_INDEX": "userId-index",
                     "NODE_OPTIONS": "--enable-source-maps"
                   }
                 },
@@ -234,34 +294,209 @@
                 "GetRegistrationsLogGroup"
               ]
             },
-            "GetEventsLambdaVersionZe5N0itJoSuGyqzkJgEDkpI4utjG5MoExdOPxBTqMw": {
+            "SignupLambdaFunction": {
+              "Type": "AWS::Lambda::Function",
+              "Properties": {
+                "Code": {
+                  "S3Bucket": "serverless-framework-deployments-us-east-1-e3c07911-961a",
+                  "S3Key": "serverless/event-booking-app/dev/1750207391096-2025-06-18T00:43:11.096Z/event-booking-app.zip"
+                },
+                "Handler": "aws/lambdas/signup.handler",
+                "Runtime": "nodejs20.x",
+                "FunctionName": "event-booking-app-dev-signup",
+                "MemorySize": 1024,
+                "Timeout": 6,
+                "Environment": {
+                  "Variables": {
+                    "EVENTS_TABLE": "Events",
+                    "BOOKINGS_TABLE": "Registrations",
+                    "USER_TABLE": "YourUserTable",
+                    "COGNITO_CLIENT_ID": "4v4qbgptde4v367c05hd4gq2rf",
+                    "COGNITO_CLIENT_SECRET": "<REDACTED>",
+                    "USER_ID_INDEX": "userId-index",
+                    "NODE_OPTIONS": "--enable-source-maps"
+                  }
+                },
+                "Role": {
+                  "Fn::GetAtt": [
+                    "IamRoleLambdaExecution",
+                    "Arn"
+                  ]
+                }
+              },
+              "DependsOn": [
+                "SignupLogGroup"
+              ]
+            },
+            "LoginLambdaFunction": {
+              "Type": "AWS::Lambda::Function",
+              "Properties": {
+                "Code": {
+                  "S3Bucket": "serverless-framework-deployments-us-east-1-e3c07911-961a",
+                  "S3Key": "serverless/event-booking-app/dev/1750207391096-2025-06-18T00:43:11.096Z/event-booking-app.zip"
+                },
+                "Handler": "aws/lambdas/login.handler",
+                "Runtime": "nodejs20.x",
+                "FunctionName": "event-booking-app-dev-login",
+                "MemorySize": 1024,
+                "Timeout": 6,
+                "Environment": {
+                  "Variables": {
+                    "EVENTS_TABLE": "Events",
+                    "BOOKINGS_TABLE": "Registrations",
+                    "USER_TABLE": "YourUserTable",
+                    "COGNITO_CLIENT_ID": "4v4qbgptde4v367c05hd4gq2rf",
+                    "COGNITO_CLIENT_SECRET": "<REDACTED>",
+                    "USER_ID_INDEX": "userId-index",
+                    "NODE_OPTIONS": "--enable-source-maps"
+                  }
+                },
+                "Role": {
+                  "Fn::GetAtt": [
+                    "IamRoleLambdaExecution",
+                    "Arn"
+                  ]
+                }
+              },
+              "DependsOn": [
+                "LoginLogGroup"
+              ]
+            },
+            "ConfirmSignupLambdaFunction": {
+              "Type": "AWS::Lambda::Function",
+              "Properties": {
+                "Code": {
+                  "S3Bucket": "serverless-framework-deployments-us-east-1-e3c07911-961a",
+                  "S3Key": "serverless/event-booking-app/dev/1750207391096-2025-06-18T00:43:11.096Z/event-booking-app.zip"
+                },
+                "Handler": "aws/lambdas/confirmSignup.handler",
+                "Runtime": "nodejs20.x",
+                "FunctionName": "event-booking-app-dev-confirmSignup",
+                "MemorySize": 1024,
+                "Timeout": 6,
+                "Environment": {
+                  "Variables": {
+                    "EVENTS_TABLE": "Events",
+                    "BOOKINGS_TABLE": "Registrations",
+                    "USER_TABLE": "YourUserTable",
+                    "COGNITO_CLIENT_ID": "4v4qbgptde4v367c05hd4gq2rf",
+                    "COGNITO_CLIENT_SECRET": "<REDACTED>",
+                    "USER_ID_INDEX": "userId-index"
+                  }
+                },
+                "Role": {
+                  "Fn::GetAtt": [
+                    "IamRoleLambdaExecution",
+                    "Arn"
+                  ]
+                }
+              },
+              "DependsOn": [
+                "ConfirmSignupLogGroup"
+              ]
+            },
+            "SaveUserLambdaFunction": {
+              "Type": "AWS::Lambda::Function",
+              "Properties": {
+                "Code": {
+                  "S3Bucket": "serverless-framework-deployments-us-east-1-e3c07911-961a",
+                  "S3Key": "serverless/event-booking-app/dev/1750207391096-2025-06-18T00:43:11.096Z/event-booking-app.zip"
+                },
+                "Handler": "aws/lambdas/saveUser.handler",
+                "Runtime": "nodejs20.x",
+                "FunctionName": "event-booking-app-dev-saveUser",
+                "MemorySize": 1024,
+                "Timeout": 6,
+                "Environment": {
+                  "Variables": {
+                    "EVENTS_TABLE": "Events",
+                    "BOOKINGS_TABLE": "Registrations",
+                    "USER_TABLE": "YourUserTable",
+                    "COGNITO_CLIENT_ID": "4v4qbgptde4v367c05hd4gq2rf",
+                    "COGNITO_CLIENT_SECRET": "<REDACTED>",
+                    "USER_ID_INDEX": "userId-index",
+                    "NODE_OPTIONS": "--enable-source-maps"
+                  }
+                },
+                "Role": {
+                  "Fn::GetAtt": [
+                    "IamRoleLambdaExecution",
+                    "Arn"
+                  ]
+                }
+              },
+              "DependsOn": [
+                "SaveUserLogGroup"
+              ]
+            },
+            "GetEventsLambdaVersionTNffPrry2V0iPZhBNY3KHcrVzDdtT1MnNCfZyhcwk": {
               "Type": "AWS::Lambda::Version",
               "DeletionPolicy": "Retain",
               "Properties": {
                 "FunctionName": {
                   "Ref": "GetEventsLambdaFunction"
                 },
-                "CodeSha256": "nMK3ENh9PdgCt+Ne4DDT0H9XTSOv8w2eAQH3RW6Pb3Q="
+                "CodeSha256": "Jdz5dsb/COTI7T0a11UzeQ7kAqKlOMWTb9lM3bPBoxg="
               }
             },
-            "BookEventLambdaVersiondjeHvr11Zo7DaPzvi0tV7Y4DDHiwlDoE5vC7bcIzF4": {
+            "BookEventLambdaVersion7aqaLs6MOQDnMSD4RZBkZmzVtjPYZ0eqjZu8RDQ": {
               "Type": "AWS::Lambda::Version",
               "DeletionPolicy": "Retain",
               "Properties": {
                 "FunctionName": {
                   "Ref": "BookEventLambdaFunction"
                 },
-                "CodeSha256": "nMK3ENh9PdgCt+Ne4DDT0H9XTSOv8w2eAQH3RW6Pb3Q="
+                "CodeSha256": "Jdz5dsb/COTI7T0a11UzeQ7kAqKlOMWTb9lM3bPBoxg="
               }
             },
-            "GetRegistrationsLambdaVersionwm5z2ICkn4YrFX1Uxyxq0BpkuQoNQPh5lQ3LKGNbDc": {
+            "GetRegistrationsLambdaVersionFtoALyCIxxgJdaEmqGF7QjgqX4I8RXJLaQ1IYieA": {
               "Type": "AWS::Lambda::Version",
               "DeletionPolicy": "Retain",
               "Properties": {
                 "FunctionName": {
                   "Ref": "GetRegistrationsLambdaFunction"
                 },
-                "CodeSha256": "nMK3ENh9PdgCt+Ne4DDT0H9XTSOv8w2eAQH3RW6Pb3Q="
+                "CodeSha256": "Jdz5dsb/COTI7T0a11UzeQ7kAqKlOMWTb9lM3bPBoxg="
+              }
+            },
+            "SignupLambdaVersionQhznjuMDIHVUNjzL9dugbTmyjkSg7E2mN2uriJyIDI": {
+              "Type": "AWS::Lambda::Version",
+              "DeletionPolicy": "Retain",
+              "Properties": {
+                "FunctionName": {
+                  "Ref": "SignupLambdaFunction"
+                },
+                "CodeSha256": "Jdz5dsb/COTI7T0a11UzeQ7kAqKlOMWTb9lM3bPBoxg="
+              }
+            },
+            "LoginLambdaVersionD4ePpd7XoN9RiFHuqMaLacGx1TJFwL2GAb4gC7HQBGI": {
+              "Type": "AWS::Lambda::Version",
+              "DeletionPolicy": "Retain",
+              "Properties": {
+                "FunctionName": {
+                  "Ref": "LoginLambdaFunction"
+                },
+                "CodeSha256": "Jdz5dsb/COTI7T0a11UzeQ7kAqKlOMWTb9lM3bPBoxg="
+              }
+            },
+            "ConfirmSignupLambdaVersiontGmn01JyjPUlqL28UpogBIyAu7EwwMAAwq2u5MlGdE": {
+              "Type": "AWS::Lambda::Version",
+              "DeletionPolicy": "Retain",
+              "Properties": {
+                "FunctionName": {
+                  "Ref": "ConfirmSignupLambdaFunction"
+                },
+                "CodeSha256": "Jdz5dsb/COTI7T0a11UzeQ7kAqKlOMWTb9lM3bPBoxg="
+              }
+            },
+            "SaveUserLambdaVersionRZzxe3H4E1IkTpn3IIh1ClrAkiMocfX7lda51EM": {
+              "Type": "AWS::Lambda::Version",
+              "DeletionPolicy": "Retain",
+              "Properties": {
+                "FunctionName": {
+                  "Ref": "SaveUserLambdaFunction"
+                },
+                "CodeSha256": "Jdz5dsb/COTI7T0a11UzeQ7kAqKlOMWTb9lM3bPBoxg="
               }
             },
             "ApiGatewayRestApi": {
@@ -316,6 +551,381 @@
                   ]
                 },
                 "PathPart": "registrations",
+                "RestApiId": {
+                  "Ref": "ApiGatewayRestApi"
+                }
+              }
+            },
+            "ApiGatewayResourceSignup": {
+              "Type": "AWS::ApiGateway::Resource",
+              "Properties": {
+                "ParentId": {
+                  "Fn::GetAtt": [
+                    "ApiGatewayRestApi",
+                    "RootResourceId"
+                  ]
+                },
+                "PathPart": "signup",
+                "RestApiId": {
+                  "Ref": "ApiGatewayRestApi"
+                }
+              }
+            },
+            "ApiGatewayResourceLogin": {
+              "Type": "AWS::ApiGateway::Resource",
+              "Properties": {
+                "ParentId": {
+                  "Fn::GetAtt": [
+                    "ApiGatewayRestApi",
+                    "RootResourceId"
+                  ]
+                },
+                "PathPart": "login",
+                "RestApiId": {
+                  "Ref": "ApiGatewayRestApi"
+                }
+              }
+            },
+            "ApiGatewayResourceConfirmDashsignup": {
+              "Type": "AWS::ApiGateway::Resource",
+              "Properties": {
+                "ParentId": {
+                  "Fn::GetAtt": [
+                    "ApiGatewayRestApi",
+                    "RootResourceId"
+                  ]
+                },
+                "PathPart": "confirm-signup",
+                "RestApiId": {
+                  "Ref": "ApiGatewayRestApi"
+                }
+              }
+            },
+            "ApiGatewayResourceSaveuser": {
+              "Type": "AWS::ApiGateway::Resource",
+              "Properties": {
+                "ParentId": {
+                  "Fn::GetAtt": [
+                    "ApiGatewayRestApi",
+                    "RootResourceId"
+                  ]
+                },
+                "PathPart": "saveUser",
+                "RestApiId": {
+                  "Ref": "ApiGatewayRestApi"
+                }
+              }
+            },
+            "ApiGatewayMethodEventsOptions": {
+              "Type": "AWS::ApiGateway::Method",
+              "Properties": {
+                "AuthorizationType": "NONE",
+                "HttpMethod": "OPTIONS",
+                "MethodResponses": [
+                  {
+                    "StatusCode": "200",
+                    "ResponseParameters": {
+                      "method.response.header.Access-Control-Allow-Origin": true,
+                      "method.response.header.Access-Control-Allow-Headers": true,
+                      "method.response.header.Access-Control-Allow-Methods": true
+                    },
+                    "ResponseModels": {}
+                  }
+                ],
+                "RequestParameters": {},
+                "Integration": {
+                  "Type": "MOCK",
+                  "RequestTemplates": {
+                    "application/json": "{statusCode:200}"
+                  },
+                  "ContentHandling": "CONVERT_TO_TEXT",
+                  "IntegrationResponses": [
+                    {
+                      "StatusCode": "200",
+                      "ResponseParameters": {
+                        "method.response.header.Access-Control-Allow-Origin": "'*'",
+                        "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent,X-Amzn-Trace-Id'",
+                        "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,GET'"
+                      },
+                      "ResponseTemplates": {
+                        "application/json": ""
+                      }
+                    }
+                  ]
+                },
+                "ResourceId": {
+                  "Ref": "ApiGatewayResourceEvents"
+                },
+                "RestApiId": {
+                  "Ref": "ApiGatewayRestApi"
+                }
+              }
+            },
+            "ApiGatewayMethodBookOptions": {
+              "Type": "AWS::ApiGateway::Method",
+              "Properties": {
+                "AuthorizationType": "NONE",
+                "HttpMethod": "OPTIONS",
+                "MethodResponses": [
+                  {
+                    "StatusCode": "200",
+                    "ResponseParameters": {
+                      "method.response.header.Access-Control-Allow-Origin": true,
+                      "method.response.header.Access-Control-Allow-Headers": true,
+                      "method.response.header.Access-Control-Allow-Methods": true
+                    },
+                    "ResponseModels": {}
+                  }
+                ],
+                "RequestParameters": {},
+                "Integration": {
+                  "Type": "MOCK",
+                  "RequestTemplates": {
+                    "application/json": "{statusCode:200}"
+                  },
+                  "ContentHandling": "CONVERT_TO_TEXT",
+                  "IntegrationResponses": [
+                    {
+                      "StatusCode": "200",
+                      "ResponseParameters": {
+                        "method.response.header.Access-Control-Allow-Origin": "'*'",
+                        "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent,X-Amzn-Trace-Id'",
+                        "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,POST'"
+                      },
+                      "ResponseTemplates": {
+                        "application/json": ""
+                      }
+                    }
+                  ]
+                },
+                "ResourceId": {
+                  "Ref": "ApiGatewayResourceBook"
+                },
+                "RestApiId": {
+                  "Ref": "ApiGatewayRestApi"
+                }
+              }
+            },
+            "ApiGatewayMethodRegistrationsOptions": {
+              "Type": "AWS::ApiGateway::Method",
+              "Properties": {
+                "AuthorizationType": "NONE",
+                "HttpMethod": "OPTIONS",
+                "MethodResponses": [
+                  {
+                    "StatusCode": "200",
+                    "ResponseParameters": {
+                      "method.response.header.Access-Control-Allow-Origin": true,
+                      "method.response.header.Access-Control-Allow-Headers": true,
+                      "method.response.header.Access-Control-Allow-Methods": true
+                    },
+                    "ResponseModels": {}
+                  }
+                ],
+                "RequestParameters": {},
+                "Integration": {
+                  "Type": "MOCK",
+                  "RequestTemplates": {
+                    "application/json": "{statusCode:200}"
+                  },
+                  "ContentHandling": "CONVERT_TO_TEXT",
+                  "IntegrationResponses": [
+                    {
+                      "StatusCode": "200",
+                      "ResponseParameters": {
+                        "method.response.header.Access-Control-Allow-Origin": "'*'",
+                        "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent,X-Amzn-Trace-Id'",
+                        "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,GET'"
+                      },
+                      "ResponseTemplates": {
+                        "application/json": ""
+                      }
+                    }
+                  ]
+                },
+                "ResourceId": {
+                  "Ref": "ApiGatewayResourceRegistrations"
+                },
+                "RestApiId": {
+                  "Ref": "ApiGatewayRestApi"
+                }
+              }
+            },
+            "ApiGatewayMethodSignupOptions": {
+              "Type": "AWS::ApiGateway::Method",
+              "Properties": {
+                "AuthorizationType": "NONE",
+                "HttpMethod": "OPTIONS",
+                "MethodResponses": [
+                  {
+                    "StatusCode": "200",
+                    "ResponseParameters": {
+                      "method.response.header.Access-Control-Allow-Origin": true,
+                      "method.response.header.Access-Control-Allow-Headers": true,
+                      "method.response.header.Access-Control-Allow-Methods": true
+                    },
+                    "ResponseModels": {}
+                  }
+                ],
+                "RequestParameters": {},
+                "Integration": {
+                  "Type": "MOCK",
+                  "RequestTemplates": {
+                    "application/json": "{statusCode:200}"
+                  },
+                  "ContentHandling": "CONVERT_TO_TEXT",
+                  "IntegrationResponses": [
+                    {
+                      "StatusCode": "200",
+                      "ResponseParameters": {
+                        "method.response.header.Access-Control-Allow-Origin": "'*'",
+                        "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent,X-Amzn-Trace-Id'",
+                        "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,POST'"
+                      },
+                      "ResponseTemplates": {
+                        "application/json": ""
+                      }
+                    }
+                  ]
+                },
+                "ResourceId": {
+                  "Ref": "ApiGatewayResourceSignup"
+                },
+                "RestApiId": {
+                  "Ref": "ApiGatewayRestApi"
+                }
+              }
+            },
+            "ApiGatewayMethodLoginOptions": {
+              "Type": "AWS::ApiGateway::Method",
+              "Properties": {
+                "AuthorizationType": "NONE",
+                "HttpMethod": "OPTIONS",
+                "MethodResponses": [
+                  {
+                    "StatusCode": "200",
+                    "ResponseParameters": {
+                      "method.response.header.Access-Control-Allow-Origin": true,
+                      "method.response.header.Access-Control-Allow-Headers": true,
+                      "method.response.header.Access-Control-Allow-Methods": true
+                    },
+                    "ResponseModels": {}
+                  }
+                ],
+                "RequestParameters": {},
+                "Integration": {
+                  "Type": "MOCK",
+                  "RequestTemplates": {
+                    "application/json": "{statusCode:200}"
+                  },
+                  "ContentHandling": "CONVERT_TO_TEXT",
+                  "IntegrationResponses": [
+                    {
+                      "StatusCode": "200",
+                      "ResponseParameters": {
+                        "method.response.header.Access-Control-Allow-Origin": "'*'",
+                        "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent,X-Amzn-Trace-Id'",
+                        "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,POST'"
+                      },
+                      "ResponseTemplates": {
+                        "application/json": ""
+                      }
+                    }
+                  ]
+                },
+                "ResourceId": {
+                  "Ref": "ApiGatewayResourceLogin"
+                },
+                "RestApiId": {
+                  "Ref": "ApiGatewayRestApi"
+                }
+              }
+            },
+            "ApiGatewayMethodConfirmDashsignupOptions": {
+              "Type": "AWS::ApiGateway::Method",
+              "Properties": {
+                "AuthorizationType": "NONE",
+                "HttpMethod": "OPTIONS",
+                "MethodResponses": [
+                  {
+                    "StatusCode": "200",
+                    "ResponseParameters": {
+                      "method.response.header.Access-Control-Allow-Origin": true,
+                      "method.response.header.Access-Control-Allow-Headers": true,
+                      "method.response.header.Access-Control-Allow-Methods": true
+                    },
+                    "ResponseModels": {}
+                  }
+                ],
+                "RequestParameters": {},
+                "Integration": {
+                  "Type": "MOCK",
+                  "RequestTemplates": {
+                    "application/json": "{statusCode:200}"
+                  },
+                  "ContentHandling": "CONVERT_TO_TEXT",
+                  "IntegrationResponses": [
+                    {
+                      "StatusCode": "200",
+                      "ResponseParameters": {
+                        "method.response.header.Access-Control-Allow-Origin": "'*'",
+                        "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent,X-Amzn-Trace-Id'",
+                        "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,POST'"
+                      },
+                      "ResponseTemplates": {
+                        "application/json": ""
+                      }
+                    }
+                  ]
+                },
+                "ResourceId": {
+                  "Ref": "ApiGatewayResourceConfirmDashsignup"
+                },
+                "RestApiId": {
+                  "Ref": "ApiGatewayRestApi"
+                }
+              }
+            },
+            "ApiGatewayMethodSaveuserOptions": {
+              "Type": "AWS::ApiGateway::Method",
+              "Properties": {
+                "AuthorizationType": "NONE",
+                "HttpMethod": "OPTIONS",
+                "MethodResponses": [
+                  {
+                    "StatusCode": "200",
+                    "ResponseParameters": {
+                      "method.response.header.Access-Control-Allow-Origin": true,
+                      "method.response.header.Access-Control-Allow-Headers": true,
+                      "method.response.header.Access-Control-Allow-Methods": true
+                    },
+                    "ResponseModels": {}
+                  }
+                ],
+                "RequestParameters": {},
+                "Integration": {
+                  "Type": "MOCK",
+                  "RequestTemplates": {
+                    "application/json": "{statusCode:200}"
+                  },
+                  "ContentHandling": "CONVERT_TO_TEXT",
+                  "IntegrationResponses": [
+                    {
+                      "StatusCode": "200",
+                      "ResponseParameters": {
+                        "method.response.header.Access-Control-Allow-Origin": "'*'",
+                        "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent,X-Amzn-Trace-Id'",
+                        "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,POST'"
+                      },
+                      "ResponseTemplates": {
+                        "application/json": ""
+                      }
+                    }
+                  ]
+                },
+                "ResourceId": {
+                  "Ref": "ApiGatewayResourceSaveuser"
+                },
                 "RestApiId": {
                   "Ref": "ApiGatewayRestApi"
                 }
@@ -459,7 +1069,191 @@
                 "GetRegistrationsLambdaPermissionApiGateway"
               ]
             },
-            "ApiGatewayDeployment1750157565738": {
+            "ApiGatewayMethodSignupPost": {
+              "Type": "AWS::ApiGateway::Method",
+              "Properties": {
+                "HttpMethod": "POST",
+                "RequestParameters": {},
+                "ResourceId": {
+                  "Ref": "ApiGatewayResourceSignup"
+                },
+                "RestApiId": {
+                  "Ref": "ApiGatewayRestApi"
+                },
+                "ApiKeyRequired": "<REDACTED>",
+                "AuthorizationType": "NONE",
+                "Integration": {
+                  "IntegrationHttpMethod": "POST",
+                  "Type": "AWS_PROXY",
+                  "Uri": {
+                    "Fn::Join": [
+                      "",
+                      [
+                        "arn:",
+                        {
+                          "Ref": "AWS::Partition"
+                        },
+                        ":apigateway:",
+                        {
+                          "Ref": "AWS::Region"
+                        },
+                        ":lambda:path/2015-03-31/functions/",
+                        {
+                          "Fn::GetAtt": [
+                            "SignupLambdaFunction",
+                            "Arn"
+                          ]
+                        },
+                        "/invocations"
+                      ]
+                    ]
+                  }
+                },
+                "MethodResponses": []
+              },
+              "DependsOn": [
+                "SignupLambdaPermissionApiGateway"
+              ]
+            },
+            "ApiGatewayMethodLoginPost": {
+              "Type": "AWS::ApiGateway::Method",
+              "Properties": {
+                "HttpMethod": "POST",
+                "RequestParameters": {},
+                "ResourceId": {
+                  "Ref": "ApiGatewayResourceLogin"
+                },
+                "RestApiId": {
+                  "Ref": "ApiGatewayRestApi"
+                },
+                "ApiKeyRequired": "<REDACTED>",
+                "AuthorizationType": "NONE",
+                "Integration": {
+                  "IntegrationHttpMethod": "POST",
+                  "Type": "AWS_PROXY",
+                  "Uri": {
+                    "Fn::Join": [
+                      "",
+                      [
+                        "arn:",
+                        {
+                          "Ref": "AWS::Partition"
+                        },
+                        ":apigateway:",
+                        {
+                          "Ref": "AWS::Region"
+                        },
+                        ":lambda:path/2015-03-31/functions/",
+                        {
+                          "Fn::GetAtt": [
+                            "LoginLambdaFunction",
+                            "Arn"
+                          ]
+                        },
+                        "/invocations"
+                      ]
+                    ]
+                  }
+                },
+                "MethodResponses": []
+              },
+              "DependsOn": [
+                "LoginLambdaPermissionApiGateway"
+              ]
+            },
+            "ApiGatewayMethodConfirmDashsignupPost": {
+              "Type": "AWS::ApiGateway::Method",
+              "Properties": {
+                "HttpMethod": "POST",
+                "RequestParameters": {},
+                "ResourceId": {
+                  "Ref": "ApiGatewayResourceConfirmDashsignup"
+                },
+                "RestApiId": {
+                  "Ref": "ApiGatewayRestApi"
+                },
+                "ApiKeyRequired": "<REDACTED>",
+                "AuthorizationType": "NONE",
+                "Integration": {
+                  "IntegrationHttpMethod": "POST",
+                  "Type": "AWS_PROXY",
+                  "Uri": {
+                    "Fn::Join": [
+                      "",
+                      [
+                        "arn:",
+                        {
+                          "Ref": "AWS::Partition"
+                        },
+                        ":apigateway:",
+                        {
+                          "Ref": "AWS::Region"
+                        },
+                        ":lambda:path/2015-03-31/functions/",
+                        {
+                          "Fn::GetAtt": [
+                            "ConfirmSignupLambdaFunction",
+                            "Arn"
+                          ]
+                        },
+                        "/invocations"
+                      ]
+                    ]
+                  }
+                },
+                "MethodResponses": []
+              },
+              "DependsOn": [
+                "ConfirmSignupLambdaPermissionApiGateway"
+              ]
+            },
+            "ApiGatewayMethodSaveuserPost": {
+              "Type": "AWS::ApiGateway::Method",
+              "Properties": {
+                "HttpMethod": "POST",
+                "RequestParameters": {},
+                "ResourceId": {
+                  "Ref": "ApiGatewayResourceSaveuser"
+                },
+                "RestApiId": {
+                  "Ref": "ApiGatewayRestApi"
+                },
+                "ApiKeyRequired": "<REDACTED>",
+                "AuthorizationType": "NONE",
+                "Integration": {
+                  "IntegrationHttpMethod": "POST",
+                  "Type": "AWS_PROXY",
+                  "Uri": {
+                    "Fn::Join": [
+                      "",
+                      [
+                        "arn:",
+                        {
+                          "Ref": "AWS::Partition"
+                        },
+                        ":apigateway:",
+                        {
+                          "Ref": "AWS::Region"
+                        },
+                        ":lambda:path/2015-03-31/functions/",
+                        {
+                          "Fn::GetAtt": [
+                            "SaveUserLambdaFunction",
+                            "Arn"
+                          ]
+                        },
+                        "/invocations"
+                      ]
+                    ]
+                  }
+                },
+                "MethodResponses": []
+              },
+              "DependsOn": [
+                "SaveUserLambdaPermissionApiGateway"
+              ]
+            },
+            "ApiGatewayDeployment1750207378852": {
               "Type": "AWS::ApiGateway::Deployment",
               "Properties": {
                 "RestApiId": {
@@ -468,9 +1262,20 @@
                 "StageName": "dev"
               },
               "DependsOn": [
+                "ApiGatewayMethodEventsOptions",
+                "ApiGatewayMethodBookOptions",
+                "ApiGatewayMethodRegistrationsOptions",
+                "ApiGatewayMethodSignupOptions",
+                "ApiGatewayMethodLoginOptions",
+                "ApiGatewayMethodConfirmDashsignupOptions",
+                "ApiGatewayMethodSaveuserOptions",
                 "ApiGatewayMethodEventsGet",
                 "ApiGatewayMethodBookPost",
-                "ApiGatewayMethodRegistrationsGet"
+                "ApiGatewayMethodRegistrationsGet",
+                "ApiGatewayMethodSignupPost",
+                "ApiGatewayMethodLoginPost",
+                "ApiGatewayMethodConfirmDashsignupPost",
+                "ApiGatewayMethodSaveuserPost"
               ]
             },
             "GetEventsLambdaPermissionApiGateway": {
@@ -583,6 +1388,154 @@
                   ]
                 }
               }
+            },
+            "SignupLambdaPermissionApiGateway": {
+              "Type": "AWS::Lambda::Permission",
+              "Properties": {
+                "FunctionName": {
+                  "Fn::GetAtt": [
+                    "SignupLambdaFunction",
+                    "Arn"
+                  ]
+                },
+                "Action": "lambda:InvokeFunction",
+                "Principal": "apigateway.amazonaws.com",
+                "SourceArn": {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:",
+                      {
+                        "Ref": "AWS::Partition"
+                      },
+                      ":execute-api:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":",
+                      {
+                        "Ref": "AWS::AccountId"
+                      },
+                      ":",
+                      {
+                        "Ref": "ApiGatewayRestApi"
+                      },
+                      "/*/*"
+                    ]
+                  ]
+                }
+              }
+            },
+            "LoginLambdaPermissionApiGateway": {
+              "Type": "AWS::Lambda::Permission",
+              "Properties": {
+                "FunctionName": {
+                  "Fn::GetAtt": [
+                    "LoginLambdaFunction",
+                    "Arn"
+                  ]
+                },
+                "Action": "lambda:InvokeFunction",
+                "Principal": "apigateway.amazonaws.com",
+                "SourceArn": {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:",
+                      {
+                        "Ref": "AWS::Partition"
+                      },
+                      ":execute-api:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":",
+                      {
+                        "Ref": "AWS::AccountId"
+                      },
+                      ":",
+                      {
+                        "Ref": "ApiGatewayRestApi"
+                      },
+                      "/*/*"
+                    ]
+                  ]
+                }
+              }
+            },
+            "ConfirmSignupLambdaPermissionApiGateway": {
+              "Type": "AWS::Lambda::Permission",
+              "Properties": {
+                "FunctionName": {
+                  "Fn::GetAtt": [
+                    "ConfirmSignupLambdaFunction",
+                    "Arn"
+                  ]
+                },
+                "Action": "lambda:InvokeFunction",
+                "Principal": "apigateway.amazonaws.com",
+                "SourceArn": {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:",
+                      {
+                        "Ref": "AWS::Partition"
+                      },
+                      ":execute-api:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":",
+                      {
+                        "Ref": "AWS::AccountId"
+                      },
+                      ":",
+                      {
+                        "Ref": "ApiGatewayRestApi"
+                      },
+                      "/*/*"
+                    ]
+                  ]
+                }
+              }
+            },
+            "SaveUserLambdaPermissionApiGateway": {
+              "Type": "AWS::Lambda::Permission",
+              "Properties": {
+                "FunctionName": {
+                  "Fn::GetAtt": [
+                    "SaveUserLambdaFunction",
+                    "Arn"
+                  ]
+                },
+                "Action": "lambda:InvokeFunction",
+                "Principal": "apigateway.amazonaws.com",
+                "SourceArn": {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:",
+                      {
+                        "Ref": "AWS::Partition"
+                      },
+                      ":execute-api:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":",
+                      {
+                        "Ref": "AWS::AccountId"
+                      },
+                      ":",
+                      {
+                        "Ref": "ApiGatewayRestApi"
+                      },
+                      "/*/*"
+                    ]
+                  ]
+                }
+              }
             }
           },
           "Outputs": {
@@ -595,7 +1548,7 @@
             "GetEventsLambdaFunctionQualifiedArn": {
               "Description": "Current Lambda function version",
               "Value": {
-                "Ref": "GetEventsLambdaVersionZe5N0itJoSuGyqzkJgEDkpI4utjG5MoExdOPxBTqMw"
+                "Ref": "GetEventsLambdaVersionTNffPrry2V0iPZhBNY3KHcrVzDdtT1MnNCfZyhcwk"
               },
               "Export": {
                 "Name": "sls-event-booking-app-dev-GetEventsLambdaFunctionQualifiedArn"
@@ -604,7 +1557,7 @@
             "BookEventLambdaFunctionQualifiedArn": {
               "Description": "Current Lambda function version",
               "Value": {
-                "Ref": "BookEventLambdaVersiondjeHvr11Zo7DaPzvi0tV7Y4DDHiwlDoE5vC7bcIzF4"
+                "Ref": "BookEventLambdaVersion7aqaLs6MOQDnMSD4RZBkZmzVtjPYZ0eqjZu8RDQ"
               },
               "Export": {
                 "Name": "sls-event-booking-app-dev-BookEventLambdaFunctionQualifiedArn"
@@ -613,10 +1566,46 @@
             "GetRegistrationsLambdaFunctionQualifiedArn": {
               "Description": "Current Lambda function version",
               "Value": {
-                "Ref": "GetRegistrationsLambdaVersionwm5z2ICkn4YrFX1Uxyxq0BpkuQoNQPh5lQ3LKGNbDc"
+                "Ref": "GetRegistrationsLambdaVersionFtoALyCIxxgJdaEmqGF7QjgqX4I8RXJLaQ1IYieA"
               },
               "Export": {
                 "Name": "sls-event-booking-app-dev-GetRegistrationsLambdaFunctionQualifiedArn"
+              }
+            },
+            "SignupLambdaFunctionQualifiedArn": {
+              "Description": "Current Lambda function version",
+              "Value": {
+                "Ref": "SignupLambdaVersionQhznjuMDIHVUNjzL9dugbTmyjkSg7E2mN2uriJyIDI"
+              },
+              "Export": {
+                "Name": "sls-event-booking-app-dev-SignupLambdaFunctionQualifiedArn"
+              }
+            },
+            "LoginLambdaFunctionQualifiedArn": {
+              "Description": "Current Lambda function version",
+              "Value": {
+                "Ref": "LoginLambdaVersionD4ePpd7XoN9RiFHuqMaLacGx1TJFwL2GAb4gC7HQBGI"
+              },
+              "Export": {
+                "Name": "sls-event-booking-app-dev-LoginLambdaFunctionQualifiedArn"
+              }
+            },
+            "ConfirmSignupLambdaFunctionQualifiedArn": {
+              "Description": "Current Lambda function version",
+              "Value": {
+                "Ref": "ConfirmSignupLambdaVersiontGmn01JyjPUlqL28UpogBIyAu7EwwMAAwq2u5MlGdE"
+              },
+              "Export": {
+                "Name": "sls-event-booking-app-dev-ConfirmSignupLambdaFunctionQualifiedArn"
+              }
+            },
+            "SaveUserLambdaFunctionQualifiedArn": {
+              "Description": "Current Lambda function version",
+              "Value": {
+                "Ref": "SaveUserLambdaVersionRZzxe3H4E1IkTpn3IIh1ClrAkiMocfX7lda51EM"
+              },
+              "Export": {
+                "Name": "sls-event-booking-app-dev-SaveUserLambdaFunctionQualifiedArn"
               }
             },
             "ServiceEndpoint": {
@@ -657,6 +1646,23 @@
               "http": {
                 "path": "events",
                 "method": "get",
+                "cors": {
+                  "origin": "*",
+                  "methods": [
+                    "OPTIONS",
+                    "GET"
+                  ],
+                  "headers": [
+                    "Content-Type",
+                    "X-Amz-Date",
+                    "Authorization",
+                    "X-Api-Key",
+                    "X-Amz-Security-Token",
+                    "X-Amz-User-Agent",
+                    "X-Amzn-Trace-Id"
+                  ],
+                  "allowCredentials": "<REDACTED>"
+                },
                 "integration": "AWS_PROXY"
               }
             }
@@ -670,7 +1676,7 @@
           "timeout": 6,
           "runtime": "nodejs20.x",
           "vpc": {},
-          "versionLogicalId": "GetEventsLambdaVersionZe5N0itJoSuGyqzkJgEDkpI4utjG5MoExdOPxBTqMw"
+          "versionLogicalId": "GetEventsLambdaVersionTNffPrry2V0iPZhBNY3KHcrVzDdtT1MnNCfZyhcwk"
         },
         "bookEvent": {
           "handler": "aws/lambdas/bookEvent.handler",
@@ -679,6 +1685,23 @@
               "http": {
                 "path": "book",
                 "method": "post",
+                "cors": {
+                  "origin": "*",
+                  "methods": [
+                    "OPTIONS",
+                    "POST"
+                  ],
+                  "headers": [
+                    "Content-Type",
+                    "X-Amz-Date",
+                    "Authorization",
+                    "X-Api-Key",
+                    "X-Amz-Security-Token",
+                    "X-Amz-User-Agent",
+                    "X-Amzn-Trace-Id"
+                  ],
+                  "allowCredentials": "<REDACTED>"
+                },
                 "integration": "AWS_PROXY"
               }
             }
@@ -692,7 +1715,7 @@
           "timeout": 6,
           "runtime": "nodejs20.x",
           "vpc": {},
-          "versionLogicalId": "BookEventLambdaVersiondjeHvr11Zo7DaPzvi0tV7Y4DDHiwlDoE5vC7bcIzF4"
+          "versionLogicalId": "BookEventLambdaVersion7aqaLs6MOQDnMSD4RZBkZmzVtjPYZ0eqjZu8RDQ"
         },
         "getRegistrations": {
           "handler": "aws/lambdas/getRegistrations.handler",
@@ -701,6 +1724,23 @@
               "http": {
                 "path": "registrations",
                 "method": "get",
+                "cors": {
+                  "origin": "*",
+                  "methods": [
+                    "OPTIONS",
+                    "GET"
+                  ],
+                  "headers": [
+                    "Content-Type",
+                    "X-Amz-Date",
+                    "Authorization",
+                    "X-Api-Key",
+                    "X-Amz-Security-Token",
+                    "X-Amz-User-Agent",
+                    "X-Amzn-Trace-Id"
+                  ],
+                  "allowCredentials": "<REDACTED>"
+                },
                 "integration": "AWS_PROXY"
               }
             }
@@ -714,7 +1754,160 @@
           "timeout": 6,
           "runtime": "nodejs20.x",
           "vpc": {},
-          "versionLogicalId": "GetRegistrationsLambdaVersionwm5z2ICkn4YrFX1Uxyxq0BpkuQoNQPh5lQ3LKGNbDc"
+          "versionLogicalId": "GetRegistrationsLambdaVersionFtoALyCIxxgJdaEmqGF7QjgqX4I8RXJLaQ1IYieA"
+        },
+        "signup": {
+          "handler": "aws/lambdas/signup.handler",
+          "events": [
+            {
+              "http": {
+                "path": "signup",
+                "method": "post",
+                "cors": {
+                  "origin": "*",
+                  "methods": [
+                    "OPTIONS",
+                    "POST"
+                  ],
+                  "headers": [
+                    "Content-Type",
+                    "X-Amz-Date",
+                    "Authorization",
+                    "X-Api-Key",
+                    "X-Amz-Security-Token",
+                    "X-Amz-User-Agent",
+                    "X-Amzn-Trace-Id"
+                  ],
+                  "allowCredentials": "<REDACTED>"
+                },
+                "integration": "AWS_PROXY"
+              }
+            }
+          ],
+          "name": "event-booking-app-dev-signup",
+          "environment": {
+            "NODE_OPTIONS": "--enable-source-maps"
+          },
+          "package": {},
+          "memory": 1024,
+          "timeout": 6,
+          "runtime": "nodejs20.x",
+          "vpc": {},
+          "versionLogicalId": "SignupLambdaVersionQhznjuMDIHVUNjzL9dugbTmyjkSg7E2mN2uriJyIDI"
+        },
+        "login": {
+          "handler": "aws/lambdas/login.handler",
+          "events": [
+            {
+              "http": {
+                "path": "login",
+                "method": "post",
+                "cors": {
+                  "origin": "*",
+                  "methods": [
+                    "OPTIONS",
+                    "POST"
+                  ],
+                  "headers": [
+                    "Content-Type",
+                    "X-Amz-Date",
+                    "Authorization",
+                    "X-Api-Key",
+                    "X-Amz-Security-Token",
+                    "X-Amz-User-Agent",
+                    "X-Amzn-Trace-Id"
+                  ],
+                  "allowCredentials": "<REDACTED>"
+                },
+                "integration": "AWS_PROXY"
+              }
+            }
+          ],
+          "name": "event-booking-app-dev-login",
+          "environment": {
+            "NODE_OPTIONS": "--enable-source-maps"
+          },
+          "package": {},
+          "memory": 1024,
+          "timeout": 6,
+          "runtime": "nodejs20.x",
+          "vpc": {},
+          "versionLogicalId": "LoginLambdaVersionD4ePpd7XoN9RiFHuqMaLacGx1TJFwL2GAb4gC7HQBGI"
+        },
+        "confirmSignup": {
+          "handler": "aws/lambdas/confirmSignup.handler",
+          "events": [
+            {
+              "http": {
+                "path": "confirm-signup",
+                "method": "post",
+                "cors": {
+                  "origin": "*",
+                  "methods": [
+                    "OPTIONS",
+                    "POST"
+                  ],
+                  "headers": [
+                    "Content-Type",
+                    "X-Amz-Date",
+                    "Authorization",
+                    "X-Api-Key",
+                    "X-Amz-Security-Token",
+                    "X-Amz-User-Agent",
+                    "X-Amzn-Trace-Id"
+                  ],
+                  "allowCredentials": "<REDACTED>"
+                },
+                "integration": "AWS_PROXY"
+              }
+            }
+          ],
+          "name": "event-booking-app-dev-confirmSignup",
+          "package": {},
+          "memory": 1024,
+          "timeout": 6,
+          "runtime": "nodejs20.x",
+          "vpc": {},
+          "versionLogicalId": "ConfirmSignupLambdaVersiontGmn01JyjPUlqL28UpogBIyAu7EwwMAAwq2u5MlGdE"
+        },
+        "saveUser": {
+          "handler": "aws/lambdas/saveUser.handler",
+          "events": [
+            {
+              "http": {
+                "path": "saveUser",
+                "method": "post",
+                "cors": {
+                  "origin": "*",
+                  "methods": [
+                    "OPTIONS",
+                    "POST"
+                  ],
+                  "headers": [
+                    "Content-Type",
+                    "X-Amz-Date",
+                    "Authorization",
+                    "X-Api-Key",
+                    "X-Amz-Security-Token",
+                    "X-Amz-User-Agent",
+                    "X-Amzn-Trace-Id"
+                  ],
+                  "allowCredentials": "<REDACTED>"
+                },
+                "integration": "AWS_PROXY"
+              }
+            }
+          ],
+          "name": "event-booking-app-dev-saveUser",
+          "environment": {
+            "NODE_OPTIONS": "--enable-source-maps"
+          },
+          "package": {},
+          "memory": 1024,
+          "timeout": 6,
+          "runtime": "nodejs20.x",
+          "vpc": {},
+          "versionLogicalId": "SaveUserLambdaVersionRZzxe3H4E1IkTpn3IIh1ClrAkiMocfX7lda51EM"
         }
       }
     },
@@ -724,7 +1917,11 @@
       "region": "us-east-1",
       "environment": {
         "EVENTS_TABLE": "Events",
-        "BOOKINGS_TABLE": "Registrations"
+        "BOOKINGS_TABLE": "Registrations",
+        "USER_TABLE": "YourUserTable",
+        "COGNITO_CLIENT_ID": "4v4qbgptde4v367c05hd4gq2rf",
+        "COGNITO_CLIENT_SECRET": "<REDACTED>",
+        "USER_ID_INDEX": "userId-index"
       },
       "iam": {
         "role": {
@@ -739,6 +1936,16 @@
                 "dynamodb:Query"
               ],
               "Resource": "arn:aws:dynamodb:us-east-1:*:table/*"
+            },
+            {
+              "Effect": "Allow",
+              "Action": [
+                "cognito-idp:SignUp",
+                "cognito-idp:AdminConfirmSignUp",
+                "cognito-idp:InitiateAuth",
+                "cognito-idp:ConfirmSignUp"
+              ],
+              "Resource": "*"
             }
           ]
         }
@@ -765,6 +1972,30 @@
             "Type": "AWS::Logs::LogGroup",
             "Properties": {
               "LogGroupName": "/aws/lambda/event-booking-app-dev-getRegistrations"
+            }
+          },
+          "SignupLogGroup": {
+            "Type": "AWS::Logs::LogGroup",
+            "Properties": {
+              "LogGroupName": "/aws/lambda/event-booking-app-dev-signup"
+            }
+          },
+          "LoginLogGroup": {
+            "Type": "AWS::Logs::LogGroup",
+            "Properties": {
+              "LogGroupName": "/aws/lambda/event-booking-app-dev-login"
+            }
+          },
+          "ConfirmSignupLogGroup": {
+            "Type": "AWS::Logs::LogGroup",
+            "Properties": {
+              "LogGroupName": "/aws/lambda/event-booking-app-dev-confirmSignup"
+            }
+          },
+          "SaveUserLogGroup": {
+            "Type": "AWS::Logs::LogGroup",
+            "Properties": {
+              "LogGroupName": "/aws/lambda/event-booking-app-dev-saveUser"
             }
           },
           "IamRoleLambdaExecution": {
@@ -835,6 +2066,16 @@
                           "dynamodb:Query"
                         ],
                         "Resource": "arn:aws:dynamodb:us-east-1:*:table/*"
+                      },
+                      {
+                        "Effect": "Allow",
+                        "Action": [
+                          "cognito-idp:SignUp",
+                          "cognito-idp:AdminConfirmSignUp",
+                          "cognito-idp:InitiateAuth",
+                          "cognito-idp:ConfirmSignUp"
+                        ],
+                        "Resource": "*"
                       }
                     ]
                   }
@@ -861,7 +2102,7 @@
             "Properties": {
               "Code": {
                 "S3Bucket": "serverless-framework-deployments-us-east-1-e3c07911-961a",
-                "S3Key": "serverless/event-booking-app/dev/1750157584607-2025-06-17T10:53:04.607Z/event-booking-app.zip"
+                "S3Key": "serverless/event-booking-app/dev/1750207391096-2025-06-18T00:43:11.096Z/event-booking-app.zip"
               },
               "Handler": "aws/lambdas/getEvents.handler",
               "Runtime": "nodejs20.x",
@@ -872,6 +2113,10 @@
                 "Variables": {
                   "EVENTS_TABLE": "Events",
                   "BOOKINGS_TABLE": "Registrations",
+                  "USER_TABLE": "YourUserTable",
+                  "COGNITO_CLIENT_ID": "4v4qbgptde4v367c05hd4gq2rf",
+                  "COGNITO_CLIENT_SECRET": "<REDACTED>",
+                  "USER_ID_INDEX": "userId-index",
                   "NODE_OPTIONS": "--enable-source-maps"
                 }
               },
@@ -891,7 +2136,7 @@
             "Properties": {
               "Code": {
                 "S3Bucket": "serverless-framework-deployments-us-east-1-e3c07911-961a",
-                "S3Key": "serverless/event-booking-app/dev/1750157584607-2025-06-17T10:53:04.607Z/event-booking-app.zip"
+                "S3Key": "serverless/event-booking-app/dev/1750207391096-2025-06-18T00:43:11.096Z/event-booking-app.zip"
               },
               "Handler": "aws/lambdas/bookEvent.handler",
               "Runtime": "nodejs20.x",
@@ -902,6 +2147,10 @@
                 "Variables": {
                   "EVENTS_TABLE": "Events",
                   "BOOKINGS_TABLE": "Registrations",
+                  "USER_TABLE": "YourUserTable",
+                  "COGNITO_CLIENT_ID": "4v4qbgptde4v367c05hd4gq2rf",
+                  "COGNITO_CLIENT_SECRET": "<REDACTED>",
+                  "USER_ID_INDEX": "userId-index",
                   "NODE_OPTIONS": "--enable-source-maps"
                 }
               },
@@ -921,7 +2170,7 @@
             "Properties": {
               "Code": {
                 "S3Bucket": "serverless-framework-deployments-us-east-1-e3c07911-961a",
-                "S3Key": "serverless/event-booking-app/dev/1750157584607-2025-06-17T10:53:04.607Z/event-booking-app.zip"
+                "S3Key": "serverless/event-booking-app/dev/1750207391096-2025-06-18T00:43:11.096Z/event-booking-app.zip"
               },
               "Handler": "aws/lambdas/getRegistrations.handler",
               "Runtime": "nodejs20.x",
@@ -932,6 +2181,10 @@
                 "Variables": {
                   "EVENTS_TABLE": "Events",
                   "BOOKINGS_TABLE": "Registrations",
+                  "USER_TABLE": "YourUserTable",
+                  "COGNITO_CLIENT_ID": "4v4qbgptde4v367c05hd4gq2rf",
+                  "COGNITO_CLIENT_SECRET": "<REDACTED>",
+                  "USER_ID_INDEX": "userId-index",
                   "NODE_OPTIONS": "--enable-source-maps"
                 }
               },
@@ -946,34 +2199,209 @@
               "GetRegistrationsLogGroup"
             ]
           },
-          "GetEventsLambdaVersionZe5N0itJoSuGyqzkJgEDkpI4utjG5MoExdOPxBTqMw": {
+          "SignupLambdaFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+              "Code": {
+                "S3Bucket": "serverless-framework-deployments-us-east-1-e3c07911-961a",
+                "S3Key": "serverless/event-booking-app/dev/1750207391096-2025-06-18T00:43:11.096Z/event-booking-app.zip"
+              },
+              "Handler": "aws/lambdas/signup.handler",
+              "Runtime": "nodejs20.x",
+              "FunctionName": "event-booking-app-dev-signup",
+              "MemorySize": 1024,
+              "Timeout": 6,
+              "Environment": {
+                "Variables": {
+                  "EVENTS_TABLE": "Events",
+                  "BOOKINGS_TABLE": "Registrations",
+                  "USER_TABLE": "YourUserTable",
+                  "COGNITO_CLIENT_ID": "4v4qbgptde4v367c05hd4gq2rf",
+                  "COGNITO_CLIENT_SECRET": "<REDACTED>",
+                  "USER_ID_INDEX": "userId-index",
+                  "NODE_OPTIONS": "--enable-source-maps"
+                }
+              },
+              "Role": {
+                "Fn::GetAtt": [
+                  "IamRoleLambdaExecution",
+                  "Arn"
+                ]
+              }
+            },
+            "DependsOn": [
+              "SignupLogGroup"
+            ]
+          },
+          "LoginLambdaFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+              "Code": {
+                "S3Bucket": "serverless-framework-deployments-us-east-1-e3c07911-961a",
+                "S3Key": "serverless/event-booking-app/dev/1750207391096-2025-06-18T00:43:11.096Z/event-booking-app.zip"
+              },
+              "Handler": "aws/lambdas/login.handler",
+              "Runtime": "nodejs20.x",
+              "FunctionName": "event-booking-app-dev-login",
+              "MemorySize": 1024,
+              "Timeout": 6,
+              "Environment": {
+                "Variables": {
+                  "EVENTS_TABLE": "Events",
+                  "BOOKINGS_TABLE": "Registrations",
+                  "USER_TABLE": "YourUserTable",
+                  "COGNITO_CLIENT_ID": "4v4qbgptde4v367c05hd4gq2rf",
+                  "COGNITO_CLIENT_SECRET": "<REDACTED>",
+                  "USER_ID_INDEX": "userId-index",
+                  "NODE_OPTIONS": "--enable-source-maps"
+                }
+              },
+              "Role": {
+                "Fn::GetAtt": [
+                  "IamRoleLambdaExecution",
+                  "Arn"
+                ]
+              }
+            },
+            "DependsOn": [
+              "LoginLogGroup"
+            ]
+          },
+          "ConfirmSignupLambdaFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+              "Code": {
+                "S3Bucket": "serverless-framework-deployments-us-east-1-e3c07911-961a",
+                "S3Key": "serverless/event-booking-app/dev/1750207391096-2025-06-18T00:43:11.096Z/event-booking-app.zip"
+              },
+              "Handler": "aws/lambdas/confirmSignup.handler",
+              "Runtime": "nodejs20.x",
+              "FunctionName": "event-booking-app-dev-confirmSignup",
+              "MemorySize": 1024,
+              "Timeout": 6,
+              "Environment": {
+                "Variables": {
+                  "EVENTS_TABLE": "Events",
+                  "BOOKINGS_TABLE": "Registrations",
+                  "USER_TABLE": "YourUserTable",
+                  "COGNITO_CLIENT_ID": "4v4qbgptde4v367c05hd4gq2rf",
+                  "COGNITO_CLIENT_SECRET": "<REDACTED>",
+                  "USER_ID_INDEX": "userId-index"
+                }
+              },
+              "Role": {
+                "Fn::GetAtt": [
+                  "IamRoleLambdaExecution",
+                  "Arn"
+                ]
+              }
+            },
+            "DependsOn": [
+              "ConfirmSignupLogGroup"
+            ]
+          },
+          "SaveUserLambdaFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+              "Code": {
+                "S3Bucket": "serverless-framework-deployments-us-east-1-e3c07911-961a",
+                "S3Key": "serverless/event-booking-app/dev/1750207391096-2025-06-18T00:43:11.096Z/event-booking-app.zip"
+              },
+              "Handler": "aws/lambdas/saveUser.handler",
+              "Runtime": "nodejs20.x",
+              "FunctionName": "event-booking-app-dev-saveUser",
+              "MemorySize": 1024,
+              "Timeout": 6,
+              "Environment": {
+                "Variables": {
+                  "EVENTS_TABLE": "Events",
+                  "BOOKINGS_TABLE": "Registrations",
+                  "USER_TABLE": "YourUserTable",
+                  "COGNITO_CLIENT_ID": "4v4qbgptde4v367c05hd4gq2rf",
+                  "COGNITO_CLIENT_SECRET": "<REDACTED>",
+                  "USER_ID_INDEX": "userId-index",
+                  "NODE_OPTIONS": "--enable-source-maps"
+                }
+              },
+              "Role": {
+                "Fn::GetAtt": [
+                  "IamRoleLambdaExecution",
+                  "Arn"
+                ]
+              }
+            },
+            "DependsOn": [
+              "SaveUserLogGroup"
+            ]
+          },
+          "GetEventsLambdaVersionTNffPrry2V0iPZhBNY3KHcrVzDdtT1MnNCfZyhcwk": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "GetEventsLambdaFunction"
               },
-              "CodeSha256": "nMK3ENh9PdgCt+Ne4DDT0H9XTSOv8w2eAQH3RW6Pb3Q="
+              "CodeSha256": "Jdz5dsb/COTI7T0a11UzeQ7kAqKlOMWTb9lM3bPBoxg="
             }
           },
-          "BookEventLambdaVersiondjeHvr11Zo7DaPzvi0tV7Y4DDHiwlDoE5vC7bcIzF4": {
+          "BookEventLambdaVersion7aqaLs6MOQDnMSD4RZBkZmzVtjPYZ0eqjZu8RDQ": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "BookEventLambdaFunction"
               },
-              "CodeSha256": "nMK3ENh9PdgCt+Ne4DDT0H9XTSOv8w2eAQH3RW6Pb3Q="
+              "CodeSha256": "Jdz5dsb/COTI7T0a11UzeQ7kAqKlOMWTb9lM3bPBoxg="
             }
           },
-          "GetRegistrationsLambdaVersionwm5z2ICkn4YrFX1Uxyxq0BpkuQoNQPh5lQ3LKGNbDc": {
+          "GetRegistrationsLambdaVersionFtoALyCIxxgJdaEmqGF7QjgqX4I8RXJLaQ1IYieA": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "GetRegistrationsLambdaFunction"
               },
-              "CodeSha256": "nMK3ENh9PdgCt+Ne4DDT0H9XTSOv8w2eAQH3RW6Pb3Q="
+              "CodeSha256": "Jdz5dsb/COTI7T0a11UzeQ7kAqKlOMWTb9lM3bPBoxg="
+            }
+          },
+          "SignupLambdaVersionQhznjuMDIHVUNjzL9dugbTmyjkSg7E2mN2uriJyIDI": {
+            "Type": "AWS::Lambda::Version",
+            "DeletionPolicy": "Retain",
+            "Properties": {
+              "FunctionName": {
+                "Ref": "SignupLambdaFunction"
+              },
+              "CodeSha256": "Jdz5dsb/COTI7T0a11UzeQ7kAqKlOMWTb9lM3bPBoxg="
+            }
+          },
+          "LoginLambdaVersionD4ePpd7XoN9RiFHuqMaLacGx1TJFwL2GAb4gC7HQBGI": {
+            "Type": "AWS::Lambda::Version",
+            "DeletionPolicy": "Retain",
+            "Properties": {
+              "FunctionName": {
+                "Ref": "LoginLambdaFunction"
+              },
+              "CodeSha256": "Jdz5dsb/COTI7T0a11UzeQ7kAqKlOMWTb9lM3bPBoxg="
+            }
+          },
+          "ConfirmSignupLambdaVersiontGmn01JyjPUlqL28UpogBIyAu7EwwMAAwq2u5MlGdE": {
+            "Type": "AWS::Lambda::Version",
+            "DeletionPolicy": "Retain",
+            "Properties": {
+              "FunctionName": {
+                "Ref": "ConfirmSignupLambdaFunction"
+              },
+              "CodeSha256": "Jdz5dsb/COTI7T0a11UzeQ7kAqKlOMWTb9lM3bPBoxg="
+            }
+          },
+          "SaveUserLambdaVersionRZzxe3H4E1IkTpn3IIh1ClrAkiMocfX7lda51EM": {
+            "Type": "AWS::Lambda::Version",
+            "DeletionPolicy": "Retain",
+            "Properties": {
+              "FunctionName": {
+                "Ref": "SaveUserLambdaFunction"
+              },
+              "CodeSha256": "Jdz5dsb/COTI7T0a11UzeQ7kAqKlOMWTb9lM3bPBoxg="
             }
           },
           "ApiGatewayRestApi": {
@@ -1028,6 +2456,381 @@
                 ]
               },
               "PathPart": "registrations",
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              }
+            }
+          },
+          "ApiGatewayResourceSignup": {
+            "Type": "AWS::ApiGateway::Resource",
+            "Properties": {
+              "ParentId": {
+                "Fn::GetAtt": [
+                  "ApiGatewayRestApi",
+                  "RootResourceId"
+                ]
+              },
+              "PathPart": "signup",
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              }
+            }
+          },
+          "ApiGatewayResourceLogin": {
+            "Type": "AWS::ApiGateway::Resource",
+            "Properties": {
+              "ParentId": {
+                "Fn::GetAtt": [
+                  "ApiGatewayRestApi",
+                  "RootResourceId"
+                ]
+              },
+              "PathPart": "login",
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              }
+            }
+          },
+          "ApiGatewayResourceConfirmDashsignup": {
+            "Type": "AWS::ApiGateway::Resource",
+            "Properties": {
+              "ParentId": {
+                "Fn::GetAtt": [
+                  "ApiGatewayRestApi",
+                  "RootResourceId"
+                ]
+              },
+              "PathPart": "confirm-signup",
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              }
+            }
+          },
+          "ApiGatewayResourceSaveuser": {
+            "Type": "AWS::ApiGateway::Resource",
+            "Properties": {
+              "ParentId": {
+                "Fn::GetAtt": [
+                  "ApiGatewayRestApi",
+                  "RootResourceId"
+                ]
+              },
+              "PathPart": "saveUser",
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              }
+            }
+          },
+          "ApiGatewayMethodEventsOptions": {
+            "Type": "AWS::ApiGateway::Method",
+            "Properties": {
+              "AuthorizationType": "NONE",
+              "HttpMethod": "OPTIONS",
+              "MethodResponses": [
+                {
+                  "StatusCode": "200",
+                  "ResponseParameters": {
+                    "method.response.header.Access-Control-Allow-Origin": true,
+                    "method.response.header.Access-Control-Allow-Headers": true,
+                    "method.response.header.Access-Control-Allow-Methods": true
+                  },
+                  "ResponseModels": {}
+                }
+              ],
+              "RequestParameters": {},
+              "Integration": {
+                "Type": "MOCK",
+                "RequestTemplates": {
+                  "application/json": "{statusCode:200}"
+                },
+                "ContentHandling": "CONVERT_TO_TEXT",
+                "IntegrationResponses": [
+                  {
+                    "StatusCode": "200",
+                    "ResponseParameters": {
+                      "method.response.header.Access-Control-Allow-Origin": "'*'",
+                      "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent,X-Amzn-Trace-Id'",
+                      "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,GET'"
+                    },
+                    "ResponseTemplates": {
+                      "application/json": ""
+                    }
+                  }
+                ]
+              },
+              "ResourceId": {
+                "Ref": "ApiGatewayResourceEvents"
+              },
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              }
+            }
+          },
+          "ApiGatewayMethodBookOptions": {
+            "Type": "AWS::ApiGateway::Method",
+            "Properties": {
+              "AuthorizationType": "NONE",
+              "HttpMethod": "OPTIONS",
+              "MethodResponses": [
+                {
+                  "StatusCode": "200",
+                  "ResponseParameters": {
+                    "method.response.header.Access-Control-Allow-Origin": true,
+                    "method.response.header.Access-Control-Allow-Headers": true,
+                    "method.response.header.Access-Control-Allow-Methods": true
+                  },
+                  "ResponseModels": {}
+                }
+              ],
+              "RequestParameters": {},
+              "Integration": {
+                "Type": "MOCK",
+                "RequestTemplates": {
+                  "application/json": "{statusCode:200}"
+                },
+                "ContentHandling": "CONVERT_TO_TEXT",
+                "IntegrationResponses": [
+                  {
+                    "StatusCode": "200",
+                    "ResponseParameters": {
+                      "method.response.header.Access-Control-Allow-Origin": "'*'",
+                      "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent,X-Amzn-Trace-Id'",
+                      "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,POST'"
+                    },
+                    "ResponseTemplates": {
+                      "application/json": ""
+                    }
+                  }
+                ]
+              },
+              "ResourceId": {
+                "Ref": "ApiGatewayResourceBook"
+              },
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              }
+            }
+          },
+          "ApiGatewayMethodRegistrationsOptions": {
+            "Type": "AWS::ApiGateway::Method",
+            "Properties": {
+              "AuthorizationType": "NONE",
+              "HttpMethod": "OPTIONS",
+              "MethodResponses": [
+                {
+                  "StatusCode": "200",
+                  "ResponseParameters": {
+                    "method.response.header.Access-Control-Allow-Origin": true,
+                    "method.response.header.Access-Control-Allow-Headers": true,
+                    "method.response.header.Access-Control-Allow-Methods": true
+                  },
+                  "ResponseModels": {}
+                }
+              ],
+              "RequestParameters": {},
+              "Integration": {
+                "Type": "MOCK",
+                "RequestTemplates": {
+                  "application/json": "{statusCode:200}"
+                },
+                "ContentHandling": "CONVERT_TO_TEXT",
+                "IntegrationResponses": [
+                  {
+                    "StatusCode": "200",
+                    "ResponseParameters": {
+                      "method.response.header.Access-Control-Allow-Origin": "'*'",
+                      "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent,X-Amzn-Trace-Id'",
+                      "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,GET'"
+                    },
+                    "ResponseTemplates": {
+                      "application/json": ""
+                    }
+                  }
+                ]
+              },
+              "ResourceId": {
+                "Ref": "ApiGatewayResourceRegistrations"
+              },
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              }
+            }
+          },
+          "ApiGatewayMethodSignupOptions": {
+            "Type": "AWS::ApiGateway::Method",
+            "Properties": {
+              "AuthorizationType": "NONE",
+              "HttpMethod": "OPTIONS",
+              "MethodResponses": [
+                {
+                  "StatusCode": "200",
+                  "ResponseParameters": {
+                    "method.response.header.Access-Control-Allow-Origin": true,
+                    "method.response.header.Access-Control-Allow-Headers": true,
+                    "method.response.header.Access-Control-Allow-Methods": true
+                  },
+                  "ResponseModels": {}
+                }
+              ],
+              "RequestParameters": {},
+              "Integration": {
+                "Type": "MOCK",
+                "RequestTemplates": {
+                  "application/json": "{statusCode:200}"
+                },
+                "ContentHandling": "CONVERT_TO_TEXT",
+                "IntegrationResponses": [
+                  {
+                    "StatusCode": "200",
+                    "ResponseParameters": {
+                      "method.response.header.Access-Control-Allow-Origin": "'*'",
+                      "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent,X-Amzn-Trace-Id'",
+                      "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,POST'"
+                    },
+                    "ResponseTemplates": {
+                      "application/json": ""
+                    }
+                  }
+                ]
+              },
+              "ResourceId": {
+                "Ref": "ApiGatewayResourceSignup"
+              },
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              }
+            }
+          },
+          "ApiGatewayMethodLoginOptions": {
+            "Type": "AWS::ApiGateway::Method",
+            "Properties": {
+              "AuthorizationType": "NONE",
+              "HttpMethod": "OPTIONS",
+              "MethodResponses": [
+                {
+                  "StatusCode": "200",
+                  "ResponseParameters": {
+                    "method.response.header.Access-Control-Allow-Origin": true,
+                    "method.response.header.Access-Control-Allow-Headers": true,
+                    "method.response.header.Access-Control-Allow-Methods": true
+                  },
+                  "ResponseModels": {}
+                }
+              ],
+              "RequestParameters": {},
+              "Integration": {
+                "Type": "MOCK",
+                "RequestTemplates": {
+                  "application/json": "{statusCode:200}"
+                },
+                "ContentHandling": "CONVERT_TO_TEXT",
+                "IntegrationResponses": [
+                  {
+                    "StatusCode": "200",
+                    "ResponseParameters": {
+                      "method.response.header.Access-Control-Allow-Origin": "'*'",
+                      "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent,X-Amzn-Trace-Id'",
+                      "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,POST'"
+                    },
+                    "ResponseTemplates": {
+                      "application/json": ""
+                    }
+                  }
+                ]
+              },
+              "ResourceId": {
+                "Ref": "ApiGatewayResourceLogin"
+              },
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              }
+            }
+          },
+          "ApiGatewayMethodConfirmDashsignupOptions": {
+            "Type": "AWS::ApiGateway::Method",
+            "Properties": {
+              "AuthorizationType": "NONE",
+              "HttpMethod": "OPTIONS",
+              "MethodResponses": [
+                {
+                  "StatusCode": "200",
+                  "ResponseParameters": {
+                    "method.response.header.Access-Control-Allow-Origin": true,
+                    "method.response.header.Access-Control-Allow-Headers": true,
+                    "method.response.header.Access-Control-Allow-Methods": true
+                  },
+                  "ResponseModels": {}
+                }
+              ],
+              "RequestParameters": {},
+              "Integration": {
+                "Type": "MOCK",
+                "RequestTemplates": {
+                  "application/json": "{statusCode:200}"
+                },
+                "ContentHandling": "CONVERT_TO_TEXT",
+                "IntegrationResponses": [
+                  {
+                    "StatusCode": "200",
+                    "ResponseParameters": {
+                      "method.response.header.Access-Control-Allow-Origin": "'*'",
+                      "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent,X-Amzn-Trace-Id'",
+                      "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,POST'"
+                    },
+                    "ResponseTemplates": {
+                      "application/json": ""
+                    }
+                  }
+                ]
+              },
+              "ResourceId": {
+                "Ref": "ApiGatewayResourceConfirmDashsignup"
+              },
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              }
+            }
+          },
+          "ApiGatewayMethodSaveuserOptions": {
+            "Type": "AWS::ApiGateway::Method",
+            "Properties": {
+              "AuthorizationType": "NONE",
+              "HttpMethod": "OPTIONS",
+              "MethodResponses": [
+                {
+                  "StatusCode": "200",
+                  "ResponseParameters": {
+                    "method.response.header.Access-Control-Allow-Origin": true,
+                    "method.response.header.Access-Control-Allow-Headers": true,
+                    "method.response.header.Access-Control-Allow-Methods": true
+                  },
+                  "ResponseModels": {}
+                }
+              ],
+              "RequestParameters": {},
+              "Integration": {
+                "Type": "MOCK",
+                "RequestTemplates": {
+                  "application/json": "{statusCode:200}"
+                },
+                "ContentHandling": "CONVERT_TO_TEXT",
+                "IntegrationResponses": [
+                  {
+                    "StatusCode": "200",
+                    "ResponseParameters": {
+                      "method.response.header.Access-Control-Allow-Origin": "'*'",
+                      "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent,X-Amzn-Trace-Id'",
+                      "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,POST'"
+                    },
+                    "ResponseTemplates": {
+                      "application/json": ""
+                    }
+                  }
+                ]
+              },
+              "ResourceId": {
+                "Ref": "ApiGatewayResourceSaveuser"
+              },
               "RestApiId": {
                 "Ref": "ApiGatewayRestApi"
               }
@@ -1171,7 +2974,191 @@
               "GetRegistrationsLambdaPermissionApiGateway"
             ]
           },
-          "ApiGatewayDeployment1750157565738": {
+          "ApiGatewayMethodSignupPost": {
+            "Type": "AWS::ApiGateway::Method",
+            "Properties": {
+              "HttpMethod": "POST",
+              "RequestParameters": {},
+              "ResourceId": {
+                "Ref": "ApiGatewayResourceSignup"
+              },
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              },
+              "ApiKeyRequired": "<REDACTED>",
+              "AuthorizationType": "NONE",
+              "Integration": {
+                "IntegrationHttpMethod": "POST",
+                "Type": "AWS_PROXY",
+                "Uri": {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:",
+                      {
+                        "Ref": "AWS::Partition"
+                      },
+                      ":apigateway:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":lambda:path/2015-03-31/functions/",
+                      {
+                        "Fn::GetAtt": [
+                          "SignupLambdaFunction",
+                          "Arn"
+                        ]
+                      },
+                      "/invocations"
+                    ]
+                  ]
+                }
+              },
+              "MethodResponses": []
+            },
+            "DependsOn": [
+              "SignupLambdaPermissionApiGateway"
+            ]
+          },
+          "ApiGatewayMethodLoginPost": {
+            "Type": "AWS::ApiGateway::Method",
+            "Properties": {
+              "HttpMethod": "POST",
+              "RequestParameters": {},
+              "ResourceId": {
+                "Ref": "ApiGatewayResourceLogin"
+              },
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              },
+              "ApiKeyRequired": "<REDACTED>",
+              "AuthorizationType": "NONE",
+              "Integration": {
+                "IntegrationHttpMethod": "POST",
+                "Type": "AWS_PROXY",
+                "Uri": {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:",
+                      {
+                        "Ref": "AWS::Partition"
+                      },
+                      ":apigateway:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":lambda:path/2015-03-31/functions/",
+                      {
+                        "Fn::GetAtt": [
+                          "LoginLambdaFunction",
+                          "Arn"
+                        ]
+                      },
+                      "/invocations"
+                    ]
+                  ]
+                }
+              },
+              "MethodResponses": []
+            },
+            "DependsOn": [
+              "LoginLambdaPermissionApiGateway"
+            ]
+          },
+          "ApiGatewayMethodConfirmDashsignupPost": {
+            "Type": "AWS::ApiGateway::Method",
+            "Properties": {
+              "HttpMethod": "POST",
+              "RequestParameters": {},
+              "ResourceId": {
+                "Ref": "ApiGatewayResourceConfirmDashsignup"
+              },
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              },
+              "ApiKeyRequired": "<REDACTED>",
+              "AuthorizationType": "NONE",
+              "Integration": {
+                "IntegrationHttpMethod": "POST",
+                "Type": "AWS_PROXY",
+                "Uri": {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:",
+                      {
+                        "Ref": "AWS::Partition"
+                      },
+                      ":apigateway:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":lambda:path/2015-03-31/functions/",
+                      {
+                        "Fn::GetAtt": [
+                          "ConfirmSignupLambdaFunction",
+                          "Arn"
+                        ]
+                      },
+                      "/invocations"
+                    ]
+                  ]
+                }
+              },
+              "MethodResponses": []
+            },
+            "DependsOn": [
+              "ConfirmSignupLambdaPermissionApiGateway"
+            ]
+          },
+          "ApiGatewayMethodSaveuserPost": {
+            "Type": "AWS::ApiGateway::Method",
+            "Properties": {
+              "HttpMethod": "POST",
+              "RequestParameters": {},
+              "ResourceId": {
+                "Ref": "ApiGatewayResourceSaveuser"
+              },
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              },
+              "ApiKeyRequired": "<REDACTED>",
+              "AuthorizationType": "NONE",
+              "Integration": {
+                "IntegrationHttpMethod": "POST",
+                "Type": "AWS_PROXY",
+                "Uri": {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:",
+                      {
+                        "Ref": "AWS::Partition"
+                      },
+                      ":apigateway:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":lambda:path/2015-03-31/functions/",
+                      {
+                        "Fn::GetAtt": [
+                          "SaveUserLambdaFunction",
+                          "Arn"
+                        ]
+                      },
+                      "/invocations"
+                    ]
+                  ]
+                }
+              },
+              "MethodResponses": []
+            },
+            "DependsOn": [
+              "SaveUserLambdaPermissionApiGateway"
+            ]
+          },
+          "ApiGatewayDeployment1750207378852": {
             "Type": "AWS::ApiGateway::Deployment",
             "Properties": {
               "RestApiId": {
@@ -1180,9 +3167,20 @@
               "StageName": "dev"
             },
             "DependsOn": [
+              "ApiGatewayMethodEventsOptions",
+              "ApiGatewayMethodBookOptions",
+              "ApiGatewayMethodRegistrationsOptions",
+              "ApiGatewayMethodSignupOptions",
+              "ApiGatewayMethodLoginOptions",
+              "ApiGatewayMethodConfirmDashsignupOptions",
+              "ApiGatewayMethodSaveuserOptions",
               "ApiGatewayMethodEventsGet",
               "ApiGatewayMethodBookPost",
-              "ApiGatewayMethodRegistrationsGet"
+              "ApiGatewayMethodRegistrationsGet",
+              "ApiGatewayMethodSignupPost",
+              "ApiGatewayMethodLoginPost",
+              "ApiGatewayMethodConfirmDashsignupPost",
+              "ApiGatewayMethodSaveuserPost"
             ]
           },
           "GetEventsLambdaPermissionApiGateway": {
@@ -1295,6 +3293,154 @@
                 ]
               }
             }
+          },
+          "SignupLambdaPermissionApiGateway": {
+            "Type": "AWS::Lambda::Permission",
+            "Properties": {
+              "FunctionName": {
+                "Fn::GetAtt": [
+                  "SignupLambdaFunction",
+                  "Arn"
+                ]
+              },
+              "Action": "lambda:InvokeFunction",
+              "Principal": "apigateway.amazonaws.com",
+              "SourceArn": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "arn:",
+                    {
+                      "Ref": "AWS::Partition"
+                    },
+                    ":execute-api:",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    ":",
+                    {
+                      "Ref": "AWS::AccountId"
+                    },
+                    ":",
+                    {
+                      "Ref": "ApiGatewayRestApi"
+                    },
+                    "/*/*"
+                  ]
+                ]
+              }
+            }
+          },
+          "LoginLambdaPermissionApiGateway": {
+            "Type": "AWS::Lambda::Permission",
+            "Properties": {
+              "FunctionName": {
+                "Fn::GetAtt": [
+                  "LoginLambdaFunction",
+                  "Arn"
+                ]
+              },
+              "Action": "lambda:InvokeFunction",
+              "Principal": "apigateway.amazonaws.com",
+              "SourceArn": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "arn:",
+                    {
+                      "Ref": "AWS::Partition"
+                    },
+                    ":execute-api:",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    ":",
+                    {
+                      "Ref": "AWS::AccountId"
+                    },
+                    ":",
+                    {
+                      "Ref": "ApiGatewayRestApi"
+                    },
+                    "/*/*"
+                  ]
+                ]
+              }
+            }
+          },
+          "ConfirmSignupLambdaPermissionApiGateway": {
+            "Type": "AWS::Lambda::Permission",
+            "Properties": {
+              "FunctionName": {
+                "Fn::GetAtt": [
+                  "ConfirmSignupLambdaFunction",
+                  "Arn"
+                ]
+              },
+              "Action": "lambda:InvokeFunction",
+              "Principal": "apigateway.amazonaws.com",
+              "SourceArn": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "arn:",
+                    {
+                      "Ref": "AWS::Partition"
+                    },
+                    ":execute-api:",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    ":",
+                    {
+                      "Ref": "AWS::AccountId"
+                    },
+                    ":",
+                    {
+                      "Ref": "ApiGatewayRestApi"
+                    },
+                    "/*/*"
+                  ]
+                ]
+              }
+            }
+          },
+          "SaveUserLambdaPermissionApiGateway": {
+            "Type": "AWS::Lambda::Permission",
+            "Properties": {
+              "FunctionName": {
+                "Fn::GetAtt": [
+                  "SaveUserLambdaFunction",
+                  "Arn"
+                ]
+              },
+              "Action": "lambda:InvokeFunction",
+              "Principal": "apigateway.amazonaws.com",
+              "SourceArn": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "arn:",
+                    {
+                      "Ref": "AWS::Partition"
+                    },
+                    ":execute-api:",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    ":",
+                    {
+                      "Ref": "AWS::AccountId"
+                    },
+                    ":",
+                    {
+                      "Ref": "ApiGatewayRestApi"
+                    },
+                    "/*/*"
+                  ]
+                ]
+              }
+            }
           }
         },
         "Outputs": {
@@ -1307,7 +3453,7 @@
           "GetEventsLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "GetEventsLambdaVersionZe5N0itJoSuGyqzkJgEDkpI4utjG5MoExdOPxBTqMw"
+              "Ref": "GetEventsLambdaVersionTNffPrry2V0iPZhBNY3KHcrVzDdtT1MnNCfZyhcwk"
             },
             "Export": {
               "Name": "sls-event-booking-app-dev-GetEventsLambdaFunctionQualifiedArn"
@@ -1316,7 +3462,7 @@
           "BookEventLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "BookEventLambdaVersiondjeHvr11Zo7DaPzvi0tV7Y4DDHiwlDoE5vC7bcIzF4"
+              "Ref": "BookEventLambdaVersion7aqaLs6MOQDnMSD4RZBkZmzVtjPYZ0eqjZu8RDQ"
             },
             "Export": {
               "Name": "sls-event-booking-app-dev-BookEventLambdaFunctionQualifiedArn"
@@ -1325,10 +3471,46 @@
           "GetRegistrationsLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "GetRegistrationsLambdaVersionwm5z2ICkn4YrFX1Uxyxq0BpkuQoNQPh5lQ3LKGNbDc"
+              "Ref": "GetRegistrationsLambdaVersionFtoALyCIxxgJdaEmqGF7QjgqX4I8RXJLaQ1IYieA"
             },
             "Export": {
               "Name": "sls-event-booking-app-dev-GetRegistrationsLambdaFunctionQualifiedArn"
+            }
+          },
+          "SignupLambdaFunctionQualifiedArn": {
+            "Description": "Current Lambda function version",
+            "Value": {
+              "Ref": "SignupLambdaVersionQhznjuMDIHVUNjzL9dugbTmyjkSg7E2mN2uriJyIDI"
+            },
+            "Export": {
+              "Name": "sls-event-booking-app-dev-SignupLambdaFunctionQualifiedArn"
+            }
+          },
+          "LoginLambdaFunctionQualifiedArn": {
+            "Description": "Current Lambda function version",
+            "Value": {
+              "Ref": "LoginLambdaVersionD4ePpd7XoN9RiFHuqMaLacGx1TJFwL2GAb4gC7HQBGI"
+            },
+            "Export": {
+              "Name": "sls-event-booking-app-dev-LoginLambdaFunctionQualifiedArn"
+            }
+          },
+          "ConfirmSignupLambdaFunctionQualifiedArn": {
+            "Description": "Current Lambda function version",
+            "Value": {
+              "Ref": "ConfirmSignupLambdaVersiontGmn01JyjPUlqL28UpogBIyAu7EwwMAAwq2u5MlGdE"
+            },
+            "Export": {
+              "Name": "sls-event-booking-app-dev-ConfirmSignupLambdaFunctionQualifiedArn"
+            }
+          },
+          "SaveUserLambdaFunctionQualifiedArn": {
+            "Description": "Current Lambda function version",
+            "Value": {
+              "Ref": "SaveUserLambdaVersionRZzxe3H4E1IkTpn3IIh1ClrAkiMocfX7lda51EM"
+            },
+            "Export": {
+              "Name": "sls-event-booking-app-dev-SaveUserLambdaFunctionQualifiedArn"
             }
           },
           "ServiceEndpoint": {
@@ -1370,7 +3552,7 @@
       "serviceProvider": null,
       "instanceParameters": null
     },
-    "serviceRawFile": "service: event-booking-app\r\nframeworkVersion: '4'\r\n\r\nprovider:\r\n  name: aws\r\n  runtime: nodejs20.x\r\n  region: us-east-1\r\n  environment:\r\n    EVENTS_TABLE: Events           # Updated to match your actual table name\r\n    BOOKINGS_TABLE: Registrations  # Updated to match your actual table name\r\n  iam:\r\n    role:\r\n      statements:\r\n        - Effect: Allow\r\n          Action:\r\n            - dynamodb:GetItem\r\n            - dynamodb:PutItem\r\n            - dynamodb:UpdateItem\r\n            - dynamodb:Scan\r\n            - dynamodb:Query\r\n          Resource: arn:aws:dynamodb:us-east-1:*:table/*\r\n\r\nfunctions:\r\n  getEvents:\r\n    handler: aws/lambdas/getEvents.handler\r\n    events:\r\n      - http:\r\n          path: events\r\n          method: get\r\n  bookEvent:\r\n    handler: aws/lambdas/bookEvent.handler\r\n    events:\r\n      - http:\r\n          path: book\r\n          method: post\r\n  getRegistrations:\r\n    handler: aws/lambdas/getRegistrations.handler\r\n    events:\r\n      - http:\r\n          path: registrations\r\n          method: get\r\n",
+    "serviceRawFile": "service: event-booking-app\r\nframeworkVersion: '4'\r\n\r\nprovider:\r\n  name: aws\r\n  runtime: nodejs20.x\r\n  region: us-east-1\r\n  environment:\r\n    EVENTS_TABLE: Events\r\n    BOOKINGS_TABLE: Registrations\r\n    USER_TABLE: YourUserTable\r\n    COGNITO_CLIENT_ID: 4v4qbgptde4v367c05hd4gq2rf\r\n    COGNITO_CLIENT_SECRET: kqh481640kr3jq48g05c96sch22jgokaate4r5ommrpoe6atkbc \r\n    USER_ID_INDEX: userId-index\r\n\r\n  iam:\r\n    role:\r\n      statements:\r\n        - Effect: Allow\r\n          Action:\r\n            - dynamodb:GetItem\r\n            - dynamodb:PutItem\r\n            - dynamodb:UpdateItem\r\n            - dynamodb:Scan\r\n            - dynamodb:Query\r\n          Resource: arn:aws:dynamodb:us-east-1:*:table/*\r\n        - Effect: Allow\r\n          Action:\r\n            - cognito-idp:SignUp\r\n            - cognito-idp:AdminConfirmSignUp\r\n            - cognito-idp:InitiateAuth\r\n            - cognito-idp:ConfirmSignUp\r\n          Resource: \"*\"\r\n\r\nfunctions:\r\n  getEvents:\r\n    handler: aws/lambdas/getEvents.handler\r\n    events:\r\n      - http:\r\n          path: events\r\n          method: get\r\n          cors: true\r\n\r\n  bookEvent:\r\n    handler: aws/lambdas/bookEvent.handler\r\n    events:\r\n      - http:\r\n          path: book\r\n          method: post\r\n          cors: true\r\n\r\n  getRegistrations:\r\n    handler: aws/lambdas/getRegistrations.handler\r\n    events:\r\n      - http:\r\n          path: registrations\r\n          method: get\r\n          cors: true\r\n\r\n  signup:\r\n    handler: aws/lambdas/signup.handler\r\n    events:\r\n      - http:\r\n          path: signup\r\n          method: post\r\n          cors: true\r\n\r\n  login:\r\n    handler: aws/lambdas/login.handler\r\n    events:\r\n      - http:\r\n          path: login\r\n          method: post\r\n          cors: true\r\n\r\n  confirmSignup:\r\n    handler: aws/lambdas/confirmSignup.handler\r\n    events:\r\n      - http:\r\n          path: confirm-signup\r\n          method: post\r\n          cors: true\r\n\r\n  saveUser:\r\n    handler: aws/lambdas/saveUser.handler\r\n    events:\r\n      - http:\r\n          path: saveUser\r\n          method: post\r\n          cors: true\r\n",
     "command": [
       "deploy"
     ],
@@ -1383,24 +3565,24 @@
     "serviceProviderAwsCfStackName": "event-booking-app-dev",
     "serviceProviderAwsCfStackId": "arn:aws:cloudformation:us-east-1:122610511543:stack/event-booking-app-dev/b856ce10-4a49-11f0-80a7-0ebac815dd1f",
     "serviceProviderAwsCfStackCreated": "2025-06-16T00:34:53.548Z",
-    "serviceProviderAwsCfStackUpdated": "2025-06-17T03:05:09.675Z",
-    "serviceProviderAwsCfStackStatus": "UPDATE_COMPLETE",
+    "serviceProviderAwsCfStackUpdated": "2025-06-18T00:38:11.885Z",
+    "serviceProviderAwsCfStackStatus": "UPDATE_ROLLBACK_COMPLETE",
     "serviceProviderAwsCfStackOutputs": [
       {
         "OutputKey": "GetRegistrationsLambdaFunctionQualifiedArn",
-        "OutputValue": "arn:aws:lambda:us-east-1:122610511543:function:event-booking-app-dev-getRegistrations:1",
+        "OutputValue": "arn:aws:lambda:us-east-1:122610511543:function:event-booking-app-dev-getRegistrations:3",
         "Description": "Current Lambda function version",
         "ExportName": "sls-event-booking-app-dev-GetRegistrationsLambdaFunctionQualifiedArn"
       },
       {
         "OutputKey": "BookEventLambdaFunctionQualifiedArn",
-        "OutputValue": "arn:aws:lambda:us-east-1:122610511543:function:event-booking-app-dev-bookEvent:4",
+        "OutputValue": "arn:aws:lambda:us-east-1:122610511543:function:event-booking-app-dev-bookEvent:6",
         "Description": "Current Lambda function version",
         "ExportName": "sls-event-booking-app-dev-BookEventLambdaFunctionQualifiedArn"
       },
       {
         "OutputKey": "GetEventsLambdaFunctionQualifiedArn",
-        "OutputValue": "arn:aws:lambda:us-east-1:122610511543:function:event-booking-app-dev-getEvents:4",
+        "OutputValue": "arn:aws:lambda:us-east-1:122610511543:function:event-booking-app-dev-getEvents:6",
         "Description": "Current Lambda function version",
         "ExportName": "sls-event-booking-app-dev-GetEventsLambdaFunctionQualifiedArn"
       },
@@ -1436,6 +3618,30 @@
           "Type": "AWS::Logs::LogGroup",
           "Properties": {
             "LogGroupName": "/aws/lambda/event-booking-app-dev-getRegistrations"
+          }
+        },
+        "SignupLogGroup": {
+          "Type": "AWS::Logs::LogGroup",
+          "Properties": {
+            "LogGroupName": "/aws/lambda/event-booking-app-dev-signup"
+          }
+        },
+        "LoginLogGroup": {
+          "Type": "AWS::Logs::LogGroup",
+          "Properties": {
+            "LogGroupName": "/aws/lambda/event-booking-app-dev-login"
+          }
+        },
+        "ConfirmSignupLogGroup": {
+          "Type": "AWS::Logs::LogGroup",
+          "Properties": {
+            "LogGroupName": "/aws/lambda/event-booking-app-dev-confirmSignup"
+          }
+        },
+        "SaveUserLogGroup": {
+          "Type": "AWS::Logs::LogGroup",
+          "Properties": {
+            "LogGroupName": "/aws/lambda/event-booking-app-dev-saveUser"
           }
         },
         "IamRoleLambdaExecution": {
@@ -1506,6 +3712,16 @@
                         "dynamodb:Query"
                       ],
                       "Resource": "arn:aws:dynamodb:us-east-1:*:table/*"
+                    },
+                    {
+                      "Effect": "Allow",
+                      "Action": [
+                        "cognito-idp:SignUp",
+                        "cognito-idp:AdminConfirmSignUp",
+                        "cognito-idp:InitiateAuth",
+                        "cognito-idp:ConfirmSignUp"
+                      ],
+                      "Resource": "*"
                     }
                   ]
                 }
@@ -1532,7 +3748,7 @@
           "Properties": {
             "Code": {
               "S3Bucket": "serverless-framework-deployments-us-east-1-e3c07911-961a",
-              "S3Key": "serverless/event-booking-app/dev/1750157584607-2025-06-17T10:53:04.607Z/event-booking-app.zip"
+              "S3Key": "serverless/event-booking-app/dev/1750207391096-2025-06-18T00:43:11.096Z/event-booking-app.zip"
             },
             "Handler": "aws/lambdas/getEvents.handler",
             "Runtime": "nodejs20.x",
@@ -1543,6 +3759,10 @@
               "Variables": {
                 "EVENTS_TABLE": "Events",
                 "BOOKINGS_TABLE": "Registrations",
+                "USER_TABLE": "YourUserTable",
+                "COGNITO_CLIENT_ID": "4v4qbgptde4v367c05hd4gq2rf",
+                "COGNITO_CLIENT_SECRET": "<REDACTED>",
+                "USER_ID_INDEX": "userId-index",
                 "NODE_OPTIONS": "--enable-source-maps"
               }
             },
@@ -1562,7 +3782,7 @@
           "Properties": {
             "Code": {
               "S3Bucket": "serverless-framework-deployments-us-east-1-e3c07911-961a",
-              "S3Key": "serverless/event-booking-app/dev/1750157584607-2025-06-17T10:53:04.607Z/event-booking-app.zip"
+              "S3Key": "serverless/event-booking-app/dev/1750207391096-2025-06-18T00:43:11.096Z/event-booking-app.zip"
             },
             "Handler": "aws/lambdas/bookEvent.handler",
             "Runtime": "nodejs20.x",
@@ -1573,6 +3793,10 @@
               "Variables": {
                 "EVENTS_TABLE": "Events",
                 "BOOKINGS_TABLE": "Registrations",
+                "USER_TABLE": "YourUserTable",
+                "COGNITO_CLIENT_ID": "4v4qbgptde4v367c05hd4gq2rf",
+                "COGNITO_CLIENT_SECRET": "<REDACTED>",
+                "USER_ID_INDEX": "userId-index",
                 "NODE_OPTIONS": "--enable-source-maps"
               }
             },
@@ -1592,7 +3816,7 @@
           "Properties": {
             "Code": {
               "S3Bucket": "serverless-framework-deployments-us-east-1-e3c07911-961a",
-              "S3Key": "serverless/event-booking-app/dev/1750157584607-2025-06-17T10:53:04.607Z/event-booking-app.zip"
+              "S3Key": "serverless/event-booking-app/dev/1750207391096-2025-06-18T00:43:11.096Z/event-booking-app.zip"
             },
             "Handler": "aws/lambdas/getRegistrations.handler",
             "Runtime": "nodejs20.x",
@@ -1603,6 +3827,10 @@
               "Variables": {
                 "EVENTS_TABLE": "Events",
                 "BOOKINGS_TABLE": "Registrations",
+                "USER_TABLE": "YourUserTable",
+                "COGNITO_CLIENT_ID": "4v4qbgptde4v367c05hd4gq2rf",
+                "COGNITO_CLIENT_SECRET": "<REDACTED>",
+                "USER_ID_INDEX": "userId-index",
                 "NODE_OPTIONS": "--enable-source-maps"
               }
             },
@@ -1617,34 +3845,209 @@
             "GetRegistrationsLogGroup"
           ]
         },
-        "GetEventsLambdaVersionZe5N0itJoSuGyqzkJgEDkpI4utjG5MoExdOPxBTqMw": {
+        "SignupLambdaFunction": {
+          "Type": "AWS::Lambda::Function",
+          "Properties": {
+            "Code": {
+              "S3Bucket": "serverless-framework-deployments-us-east-1-e3c07911-961a",
+              "S3Key": "serverless/event-booking-app/dev/1750207391096-2025-06-18T00:43:11.096Z/event-booking-app.zip"
+            },
+            "Handler": "aws/lambdas/signup.handler",
+            "Runtime": "nodejs20.x",
+            "FunctionName": "event-booking-app-dev-signup",
+            "MemorySize": 1024,
+            "Timeout": 6,
+            "Environment": {
+              "Variables": {
+                "EVENTS_TABLE": "Events",
+                "BOOKINGS_TABLE": "Registrations",
+                "USER_TABLE": "YourUserTable",
+                "COGNITO_CLIENT_ID": "4v4qbgptde4v367c05hd4gq2rf",
+                "COGNITO_CLIENT_SECRET": "<REDACTED>",
+                "USER_ID_INDEX": "userId-index",
+                "NODE_OPTIONS": "--enable-source-maps"
+              }
+            },
+            "Role": {
+              "Fn::GetAtt": [
+                "IamRoleLambdaExecution",
+                "Arn"
+              ]
+            }
+          },
+          "DependsOn": [
+            "SignupLogGroup"
+          ]
+        },
+        "LoginLambdaFunction": {
+          "Type": "AWS::Lambda::Function",
+          "Properties": {
+            "Code": {
+              "S3Bucket": "serverless-framework-deployments-us-east-1-e3c07911-961a",
+              "S3Key": "serverless/event-booking-app/dev/1750207391096-2025-06-18T00:43:11.096Z/event-booking-app.zip"
+            },
+            "Handler": "aws/lambdas/login.handler",
+            "Runtime": "nodejs20.x",
+            "FunctionName": "event-booking-app-dev-login",
+            "MemorySize": 1024,
+            "Timeout": 6,
+            "Environment": {
+              "Variables": {
+                "EVENTS_TABLE": "Events",
+                "BOOKINGS_TABLE": "Registrations",
+                "USER_TABLE": "YourUserTable",
+                "COGNITO_CLIENT_ID": "4v4qbgptde4v367c05hd4gq2rf",
+                "COGNITO_CLIENT_SECRET": "<REDACTED>",
+                "USER_ID_INDEX": "userId-index",
+                "NODE_OPTIONS": "--enable-source-maps"
+              }
+            },
+            "Role": {
+              "Fn::GetAtt": [
+                "IamRoleLambdaExecution",
+                "Arn"
+              ]
+            }
+          },
+          "DependsOn": [
+            "LoginLogGroup"
+          ]
+        },
+        "ConfirmSignupLambdaFunction": {
+          "Type": "AWS::Lambda::Function",
+          "Properties": {
+            "Code": {
+              "S3Bucket": "serverless-framework-deployments-us-east-1-e3c07911-961a",
+              "S3Key": "serverless/event-booking-app/dev/1750207391096-2025-06-18T00:43:11.096Z/event-booking-app.zip"
+            },
+            "Handler": "aws/lambdas/confirmSignup.handler",
+            "Runtime": "nodejs20.x",
+            "FunctionName": "event-booking-app-dev-confirmSignup",
+            "MemorySize": 1024,
+            "Timeout": 6,
+            "Environment": {
+              "Variables": {
+                "EVENTS_TABLE": "Events",
+                "BOOKINGS_TABLE": "Registrations",
+                "USER_TABLE": "YourUserTable",
+                "COGNITO_CLIENT_ID": "4v4qbgptde4v367c05hd4gq2rf",
+                "COGNITO_CLIENT_SECRET": "<REDACTED>",
+                "USER_ID_INDEX": "userId-index"
+              }
+            },
+            "Role": {
+              "Fn::GetAtt": [
+                "IamRoleLambdaExecution",
+                "Arn"
+              ]
+            }
+          },
+          "DependsOn": [
+            "ConfirmSignupLogGroup"
+          ]
+        },
+        "SaveUserLambdaFunction": {
+          "Type": "AWS::Lambda::Function",
+          "Properties": {
+            "Code": {
+              "S3Bucket": "serverless-framework-deployments-us-east-1-e3c07911-961a",
+              "S3Key": "serverless/event-booking-app/dev/1750207391096-2025-06-18T00:43:11.096Z/event-booking-app.zip"
+            },
+            "Handler": "aws/lambdas/saveUser.handler",
+            "Runtime": "nodejs20.x",
+            "FunctionName": "event-booking-app-dev-saveUser",
+            "MemorySize": 1024,
+            "Timeout": 6,
+            "Environment": {
+              "Variables": {
+                "EVENTS_TABLE": "Events",
+                "BOOKINGS_TABLE": "Registrations",
+                "USER_TABLE": "YourUserTable",
+                "COGNITO_CLIENT_ID": "4v4qbgptde4v367c05hd4gq2rf",
+                "COGNITO_CLIENT_SECRET": "<REDACTED>",
+                "USER_ID_INDEX": "userId-index",
+                "NODE_OPTIONS": "--enable-source-maps"
+              }
+            },
+            "Role": {
+              "Fn::GetAtt": [
+                "IamRoleLambdaExecution",
+                "Arn"
+              ]
+            }
+          },
+          "DependsOn": [
+            "SaveUserLogGroup"
+          ]
+        },
+        "GetEventsLambdaVersionTNffPrry2V0iPZhBNY3KHcrVzDdtT1MnNCfZyhcwk": {
           "Type": "AWS::Lambda::Version",
           "DeletionPolicy": "Retain",
           "Properties": {
             "FunctionName": {
               "Ref": "GetEventsLambdaFunction"
             },
-            "CodeSha256": "nMK3ENh9PdgCt+Ne4DDT0H9XTSOv8w2eAQH3RW6Pb3Q="
+            "CodeSha256": "Jdz5dsb/COTI7T0a11UzeQ7kAqKlOMWTb9lM3bPBoxg="
           }
         },
-        "BookEventLambdaVersiondjeHvr11Zo7DaPzvi0tV7Y4DDHiwlDoE5vC7bcIzF4": {
+        "BookEventLambdaVersion7aqaLs6MOQDnMSD4RZBkZmzVtjPYZ0eqjZu8RDQ": {
           "Type": "AWS::Lambda::Version",
           "DeletionPolicy": "Retain",
           "Properties": {
             "FunctionName": {
               "Ref": "BookEventLambdaFunction"
             },
-            "CodeSha256": "nMK3ENh9PdgCt+Ne4DDT0H9XTSOv8w2eAQH3RW6Pb3Q="
+            "CodeSha256": "Jdz5dsb/COTI7T0a11UzeQ7kAqKlOMWTb9lM3bPBoxg="
           }
         },
-        "GetRegistrationsLambdaVersionwm5z2ICkn4YrFX1Uxyxq0BpkuQoNQPh5lQ3LKGNbDc": {
+        "GetRegistrationsLambdaVersionFtoALyCIxxgJdaEmqGF7QjgqX4I8RXJLaQ1IYieA": {
           "Type": "AWS::Lambda::Version",
           "DeletionPolicy": "Retain",
           "Properties": {
             "FunctionName": {
               "Ref": "GetRegistrationsLambdaFunction"
             },
-            "CodeSha256": "nMK3ENh9PdgCt+Ne4DDT0H9XTSOv8w2eAQH3RW6Pb3Q="
+            "CodeSha256": "Jdz5dsb/COTI7T0a11UzeQ7kAqKlOMWTb9lM3bPBoxg="
+          }
+        },
+        "SignupLambdaVersionQhznjuMDIHVUNjzL9dugbTmyjkSg7E2mN2uriJyIDI": {
+          "Type": "AWS::Lambda::Version",
+          "DeletionPolicy": "Retain",
+          "Properties": {
+            "FunctionName": {
+              "Ref": "SignupLambdaFunction"
+            },
+            "CodeSha256": "Jdz5dsb/COTI7T0a11UzeQ7kAqKlOMWTb9lM3bPBoxg="
+          }
+        },
+        "LoginLambdaVersionD4ePpd7XoN9RiFHuqMaLacGx1TJFwL2GAb4gC7HQBGI": {
+          "Type": "AWS::Lambda::Version",
+          "DeletionPolicy": "Retain",
+          "Properties": {
+            "FunctionName": {
+              "Ref": "LoginLambdaFunction"
+            },
+            "CodeSha256": "Jdz5dsb/COTI7T0a11UzeQ7kAqKlOMWTb9lM3bPBoxg="
+          }
+        },
+        "ConfirmSignupLambdaVersiontGmn01JyjPUlqL28UpogBIyAu7EwwMAAwq2u5MlGdE": {
+          "Type": "AWS::Lambda::Version",
+          "DeletionPolicy": "Retain",
+          "Properties": {
+            "FunctionName": {
+              "Ref": "ConfirmSignupLambdaFunction"
+            },
+            "CodeSha256": "Jdz5dsb/COTI7T0a11UzeQ7kAqKlOMWTb9lM3bPBoxg="
+          }
+        },
+        "SaveUserLambdaVersionRZzxe3H4E1IkTpn3IIh1ClrAkiMocfX7lda51EM": {
+          "Type": "AWS::Lambda::Version",
+          "DeletionPolicy": "Retain",
+          "Properties": {
+            "FunctionName": {
+              "Ref": "SaveUserLambdaFunction"
+            },
+            "CodeSha256": "Jdz5dsb/COTI7T0a11UzeQ7kAqKlOMWTb9lM3bPBoxg="
           }
         },
         "ApiGatewayRestApi": {
@@ -1699,6 +4102,381 @@
               ]
             },
             "PathPart": "registrations",
+            "RestApiId": {
+              "Ref": "ApiGatewayRestApi"
+            }
+          }
+        },
+        "ApiGatewayResourceSignup": {
+          "Type": "AWS::ApiGateway::Resource",
+          "Properties": {
+            "ParentId": {
+              "Fn::GetAtt": [
+                "ApiGatewayRestApi",
+                "RootResourceId"
+              ]
+            },
+            "PathPart": "signup",
+            "RestApiId": {
+              "Ref": "ApiGatewayRestApi"
+            }
+          }
+        },
+        "ApiGatewayResourceLogin": {
+          "Type": "AWS::ApiGateway::Resource",
+          "Properties": {
+            "ParentId": {
+              "Fn::GetAtt": [
+                "ApiGatewayRestApi",
+                "RootResourceId"
+              ]
+            },
+            "PathPart": "login",
+            "RestApiId": {
+              "Ref": "ApiGatewayRestApi"
+            }
+          }
+        },
+        "ApiGatewayResourceConfirmDashsignup": {
+          "Type": "AWS::ApiGateway::Resource",
+          "Properties": {
+            "ParentId": {
+              "Fn::GetAtt": [
+                "ApiGatewayRestApi",
+                "RootResourceId"
+              ]
+            },
+            "PathPart": "confirm-signup",
+            "RestApiId": {
+              "Ref": "ApiGatewayRestApi"
+            }
+          }
+        },
+        "ApiGatewayResourceSaveuser": {
+          "Type": "AWS::ApiGateway::Resource",
+          "Properties": {
+            "ParentId": {
+              "Fn::GetAtt": [
+                "ApiGatewayRestApi",
+                "RootResourceId"
+              ]
+            },
+            "PathPart": "saveUser",
+            "RestApiId": {
+              "Ref": "ApiGatewayRestApi"
+            }
+          }
+        },
+        "ApiGatewayMethodEventsOptions": {
+          "Type": "AWS::ApiGateway::Method",
+          "Properties": {
+            "AuthorizationType": "NONE",
+            "HttpMethod": "OPTIONS",
+            "MethodResponses": [
+              {
+                "StatusCode": "200",
+                "ResponseParameters": {
+                  "method.response.header.Access-Control-Allow-Origin": true,
+                  "method.response.header.Access-Control-Allow-Headers": true,
+                  "method.response.header.Access-Control-Allow-Methods": true
+                },
+                "ResponseModels": {}
+              }
+            ],
+            "RequestParameters": {},
+            "Integration": {
+              "Type": "MOCK",
+              "RequestTemplates": {
+                "application/json": "{statusCode:200}"
+              },
+              "ContentHandling": "CONVERT_TO_TEXT",
+              "IntegrationResponses": [
+                {
+                  "StatusCode": "200",
+                  "ResponseParameters": {
+                    "method.response.header.Access-Control-Allow-Origin": "'*'",
+                    "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent,X-Amzn-Trace-Id'",
+                    "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,GET'"
+                  },
+                  "ResponseTemplates": {
+                    "application/json": ""
+                  }
+                }
+              ]
+            },
+            "ResourceId": {
+              "Ref": "ApiGatewayResourceEvents"
+            },
+            "RestApiId": {
+              "Ref": "ApiGatewayRestApi"
+            }
+          }
+        },
+        "ApiGatewayMethodBookOptions": {
+          "Type": "AWS::ApiGateway::Method",
+          "Properties": {
+            "AuthorizationType": "NONE",
+            "HttpMethod": "OPTIONS",
+            "MethodResponses": [
+              {
+                "StatusCode": "200",
+                "ResponseParameters": {
+                  "method.response.header.Access-Control-Allow-Origin": true,
+                  "method.response.header.Access-Control-Allow-Headers": true,
+                  "method.response.header.Access-Control-Allow-Methods": true
+                },
+                "ResponseModels": {}
+              }
+            ],
+            "RequestParameters": {},
+            "Integration": {
+              "Type": "MOCK",
+              "RequestTemplates": {
+                "application/json": "{statusCode:200}"
+              },
+              "ContentHandling": "CONVERT_TO_TEXT",
+              "IntegrationResponses": [
+                {
+                  "StatusCode": "200",
+                  "ResponseParameters": {
+                    "method.response.header.Access-Control-Allow-Origin": "'*'",
+                    "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent,X-Amzn-Trace-Id'",
+                    "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,POST'"
+                  },
+                  "ResponseTemplates": {
+                    "application/json": ""
+                  }
+                }
+              ]
+            },
+            "ResourceId": {
+              "Ref": "ApiGatewayResourceBook"
+            },
+            "RestApiId": {
+              "Ref": "ApiGatewayRestApi"
+            }
+          }
+        },
+        "ApiGatewayMethodRegistrationsOptions": {
+          "Type": "AWS::ApiGateway::Method",
+          "Properties": {
+            "AuthorizationType": "NONE",
+            "HttpMethod": "OPTIONS",
+            "MethodResponses": [
+              {
+                "StatusCode": "200",
+                "ResponseParameters": {
+                  "method.response.header.Access-Control-Allow-Origin": true,
+                  "method.response.header.Access-Control-Allow-Headers": true,
+                  "method.response.header.Access-Control-Allow-Methods": true
+                },
+                "ResponseModels": {}
+              }
+            ],
+            "RequestParameters": {},
+            "Integration": {
+              "Type": "MOCK",
+              "RequestTemplates": {
+                "application/json": "{statusCode:200}"
+              },
+              "ContentHandling": "CONVERT_TO_TEXT",
+              "IntegrationResponses": [
+                {
+                  "StatusCode": "200",
+                  "ResponseParameters": {
+                    "method.response.header.Access-Control-Allow-Origin": "'*'",
+                    "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent,X-Amzn-Trace-Id'",
+                    "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,GET'"
+                  },
+                  "ResponseTemplates": {
+                    "application/json": ""
+                  }
+                }
+              ]
+            },
+            "ResourceId": {
+              "Ref": "ApiGatewayResourceRegistrations"
+            },
+            "RestApiId": {
+              "Ref": "ApiGatewayRestApi"
+            }
+          }
+        },
+        "ApiGatewayMethodSignupOptions": {
+          "Type": "AWS::ApiGateway::Method",
+          "Properties": {
+            "AuthorizationType": "NONE",
+            "HttpMethod": "OPTIONS",
+            "MethodResponses": [
+              {
+                "StatusCode": "200",
+                "ResponseParameters": {
+                  "method.response.header.Access-Control-Allow-Origin": true,
+                  "method.response.header.Access-Control-Allow-Headers": true,
+                  "method.response.header.Access-Control-Allow-Methods": true
+                },
+                "ResponseModels": {}
+              }
+            ],
+            "RequestParameters": {},
+            "Integration": {
+              "Type": "MOCK",
+              "RequestTemplates": {
+                "application/json": "{statusCode:200}"
+              },
+              "ContentHandling": "CONVERT_TO_TEXT",
+              "IntegrationResponses": [
+                {
+                  "StatusCode": "200",
+                  "ResponseParameters": {
+                    "method.response.header.Access-Control-Allow-Origin": "'*'",
+                    "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent,X-Amzn-Trace-Id'",
+                    "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,POST'"
+                  },
+                  "ResponseTemplates": {
+                    "application/json": ""
+                  }
+                }
+              ]
+            },
+            "ResourceId": {
+              "Ref": "ApiGatewayResourceSignup"
+            },
+            "RestApiId": {
+              "Ref": "ApiGatewayRestApi"
+            }
+          }
+        },
+        "ApiGatewayMethodLoginOptions": {
+          "Type": "AWS::ApiGateway::Method",
+          "Properties": {
+            "AuthorizationType": "NONE",
+            "HttpMethod": "OPTIONS",
+            "MethodResponses": [
+              {
+                "StatusCode": "200",
+                "ResponseParameters": {
+                  "method.response.header.Access-Control-Allow-Origin": true,
+                  "method.response.header.Access-Control-Allow-Headers": true,
+                  "method.response.header.Access-Control-Allow-Methods": true
+                },
+                "ResponseModels": {}
+              }
+            ],
+            "RequestParameters": {},
+            "Integration": {
+              "Type": "MOCK",
+              "RequestTemplates": {
+                "application/json": "{statusCode:200}"
+              },
+              "ContentHandling": "CONVERT_TO_TEXT",
+              "IntegrationResponses": [
+                {
+                  "StatusCode": "200",
+                  "ResponseParameters": {
+                    "method.response.header.Access-Control-Allow-Origin": "'*'",
+                    "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent,X-Amzn-Trace-Id'",
+                    "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,POST'"
+                  },
+                  "ResponseTemplates": {
+                    "application/json": ""
+                  }
+                }
+              ]
+            },
+            "ResourceId": {
+              "Ref": "ApiGatewayResourceLogin"
+            },
+            "RestApiId": {
+              "Ref": "ApiGatewayRestApi"
+            }
+          }
+        },
+        "ApiGatewayMethodConfirmDashsignupOptions": {
+          "Type": "AWS::ApiGateway::Method",
+          "Properties": {
+            "AuthorizationType": "NONE",
+            "HttpMethod": "OPTIONS",
+            "MethodResponses": [
+              {
+                "StatusCode": "200",
+                "ResponseParameters": {
+                  "method.response.header.Access-Control-Allow-Origin": true,
+                  "method.response.header.Access-Control-Allow-Headers": true,
+                  "method.response.header.Access-Control-Allow-Methods": true
+                },
+                "ResponseModels": {}
+              }
+            ],
+            "RequestParameters": {},
+            "Integration": {
+              "Type": "MOCK",
+              "RequestTemplates": {
+                "application/json": "{statusCode:200}"
+              },
+              "ContentHandling": "CONVERT_TO_TEXT",
+              "IntegrationResponses": [
+                {
+                  "StatusCode": "200",
+                  "ResponseParameters": {
+                    "method.response.header.Access-Control-Allow-Origin": "'*'",
+                    "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent,X-Amzn-Trace-Id'",
+                    "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,POST'"
+                  },
+                  "ResponseTemplates": {
+                    "application/json": ""
+                  }
+                }
+              ]
+            },
+            "ResourceId": {
+              "Ref": "ApiGatewayResourceConfirmDashsignup"
+            },
+            "RestApiId": {
+              "Ref": "ApiGatewayRestApi"
+            }
+          }
+        },
+        "ApiGatewayMethodSaveuserOptions": {
+          "Type": "AWS::ApiGateway::Method",
+          "Properties": {
+            "AuthorizationType": "NONE",
+            "HttpMethod": "OPTIONS",
+            "MethodResponses": [
+              {
+                "StatusCode": "200",
+                "ResponseParameters": {
+                  "method.response.header.Access-Control-Allow-Origin": true,
+                  "method.response.header.Access-Control-Allow-Headers": true,
+                  "method.response.header.Access-Control-Allow-Methods": true
+                },
+                "ResponseModels": {}
+              }
+            ],
+            "RequestParameters": {},
+            "Integration": {
+              "Type": "MOCK",
+              "RequestTemplates": {
+                "application/json": "{statusCode:200}"
+              },
+              "ContentHandling": "CONVERT_TO_TEXT",
+              "IntegrationResponses": [
+                {
+                  "StatusCode": "200",
+                  "ResponseParameters": {
+                    "method.response.header.Access-Control-Allow-Origin": "'*'",
+                    "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent,X-Amzn-Trace-Id'",
+                    "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,POST'"
+                  },
+                  "ResponseTemplates": {
+                    "application/json": ""
+                  }
+                }
+              ]
+            },
+            "ResourceId": {
+              "Ref": "ApiGatewayResourceSaveuser"
+            },
             "RestApiId": {
               "Ref": "ApiGatewayRestApi"
             }
@@ -1842,7 +4620,191 @@
             "GetRegistrationsLambdaPermissionApiGateway"
           ]
         },
-        "ApiGatewayDeployment1750157565738": {
+        "ApiGatewayMethodSignupPost": {
+          "Type": "AWS::ApiGateway::Method",
+          "Properties": {
+            "HttpMethod": "POST",
+            "RequestParameters": {},
+            "ResourceId": {
+              "Ref": "ApiGatewayResourceSignup"
+            },
+            "RestApiId": {
+              "Ref": "ApiGatewayRestApi"
+            },
+            "ApiKeyRequired": "<REDACTED>",
+            "AuthorizationType": "NONE",
+            "Integration": {
+              "IntegrationHttpMethod": "POST",
+              "Type": "AWS_PROXY",
+              "Uri": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "arn:",
+                    {
+                      "Ref": "AWS::Partition"
+                    },
+                    ":apigateway:",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    ":lambda:path/2015-03-31/functions/",
+                    {
+                      "Fn::GetAtt": [
+                        "SignupLambdaFunction",
+                        "Arn"
+                      ]
+                    },
+                    "/invocations"
+                  ]
+                ]
+              }
+            },
+            "MethodResponses": []
+          },
+          "DependsOn": [
+            "SignupLambdaPermissionApiGateway"
+          ]
+        },
+        "ApiGatewayMethodLoginPost": {
+          "Type": "AWS::ApiGateway::Method",
+          "Properties": {
+            "HttpMethod": "POST",
+            "RequestParameters": {},
+            "ResourceId": {
+              "Ref": "ApiGatewayResourceLogin"
+            },
+            "RestApiId": {
+              "Ref": "ApiGatewayRestApi"
+            },
+            "ApiKeyRequired": "<REDACTED>",
+            "AuthorizationType": "NONE",
+            "Integration": {
+              "IntegrationHttpMethod": "POST",
+              "Type": "AWS_PROXY",
+              "Uri": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "arn:",
+                    {
+                      "Ref": "AWS::Partition"
+                    },
+                    ":apigateway:",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    ":lambda:path/2015-03-31/functions/",
+                    {
+                      "Fn::GetAtt": [
+                        "LoginLambdaFunction",
+                        "Arn"
+                      ]
+                    },
+                    "/invocations"
+                  ]
+                ]
+              }
+            },
+            "MethodResponses": []
+          },
+          "DependsOn": [
+            "LoginLambdaPermissionApiGateway"
+          ]
+        },
+        "ApiGatewayMethodConfirmDashsignupPost": {
+          "Type": "AWS::ApiGateway::Method",
+          "Properties": {
+            "HttpMethod": "POST",
+            "RequestParameters": {},
+            "ResourceId": {
+              "Ref": "ApiGatewayResourceConfirmDashsignup"
+            },
+            "RestApiId": {
+              "Ref": "ApiGatewayRestApi"
+            },
+            "ApiKeyRequired": "<REDACTED>",
+            "AuthorizationType": "NONE",
+            "Integration": {
+              "IntegrationHttpMethod": "POST",
+              "Type": "AWS_PROXY",
+              "Uri": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "arn:",
+                    {
+                      "Ref": "AWS::Partition"
+                    },
+                    ":apigateway:",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    ":lambda:path/2015-03-31/functions/",
+                    {
+                      "Fn::GetAtt": [
+                        "ConfirmSignupLambdaFunction",
+                        "Arn"
+                      ]
+                    },
+                    "/invocations"
+                  ]
+                ]
+              }
+            },
+            "MethodResponses": []
+          },
+          "DependsOn": [
+            "ConfirmSignupLambdaPermissionApiGateway"
+          ]
+        },
+        "ApiGatewayMethodSaveuserPost": {
+          "Type": "AWS::ApiGateway::Method",
+          "Properties": {
+            "HttpMethod": "POST",
+            "RequestParameters": {},
+            "ResourceId": {
+              "Ref": "ApiGatewayResourceSaveuser"
+            },
+            "RestApiId": {
+              "Ref": "ApiGatewayRestApi"
+            },
+            "ApiKeyRequired": "<REDACTED>",
+            "AuthorizationType": "NONE",
+            "Integration": {
+              "IntegrationHttpMethod": "POST",
+              "Type": "AWS_PROXY",
+              "Uri": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "arn:",
+                    {
+                      "Ref": "AWS::Partition"
+                    },
+                    ":apigateway:",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    ":lambda:path/2015-03-31/functions/",
+                    {
+                      "Fn::GetAtt": [
+                        "SaveUserLambdaFunction",
+                        "Arn"
+                      ]
+                    },
+                    "/invocations"
+                  ]
+                ]
+              }
+            },
+            "MethodResponses": []
+          },
+          "DependsOn": [
+            "SaveUserLambdaPermissionApiGateway"
+          ]
+        },
+        "ApiGatewayDeployment1750207378852": {
           "Type": "AWS::ApiGateway::Deployment",
           "Properties": {
             "RestApiId": {
@@ -1851,9 +4813,20 @@
             "StageName": "dev"
           },
           "DependsOn": [
+            "ApiGatewayMethodEventsOptions",
+            "ApiGatewayMethodBookOptions",
+            "ApiGatewayMethodRegistrationsOptions",
+            "ApiGatewayMethodSignupOptions",
+            "ApiGatewayMethodLoginOptions",
+            "ApiGatewayMethodConfirmDashsignupOptions",
+            "ApiGatewayMethodSaveuserOptions",
             "ApiGatewayMethodEventsGet",
             "ApiGatewayMethodBookPost",
-            "ApiGatewayMethodRegistrationsGet"
+            "ApiGatewayMethodRegistrationsGet",
+            "ApiGatewayMethodSignupPost",
+            "ApiGatewayMethodLoginPost",
+            "ApiGatewayMethodConfirmDashsignupPost",
+            "ApiGatewayMethodSaveuserPost"
           ]
         },
         "GetEventsLambdaPermissionApiGateway": {
@@ -1966,6 +4939,154 @@
               ]
             }
           }
+        },
+        "SignupLambdaPermissionApiGateway": {
+          "Type": "AWS::Lambda::Permission",
+          "Properties": {
+            "FunctionName": {
+              "Fn::GetAtt": [
+                "SignupLambdaFunction",
+                "Arn"
+              ]
+            },
+            "Action": "lambda:InvokeFunction",
+            "Principal": "apigateway.amazonaws.com",
+            "SourceArn": {
+              "Fn::Join": [
+                "",
+                [
+                  "arn:",
+                  {
+                    "Ref": "AWS::Partition"
+                  },
+                  ":execute-api:",
+                  {
+                    "Ref": "AWS::Region"
+                  },
+                  ":",
+                  {
+                    "Ref": "AWS::AccountId"
+                  },
+                  ":",
+                  {
+                    "Ref": "ApiGatewayRestApi"
+                  },
+                  "/*/*"
+                ]
+              ]
+            }
+          }
+        },
+        "LoginLambdaPermissionApiGateway": {
+          "Type": "AWS::Lambda::Permission",
+          "Properties": {
+            "FunctionName": {
+              "Fn::GetAtt": [
+                "LoginLambdaFunction",
+                "Arn"
+              ]
+            },
+            "Action": "lambda:InvokeFunction",
+            "Principal": "apigateway.amazonaws.com",
+            "SourceArn": {
+              "Fn::Join": [
+                "",
+                [
+                  "arn:",
+                  {
+                    "Ref": "AWS::Partition"
+                  },
+                  ":execute-api:",
+                  {
+                    "Ref": "AWS::Region"
+                  },
+                  ":",
+                  {
+                    "Ref": "AWS::AccountId"
+                  },
+                  ":",
+                  {
+                    "Ref": "ApiGatewayRestApi"
+                  },
+                  "/*/*"
+                ]
+              ]
+            }
+          }
+        },
+        "ConfirmSignupLambdaPermissionApiGateway": {
+          "Type": "AWS::Lambda::Permission",
+          "Properties": {
+            "FunctionName": {
+              "Fn::GetAtt": [
+                "ConfirmSignupLambdaFunction",
+                "Arn"
+              ]
+            },
+            "Action": "lambda:InvokeFunction",
+            "Principal": "apigateway.amazonaws.com",
+            "SourceArn": {
+              "Fn::Join": [
+                "",
+                [
+                  "arn:",
+                  {
+                    "Ref": "AWS::Partition"
+                  },
+                  ":execute-api:",
+                  {
+                    "Ref": "AWS::Region"
+                  },
+                  ":",
+                  {
+                    "Ref": "AWS::AccountId"
+                  },
+                  ":",
+                  {
+                    "Ref": "ApiGatewayRestApi"
+                  },
+                  "/*/*"
+                ]
+              ]
+            }
+          }
+        },
+        "SaveUserLambdaPermissionApiGateway": {
+          "Type": "AWS::Lambda::Permission",
+          "Properties": {
+            "FunctionName": {
+              "Fn::GetAtt": [
+                "SaveUserLambdaFunction",
+                "Arn"
+              ]
+            },
+            "Action": "lambda:InvokeFunction",
+            "Principal": "apigateway.amazonaws.com",
+            "SourceArn": {
+              "Fn::Join": [
+                "",
+                [
+                  "arn:",
+                  {
+                    "Ref": "AWS::Partition"
+                  },
+                  ":execute-api:",
+                  {
+                    "Ref": "AWS::Region"
+                  },
+                  ":",
+                  {
+                    "Ref": "AWS::AccountId"
+                  },
+                  ":",
+                  {
+                    "Ref": "ApiGatewayRestApi"
+                  },
+                  "/*/*"
+                ]
+              ]
+            }
+          }
         }
       },
       "Outputs": {
@@ -1978,7 +5099,7 @@
         "GetEventsLambdaFunctionQualifiedArn": {
           "Description": "Current Lambda function version",
           "Value": {
-            "Ref": "GetEventsLambdaVersionZe5N0itJoSuGyqzkJgEDkpI4utjG5MoExdOPxBTqMw"
+            "Ref": "GetEventsLambdaVersionTNffPrry2V0iPZhBNY3KHcrVzDdtT1MnNCfZyhcwk"
           },
           "Export": {
             "Name": "sls-event-booking-app-dev-GetEventsLambdaFunctionQualifiedArn"
@@ -1987,7 +5108,7 @@
         "BookEventLambdaFunctionQualifiedArn": {
           "Description": "Current Lambda function version",
           "Value": {
-            "Ref": "BookEventLambdaVersiondjeHvr11Zo7DaPzvi0tV7Y4DDHiwlDoE5vC7bcIzF4"
+            "Ref": "BookEventLambdaVersion7aqaLs6MOQDnMSD4RZBkZmzVtjPYZ0eqjZu8RDQ"
           },
           "Export": {
             "Name": "sls-event-booking-app-dev-BookEventLambdaFunctionQualifiedArn"
@@ -1996,10 +5117,46 @@
         "GetRegistrationsLambdaFunctionQualifiedArn": {
           "Description": "Current Lambda function version",
           "Value": {
-            "Ref": "GetRegistrationsLambdaVersionwm5z2ICkn4YrFX1Uxyxq0BpkuQoNQPh5lQ3LKGNbDc"
+            "Ref": "GetRegistrationsLambdaVersionFtoALyCIxxgJdaEmqGF7QjgqX4I8RXJLaQ1IYieA"
           },
           "Export": {
             "Name": "sls-event-booking-app-dev-GetRegistrationsLambdaFunctionQualifiedArn"
+          }
+        },
+        "SignupLambdaFunctionQualifiedArn": {
+          "Description": "Current Lambda function version",
+          "Value": {
+            "Ref": "SignupLambdaVersionQhznjuMDIHVUNjzL9dugbTmyjkSg7E2mN2uriJyIDI"
+          },
+          "Export": {
+            "Name": "sls-event-booking-app-dev-SignupLambdaFunctionQualifiedArn"
+          }
+        },
+        "LoginLambdaFunctionQualifiedArn": {
+          "Description": "Current Lambda function version",
+          "Value": {
+            "Ref": "LoginLambdaVersionD4ePpd7XoN9RiFHuqMaLacGx1TJFwL2GAb4gC7HQBGI"
+          },
+          "Export": {
+            "Name": "sls-event-booking-app-dev-LoginLambdaFunctionQualifiedArn"
+          }
+        },
+        "ConfirmSignupLambdaFunctionQualifiedArn": {
+          "Description": "Current Lambda function version",
+          "Value": {
+            "Ref": "ConfirmSignupLambdaVersiontGmn01JyjPUlqL28UpogBIyAu7EwwMAAwq2u5MlGdE"
+          },
+          "Export": {
+            "Name": "sls-event-booking-app-dev-ConfirmSignupLambdaFunctionQualifiedArn"
+          }
+        },
+        "SaveUserLambdaFunctionQualifiedArn": {
+          "Description": "Current Lambda function version",
+          "Value": {
+            "Ref": "SaveUserLambdaVersionRZzxe3H4E1IkTpn3IIh1ClrAkiMocfX7lda51EM"
+          },
+          "Export": {
+            "Name": "sls-event-booking-app-dev-SaveUserLambdaFunctionQualifiedArn"
           }
         },
         "ServiceEndpoint": {

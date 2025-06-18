@@ -25,24 +25,27 @@ __export(getEvents_exports, {
 module.exports = __toCommonJS(getEvents_exports);
 var import_client_dynamodb = require("@aws-sdk/client-dynamodb");
 var import_lib_dynamodb = require("@aws-sdk/lib-dynamodb");
-var client = new import_client_dynamodb.DynamoDBClient({ region: "us-east-1" });
+var client = new import_client_dynamodb.DynamoDBClient({});
 var docClient = import_lib_dynamodb.DynamoDBDocumentClient.from(client);
-var TABLE_NAME = "Events";
+var TABLE_NAME = process.env.EVENTS_TABLE;
 var handler = async () => {
   try {
     const command = new import_lib_dynamodb.ScanCommand({ TableName: TABLE_NAME });
     const response = await docClient.send(command);
-    console.log("Items:", response.Items);
     return {
       statusCode: 200,
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*"
+      },
       body: JSON.stringify(response.Items)
     };
   } catch (error) {
-    console.error("\u274C Lambda failed:", error);
+    const message = error instanceof Error ? error.message : "Requested resource not found";
     return {
       statusCode: 500,
-      body: JSON.stringify({ error: "Requested resource not found" })
+      headers: { "Access-Control-Allow-Origin": "*" },
+      body: JSON.stringify({ error: message })
     };
   }
 };

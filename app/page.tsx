@@ -3,6 +3,8 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { saveSession } from '@/lib/cookies';
 
+const API_BASE = 'https://ylmwuiuh6f.execute-api.us-east-1.amazonaws.com/dev'; // <-- your API Gateway base URL
+
 export default function HomePage() {
   const [mode, setMode] = useState<'login' | 'register'>('login');
   const [email, setEmail] = useState('');
@@ -19,7 +21,7 @@ export default function HomePage() {
     setLoading(true);
     setError(null);
     try {
-      const res = await fetch('/api/login', {
+      const res = await fetch(`${API_BASE}/login`, {
         method: 'POST',
         body: JSON.stringify({ email, password }),
         headers: { 'Content-Type': 'application/json' },
@@ -46,7 +48,7 @@ export default function HomePage() {
     setLoading(true);
     setError(null);
     try {
-      const res = await fetch('/api/signup', {
+      const res = await fetch(`${API_BASE}/signup`, {
         method: 'POST',
         body: JSON.stringify({ email, password, givenName, familyName }),
         headers: { 'Content-Type': 'application/json' },
@@ -74,7 +76,7 @@ export default function HomePage() {
     setLoading(true);
     setError(null);
     try {
-      const res = await fetch('/api/confirm-signup', {
+      const res = await fetch(`${API_BASE}/confirm-signup`, {
         method: 'POST',
         body: JSON.stringify({ email, code }),
         headers: { 'Content-Type': 'application/json' },

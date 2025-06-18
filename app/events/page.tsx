@@ -11,6 +11,8 @@ interface EventItem {
   seatsRemaining: number;
 }
 
+const API_BASE = 'https://ylmwuiuh6f.execute-api.us-east-1.amazonaws.com/dev';
+
 export default function Events() {
   const router = useRouter();
   const [loading, setLoading] = useState(true);
@@ -18,22 +20,50 @@ export default function Events() {
   const [myEvents, setMyEvents] = useState<EventItem[]>([]);
   const [showMyEvents, setShowMyEvents] = useState(false);
   const [registeredEventIds, setRegisteredEventIds] = useState<string[]>([]);
+  const [error, setError] = useState<string | null>(null);
   const session = getSession();
 
+  // Helper to extract userId from JWT
+  const getUserId = () => {
+    try {
+      return JSON.parse(atob(session!.split('.')[1])).sub;
+    } catch {
+      return '';
+    }
+  };
+
+  // Fetch events and registrations on initial load
   useEffect(() => {
     if (!session) {
       router.push('/');
       return;
     }
 
-    const fetchEvents = async () => {
-      const res = await fetch('/api/events');
-      const data = await res.json();
-      setEvents(data);
-      setLoading(false);
+    const fetchData = async () => {
+      try {
+        // Fetch events
+        const eventsRes = await fetch(`${API_BASE}/events`);
+        if (!eventsRes.ok) throw new Error('Failed to fetch events');
+        const eventsData = await eventsRes.json();
+        setEvents(eventsData);
+
+        // Fetch registrations
+        const userId = getUserId();
+        if (userId) {
+          const regRes = await fetch(`${API_BASE}/registrations?userId=${userId}`);
+          if (!regRes.ok) throw new Error('Failed to fetch registrations');
+          const regData = await regRes.json();
+          setRegisteredEventIds(regData.eventIds || []);
+        }
+      } catch (err: unknown) {
+        setError(err instanceof Error ? err.message : 'Unknown error');
+      } finally {
+        setLoading(false);
+      }
     };
 
-    fetchEvents();
+    fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router, session]);
 
   const handleLogout = () => {
@@ -42,48 +72,58 @@ export default function Events() {
   };
 
   const handleBookNow = async (eventId: string) => {
-    const userId = JSON.parse(atob(session!.split('.')[1])).sub;
+    setError(null);
+    const userId = getUserId();
 
-    const res = await fetch('/api/book', {
-      method: 'POST',
-      body: JSON.stringify({ eventId, userId }),
-      headers: { 'Content-Type': 'application/json' }
-    });
+    try {
+      const res = await fetch(`${API_BASE}/book`, {
+        method: 'POST',
+        body: JSON.stringify({ eventId, userId }),
+        headers: { 'Content-Type': 'application/json' }
+      });
 
-    const result = await res.json();
-    if (res.ok) {
-      alert(result.message);
-      setEvents(prev => prev.map(e => e.eventId === eventId ? { ...e, seatsRemaining: e.seatsRemaining - 1 } : e));
-      setRegisteredEventIds(prev => [...prev, eventId]);
-    } else {
-      alert(result.message);
+      const result = await res.json();
+      if (res.ok) {
+        setEvents(prev => prev.map(e => e.eventId === eventId ? { ...e, seatsRemaining: e.seatsRemaining - 1 } : e));
+        setRegisteredEventIds(prev => [...prev, eventId]);
+        setError(null);
+      } else {
+        setError(result.message || 'Booking failed');
+      }
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : 'Unknown error');
     }
   };
 
   // Fetch and display user's registered events
   const fetchMyEvents = async () => {
     setShowMyEvents(true);
-    const session = getSession();
-    let userId = '';
-    try {
-      userId = JSON.parse(atob(session!.split('.')[1])).sub;
-    } catch {
+    setError(null);
+    const userId = getUserId();
+    if (!userId) {
       router.push('/');
       return;
     }
 
-    const regRes = await fetch(`/api/registrations?userId=${userId}`);
-    const regData = await regRes.json();
+    try {
+      const regRes = await fetch(`${API_BASE}/registrations?userId=${userId}`);
+      if (!regRes.ok) throw new Error('Failed to fetch registrations');
+      const regData = await regRes.json();
 
-    const registeredIds: string[] = regData.eventIds || [];
-    setRegisteredEventIds(registeredIds);
-    const registeredEvents = events.filter(e => registeredIds.includes(e.eventId));
-    setMyEvents(registeredEvents);
+      const registeredIds: string[] = regData.eventIds || [];
+      setRegisteredEventIds(registeredIds);
+      const registeredEvents = events.filter(e => registeredIds.includes(e.eventId));
+      setMyEvents(registeredEvents);
+      setError(null);
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : 'Unknown error');
+    }
   };
 
   // Handler to go back to all events
   const handleBackToEvents = () => {
     setShowMyEvents(false);
+    setError(null);
   };
 
   if (loading) return (
@@ -117,6 +157,13 @@ export default function Events() {
             </div>
           </div>
         </header>
+
+        {/* Error message */}
+        {error && (
+          <div className="mb-6 p-4 bg-red-100 border border-red-300 text-red-700 rounded">
+            {error}
+          </div>
+        )}
 
         {/* My Registrations View */}
         {showMyEvents ? (

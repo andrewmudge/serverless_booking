@@ -1,27 +1,30 @@
 import { DynamoDBClient } from '@aws-sdk/client-dynamodb';
 import { DynamoDBDocumentClient, ScanCommand } from '@aws-sdk/lib-dynamodb';
 
-const client = new DynamoDBClient({ region: 'us-east-1' });
+const client = new DynamoDBClient({});
 const docClient = DynamoDBDocumentClient.from(client);
-const TABLE_NAME = 'Events';
+const TABLE_NAME = process.env.EVENTS_TABLE!;
 
 export const handler = async () => {
   try {
     const command = new ScanCommand({ TableName: TABLE_NAME });
     const response = await docClient.send(command);
 
-    console.log('Items:', response.Items);
-
     return {
       statusCode: 200,
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+      },
       body: JSON.stringify(response.Items),
     };
-  } catch (error) {
-    console.error('❌ Lambda failed:', error);
+  } catch (error: unknown) {
+    const message =
+      error instanceof Error ? error.message : 'Requested resource not found';
     return {
       statusCode: 500,
-      body: JSON.stringify({ error: 'Requested resource not found' }),
+      headers: { 'Access-Control-Allow-Origin': '*' },
+      body: JSON.stringify({ error: message }),
     };
   }
 };

@@ -31,13 +31,15 @@ var handler = async (event) => {
     if (!userId) {
       return {
         statusCode: 400,
+        headers: { "Access-Control-Allow-Origin": "*" },
         body: JSON.stringify({ error: "Missing userId" })
       };
     }
     const command = new import_client_dynamodb.QueryCommand({
-      TableName: "Registrations",
+      TableName: process.env.BOOKINGS_TABLE,
+      // Use env variable
       IndexName: "userId-index",
-      // <-- Make sure this matches your GSI name!
+      // Must match your GSI name
       KeyConditionExpression: "userId = :uid",
       ExpressionAttributeValues: {
         ":uid": { S: userId }
@@ -48,12 +50,15 @@ var handler = async (event) => {
     const eventIds = (result.Items || []).map((item) => item.eventId.S);
     return {
       statusCode: 200,
+      headers: { "Access-Control-Allow-Origin": "*" },
       body: JSON.stringify({ eventIds })
     };
   } catch (err) {
+    const message = err instanceof Error ? err.message : "Unknown error occurred";
     return {
       statusCode: 500,
-      body: JSON.stringify({ error: err.message })
+      headers: { "Access-Control-Allow-Origin": "*" },
+      body: JSON.stringify({ error: message })
     };
   }
 };
