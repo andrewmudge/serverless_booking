@@ -80,7 +80,7 @@ functions:
           cors: true
 
   confirmSignup:
-    handler: aws/lambdas/confirmSignup.handler
+    handler: aws/lambdas/confirm-signup.handler
     events:
       - http:
           path: confirm-signup

@@ -27,15 +27,16 @@ var import_client_dynamodb = require("@aws-sdk/client-dynamodb");
 var import_client_ses = require("@aws-sdk/client-ses");
 var client = new import_client_dynamodb.DynamoDBClient({});
 var ses = new import_client_ses.SESClient({});
-var SENDER_EMAIL = process.env.SENDER_EMAIL;
+var SENDER_EMAIL = process.env["SENDER_EMAIL"];
 var handler = async (event) => {
   try {
-    const { eventId, userId, userEmail } = JSON.parse(event.body || "{}");
-    if (!eventId || !userId || !userEmail) {
+    const { eventId, userId, userEmail, title, day, time } = JSON.parse(event.body || "{}");
+    if (!eventId || !userId || !userEmail || !title || !day || !time) {
+      console.error("Missing required fields:", { eventId, userId, userEmail, title, day, time });
       return {
         statusCode: 400,
         headers: { "Access-Control-Allow-Origin": "*" },
-        body: JSON.stringify({ error: "Missing eventId, userId, or userEmail" })
+        body: JSON.stringify({ error: "Missing eventId, userId, userEmail, title, day, or time" })
       };
     }
     const command = new import_client_dynamodb.TransactWriteItemsCommand({
@@ -65,22 +66,32 @@ var handler = async (event) => {
       ]
     });
     await client.send(command);
+    const emailBody = `Thank you for registering for ${title} on ${day} at ${time}. Your booking is confirmed.`;
     const emailCommand = new import_client_ses.SendEmailCommand({
       Source: SENDER_EMAIL,
       Destination: {
         ToAddresses: [userEmail]
-        // Send to the user who registered
       },
       Message: {
         Subject: { Data: "Event Registration Confirmation" },
         Body: {
-          Text: {
-            Data: `Thank you for registering for event ${eventId}! Your booking is confirmed.`
-          }
+          Text: { Data: emailBody }
         }
       }
     });
-    await ses.send(emailCommand);
+    console.log("Sending SES email:", {
+      to: userEmail,
+      from: SENDER_EMAIL,
+      subject: "Event Registration Confirmation",
+      body: emailBody
+    });
+    try {
+      await ses.send(emailCommand);
+      console.log("SES email sent successfully");
+    } catch (sesErr) {
+      console.error("SES send error:", sesErr);
+      throw sesErr;
+    }
     return {
       statusCode: 200,
       headers: { "Access-Control-Allow-Origin": "*" },
@@ -88,6 +99,7 @@ var handler = async (event) => {
     };
   } catch (err) {
     const message = err instanceof Error ? err.message : "Unknown error occurred";
+    console.error("Lambda error:", message, err);
     return {
       statusCode: 400,
       headers: { "Access-Control-Allow-Origin": "*" },

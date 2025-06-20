@@ -8,17 +8,19 @@ import { SESClient, SendEmailCommand } from '@aws-sdk/client-ses';
 const client = new DynamoDBClient({});
 const ses = new SESClient({});
 
-const SENDER_EMAIL = process.env.SENDER_EMAIL!; // e.g., 'noreply@yourdomain.com'
+// Make sure to set SENDER_EMAIL in your environment variables
+const SENDER_EMAIL = process.env['SENDER_EMAIL']!;
 
 export const handler: APIGatewayProxyHandler = async (event) => {
   try {
-    const { eventId, userId, userEmail } = JSON.parse(event.body || '{}');
+    const { eventId, userId, userEmail, title, day, time } = JSON.parse(event.body || '{}');
 
-    if (!eventId || !userId || !userEmail) {
+    if (!eventId || !userId || !userEmail || !title || !day || !time) {
+      console.error('Missing required fields:', { eventId, userId, userEmail, title, day, time });
       return {
         statusCode: 400,
         headers: { 'Access-Control-Allow-Origin': '*' },
-        body: JSON.stringify({ error: 'Missing eventId, userId, or userEmail' }),
+        body: JSON.stringify({ error: 'Missing eventId, userId, userEmail, title, day, or time' }),
       };
     }
 
@@ -51,23 +53,37 @@ export const handler: APIGatewayProxyHandler = async (event) => {
 
     await client.send(command);
 
-    // Send SES email notification
+    // Send SES email notification with event details
+    const emailBody = `Thank you for registering for ${title} on ${day} at ${time}. Your booking is confirmed.`;
+
     const emailCommand = new SendEmailCommand({
       Source: SENDER_EMAIL,
       Destination: {
-        ToAddresses: [userEmail], // Send to the user who registered
+        ToAddresses: [userEmail],
       },
       Message: {
         Subject: { Data: 'Event Registration Confirmation' },
         Body: {
-          Text: {
-            Data: `Thank you for registering for event ${eventId}! Your booking is confirmed.`,
-          },
+          Text: { Data: emailBody },
         },
       },
     });
 
-    await ses.send(emailCommand);
+    // Log before sending email
+    console.log('Sending SES email:', {
+      to: userEmail,
+      from: SENDER_EMAIL,
+      subject: 'Event Registration Confirmation',
+      body: emailBody,
+    });
+
+    try {
+      await ses.send(emailCommand);
+      console.log('SES email sent successfully');
+    } catch (sesErr) {
+      console.error('SES send error:', sesErr);
+      throw sesErr;
+    }
 
     return {
       statusCode: 200,
@@ -77,6 +93,7 @@ export const handler: APIGatewayProxyHandler = async (event) => {
   } catch (err: unknown) {
     const message =
       err instanceof Error ? err.message : 'Unknown error occurred';
+    console.error('Lambda error:', message, err);
     return {
       statusCode: 400,
       headers: { 'Access-Control-Allow-Origin': '*' },

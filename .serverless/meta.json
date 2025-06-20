@@ -214,7 +214,7 @@
               "Properties": {
                 "Code": {
                   "S3Bucket": "serverless-framework-deployments-us-east-1-e3c07911-961a",
-                  "S3Key": "serverless/event-booking-app/dev/1750215007698-2025-06-18T02:50:07.698Z/event-booking-app.zip"
+                  "S3Key": "serverless/event-booking-app/dev/1750382592842-2025-06-20T01:23:12.842Z/event-booking-app.zip"
                 },
                 "Handler": "aws/lambdas/getEvents.handler",
                 "Runtime": "nodejs20.x",
@@ -249,7 +249,7 @@
               "Properties": {
                 "Code": {
                   "S3Bucket": "serverless-framework-deployments-us-east-1-e3c07911-961a",
-                  "S3Key": "serverless/event-booking-app/dev/1750215007698-2025-06-18T02:50:07.698Z/event-booking-app.zip"
+                  "S3Key": "serverless/event-booking-app/dev/1750382592842-2025-06-20T01:23:12.842Z/event-booking-app.zip"
                 },
                 "Handler": "aws/lambdas/bookEvent.handler",
                 "Runtime": "nodejs20.x",
@@ -284,7 +284,7 @@
               "Properties": {
                 "Code": {
                   "S3Bucket": "serverless-framework-deployments-us-east-1-e3c07911-961a",
-                  "S3Key": "serverless/event-booking-app/dev/1750215007698-2025-06-18T02:50:07.698Z/event-booking-app.zip"
+                  "S3Key": "serverless/event-booking-app/dev/1750382592842-2025-06-20T01:23:12.842Z/event-booking-app.zip"
                 },
                 "Handler": "aws/lambdas/getRegistrations.handler",
                 "Runtime": "nodejs20.x",
@@ -319,7 +319,7 @@
               "Properties": {
                 "Code": {
                   "S3Bucket": "serverless-framework-deployments-us-east-1-e3c07911-961a",
-                  "S3Key": "serverless/event-booking-app/dev/1750215007698-2025-06-18T02:50:07.698Z/event-booking-app.zip"
+                  "S3Key": "serverless/event-booking-app/dev/1750382592842-2025-06-20T01:23:12.842Z/event-booking-app.zip"
                 },
                 "Handler": "aws/lambdas/signup.handler",
                 "Runtime": "nodejs20.x",
@@ -354,7 +354,7 @@
               "Properties": {
                 "Code": {
                   "S3Bucket": "serverless-framework-deployments-us-east-1-e3c07911-961a",
-                  "S3Key": "serverless/event-booking-app/dev/1750215007698-2025-06-18T02:50:07.698Z/event-booking-app.zip"
+                  "S3Key": "serverless/event-booking-app/dev/1750382592842-2025-06-20T01:23:12.842Z/event-booking-app.zip"
                 },
                 "Handler": "aws/lambdas/login.handler",
                 "Runtime": "nodejs20.x",
@@ -389,9 +389,9 @@
               "Properties": {
                 "Code": {
                   "S3Bucket": "serverless-framework-deployments-us-east-1-e3c07911-961a",
-                  "S3Key": "serverless/event-booking-app/dev/1750215007698-2025-06-18T02:50:07.698Z/event-booking-app.zip"
+                  "S3Key": "serverless/event-booking-app/dev/1750382592842-2025-06-20T01:23:12.842Z/event-booking-app.zip"
                 },
-                "Handler": "aws/lambdas/confirmSignup.handler",
+                "Handler": "aws/lambdas/confirm-signup.handler",
                 "Runtime": "nodejs20.x",
                 "FunctionName": "event-booking-app-dev-confirmSignup",
                 "MemorySize": 1024,
@@ -404,7 +404,8 @@
                     "COGNITO_CLIENT_ID": "4v4qbgptde4v367c05hd4gq2rf",
                     "COGNITO_CLIENT_SECRET": "<REDACTED>",
                     "USER_ID_INDEX": "userId-index",
-                    "SENDER_EMAIL": "mudge.andrew@gmail.com"
+                    "SENDER_EMAIL": "mudge.andrew@gmail.com",
+                    "NODE_OPTIONS": "--enable-source-maps"
                   }
                 },
                 "Role": {
@@ -423,7 +424,7 @@
               "Properties": {
                 "Code": {
                   "S3Bucket": "serverless-framework-deployments-us-east-1-e3c07911-961a",
-                  "S3Key": "serverless/event-booking-app/dev/1750215007698-2025-06-18T02:50:07.698Z/event-booking-app.zip"
+                  "S3Key": "serverless/event-booking-app/dev/1750382592842-2025-06-20T01:23:12.842Z/event-booking-app.zip"
                 },
                 "Handler": "aws/lambdas/saveUser.handler",
                 "Runtime": "nodejs20.x",
@@ -453,74 +454,74 @@
                 "SaveUserLogGroup"
               ]
             },
-            "GetEventsLambdaVersiontLF7nvH5FSwhGLcJ5WGabKShsGcgZLqer4iM1dyLdTk": {
+            "GetEventsLambdaVersionHgGXwizU9y05CaMAcVpxDBYcbMSfaZCuRPTeI8Y83w": {
               "Type": "AWS::Lambda::Version",
               "DeletionPolicy": "Retain",
               "Properties": {
                 "FunctionName": {
                   "Ref": "GetEventsLambdaFunction"
                 },
-                "CodeSha256": "z1O/GtHSfbu0MuEY8d5tSCDVX0VMGSdlYxQq8nSkhwA="
+                "CodeSha256": "esF2ufugOC+EvOCm6FK524uPuV//mwvV8ze9lQ11Lgo="
               }
             },
-            "BookEventLambdaVersionL3fs6DbLgeZnU8kMEdDOnBNQ7XcpwP8Qnp91QVrkFaI": {
+            "BookEventLambdaVersionhmLzfCGDi1s2OviSKAKtU9W1kPu1J7GtMX81X7K8g": {
               "Type": "AWS::Lambda::Version",
               "DeletionPolicy": "Retain",
               "Properties": {
                 "FunctionName": {
                   "Ref": "BookEventLambdaFunction"
                 },
-                "CodeSha256": "z1O/GtHSfbu0MuEY8d5tSCDVX0VMGSdlYxQq8nSkhwA="
+                "CodeSha256": "esF2ufugOC+EvOCm6FK524uPuV//mwvV8ze9lQ11Lgo="
               }
             },
-            "GetRegistrationsLambdaVersionyItlZc7YhzRN18cgri4mZoHMHB3563iZs9tKFhyKJVY": {
+            "GetRegistrationsLambdaVersionagvkDjRWMJsJLNk2NdW5nfJsHymAf20cDKGKNT15k": {
               "Type": "AWS::Lambda::Version",
               "DeletionPolicy": "Retain",
               "Properties": {
                 "FunctionName": {
                   "Ref": "GetRegistrationsLambdaFunction"
                 },
-                "CodeSha256": "z1O/GtHSfbu0MuEY8d5tSCDVX0VMGSdlYxQq8nSkhwA="
+                "CodeSha256": "esF2ufugOC+EvOCm6FK524uPuV//mwvV8ze9lQ11Lgo="
               }
             },
-            "SignupLambdaVersioneEJZVzvlLaTuz6xhKiY5it7rynIeyA3eiLwo63xIw0": {
+            "SignupLambdaVersiont3lVR5JRUGtJeozpPZhh7qHNSVWaae5NtB2gSsWO7A": {
               "Type": "AWS::Lambda::Version",
               "DeletionPolicy": "Retain",
               "Properties": {
                 "FunctionName": {
                   "Ref": "SignupLambdaFunction"
                 },
-                "CodeSha256": "z1O/GtHSfbu0MuEY8d5tSCDVX0VMGSdlYxQq8nSkhwA="
+                "CodeSha256": "esF2ufugOC+EvOCm6FK524uPuV//mwvV8ze9lQ11Lgo="
               }
             },
-            "LoginLambdaVersioniI6PKRb7hHLStF0wD23TQVepF0HOoxoctzt8We2ZLY": {
+            "LoginLambdaVersionDUbwGYbHzuIHsMRJ2PjFFzAkYvXpr0QgQZMlD15EIA": {
               "Type": "AWS::Lambda::Version",
               "DeletionPolicy": "Retain",
               "Properties": {
                 "FunctionName": {
                   "Ref": "LoginLambdaFunction"
                 },
-                "CodeSha256": "z1O/GtHSfbu0MuEY8d5tSCDVX0VMGSdlYxQq8nSkhwA="
+                "CodeSha256": "esF2ufugOC+EvOCm6FK524uPuV//mwvV8ze9lQ11Lgo="
               }
             },
-            "ConfirmSignupLambdaVersion1c5ibRU3d3wFeJSfZ2WjUeO3eZyiUwE6CqGgzrFoZ4": {
+            "ConfirmSignupLambdaVersionFPcq1otaUnqHSSfdzaiaPyQiidMsHQwmkVTSwcxYo": {
               "Type": "AWS::Lambda::Version",
               "DeletionPolicy": "Retain",
               "Properties": {
                 "FunctionName": {
                   "Ref": "ConfirmSignupLambdaFunction"
                 },
-                "CodeSha256": "z1O/GtHSfbu0MuEY8d5tSCDVX0VMGSdlYxQq8nSkhwA="
+                "CodeSha256": "esF2ufugOC+EvOCm6FK524uPuV//mwvV8ze9lQ11Lgo="
               }
             },
-            "SaveUserLambdaVersionIF2hU3uRiZXrgD1XGZDOLT8GDbMll6sp5c6zxtKOwk": {
+            "SaveUserLambdaVersiondXC5Z4KJTj8IDUK4t6NJp8yvfVMex41XwgXHlic5dA": {
               "Type": "AWS::Lambda::Version",
               "DeletionPolicy": "Retain",
               "Properties": {
                 "FunctionName": {
                   "Ref": "SaveUserLambdaFunction"
                 },
-                "CodeSha256": "z1O/GtHSfbu0MuEY8d5tSCDVX0VMGSdlYxQq8nSkhwA="
+                "CodeSha256": "esF2ufugOC+EvOCm6FK524uPuV//mwvV8ze9lQ11Lgo="
               }
             },
             "ApiGatewayRestApi": {
@@ -1277,7 +1278,7 @@
                 "SaveUserLambdaPermissionApiGateway"
               ]
             },
-            "ApiGatewayDeployment1750214994963": {
+            "ApiGatewayDeployment1750382576356": {
               "Type": "AWS::ApiGateway::Deployment",
               "Properties": {
                 "RestApiId": {
@@ -1572,7 +1573,7 @@
             "GetEventsLambdaFunctionQualifiedArn": {
               "Description": "Current Lambda function version",
               "Value": {
-                "Ref": "GetEventsLambdaVersiontLF7nvH5FSwhGLcJ5WGabKShsGcgZLqer4iM1dyLdTk"
+                "Ref": "GetEventsLambdaVersionHgGXwizU9y05CaMAcVpxDBYcbMSfaZCuRPTeI8Y83w"
               },
               "Export": {
                 "Name": "sls-event-booking-app-dev-GetEventsLambdaFunctionQualifiedArn"
@@ -1581,7 +1582,7 @@
             "BookEventLambdaFunctionQualifiedArn": {
               "Description": "Current Lambda function version",
               "Value": {
-                "Ref": "BookEventLambdaVersionL3fs6DbLgeZnU8kMEdDOnBNQ7XcpwP8Qnp91QVrkFaI"
+                "Ref": "BookEventLambdaVersionhmLzfCGDi1s2OviSKAKtU9W1kPu1J7GtMX81X7K8g"
               },
               "Export": {
                 "Name": "sls-event-booking-app-dev-BookEventLambdaFunctionQualifiedArn"
@@ -1590,7 +1591,7 @@
             "GetRegistrationsLambdaFunctionQualifiedArn": {
               "Description": "Current Lambda function version",
               "Value": {
-                "Ref": "GetRegistrationsLambdaVersionyItlZc7YhzRN18cgri4mZoHMHB3563iZs9tKFhyKJVY"
+                "Ref": "GetRegistrationsLambdaVersionagvkDjRWMJsJLNk2NdW5nfJsHymAf20cDKGKNT15k"
               },
               "Export": {
                 "Name": "sls-event-booking-app-dev-GetRegistrationsLambdaFunctionQualifiedArn"
@@ -1599,7 +1600,7 @@
             "SignupLambdaFunctionQualifiedArn": {
               "Description": "Current Lambda function version",
               "Value": {
-                "Ref": "SignupLambdaVersioneEJZVzvlLaTuz6xhKiY5it7rynIeyA3eiLwo63xIw0"
+                "Ref": "SignupLambdaVersiont3lVR5JRUGtJeozpPZhh7qHNSVWaae5NtB2gSsWO7A"
               },
               "Export": {
                 "Name": "sls-event-booking-app-dev-SignupLambdaFunctionQualifiedArn"
@@ -1608,7 +1609,7 @@
             "LoginLambdaFunctionQualifiedArn": {
               "Description": "Current Lambda function version",
               "Value": {
-                "Ref": "LoginLambdaVersioniI6PKRb7hHLStF0wD23TQVepF0HOoxoctzt8We2ZLY"
+                "Ref": "LoginLambdaVersionDUbwGYbHzuIHsMRJ2PjFFzAkYvXpr0QgQZMlD15EIA"
               },
               "Export": {
                 "Name": "sls-event-booking-app-dev-LoginLambdaFunctionQualifiedArn"
@@ -1617,7 +1618,7 @@
             "ConfirmSignupLambdaFunctionQualifiedArn": {
               "Description": "Current Lambda function version",
               "Value": {
-                "Ref": "ConfirmSignupLambdaVersion1c5ibRU3d3wFeJSfZ2WjUeO3eZyiUwE6CqGgzrFoZ4"
+                "Ref": "ConfirmSignupLambdaVersionFPcq1otaUnqHSSfdzaiaPyQiidMsHQwmkVTSwcxYo"
               },
               "Export": {
                 "Name": "sls-event-booking-app-dev-ConfirmSignupLambdaFunctionQualifiedArn"
@@ -1626,7 +1627,7 @@
             "SaveUserLambdaFunctionQualifiedArn": {
               "Description": "Current Lambda function version",
               "Value": {
-                "Ref": "SaveUserLambdaVersionIF2hU3uRiZXrgD1XGZDOLT8GDbMll6sp5c6zxtKOwk"
+                "Ref": "SaveUserLambdaVersiondXC5Z4KJTj8IDUK4t6NJp8yvfVMex41XwgXHlic5dA"
               },
               "Export": {
                 "Name": "sls-event-booking-app-dev-SaveUserLambdaFunctionQualifiedArn"
@@ -1700,7 +1701,7 @@
           "timeout": 6,
           "runtime": "nodejs20.x",
           "vpc": {},
-          "versionLogicalId": "GetEventsLambdaVersiontLF7nvH5FSwhGLcJ5WGabKShsGcgZLqer4iM1dyLdTk"
+          "versionLogicalId": "GetEventsLambdaVersionHgGXwizU9y05CaMAcVpxDBYcbMSfaZCuRPTeI8Y83w"
         },
         "bookEvent": {
           "handler": "aws/lambdas/bookEvent.handler",
@@ -1739,7 +1740,7 @@
           "timeout": 6,
           "runtime": "nodejs20.x",
           "vpc": {},
-          "versionLogicalId": "BookEventLambdaVersionL3fs6DbLgeZnU8kMEdDOnBNQ7XcpwP8Qnp91QVrkFaI"
+          "versionLogicalId": "BookEventLambdaVersionhmLzfCGDi1s2OviSKAKtU9W1kPu1J7GtMX81X7K8g"
         },
         "getRegistrations": {
           "handler": "aws/lambdas/getRegistrations.handler",
@@ -1778,7 +1779,7 @@
           "timeout": 6,
           "runtime": "nodejs20.x",
           "vpc": {},
-          "versionLogicalId": "GetRegistrationsLambdaVersionyItlZc7YhzRN18cgri4mZoHMHB3563iZs9tKFhyKJVY"
+          "versionLogicalId": "GetRegistrationsLambdaVersionagvkDjRWMJsJLNk2NdW5nfJsHymAf20cDKGKNT15k"
         },
         "signup": {
           "handler": "aws/lambdas/signup.handler",
@@ -1817,7 +1818,7 @@
           "timeout": 6,
           "runtime": "nodejs20.x",
           "vpc": {},
-          "versionLogicalId": "SignupLambdaVersioneEJZVzvlLaTuz6xhKiY5it7rynIeyA3eiLwo63xIw0"
+          "versionLogicalId": "SignupLambdaVersiont3lVR5JRUGtJeozpPZhh7qHNSVWaae5NtB2gSsWO7A"
         },
         "login": {
           "handler": "aws/lambdas/login.handler",
@@ -1856,10 +1857,10 @@
           "timeout": 6,
           "runtime": "nodejs20.x",
           "vpc": {},
-          "versionLogicalId": "LoginLambdaVersioniI6PKRb7hHLStF0wD23TQVepF0HOoxoctzt8We2ZLY"
+          "versionLogicalId": "LoginLambdaVersionDUbwGYbHzuIHsMRJ2PjFFzAkYvXpr0QgQZMlD15EIA"
         },
         "confirmSignup": {
-          "handler": "aws/lambdas/confirmSignup.handler",
+          "handler": "aws/lambdas/confirm-signup.handler",
           "events": [
             {
               "http": {
@@ -1887,12 +1888,15 @@
             }
           ],
           "name": "event-booking-app-dev-confirmSignup",
+          "environment": {
+            "NODE_OPTIONS": "--enable-source-maps"
+          },
           "package": {},
           "memory": 1024,
           "timeout": 6,
           "runtime": "nodejs20.x",
           "vpc": {},
-          "versionLogicalId": "ConfirmSignupLambdaVersion1c5ibRU3d3wFeJSfZ2WjUeO3eZyiUwE6CqGgzrFoZ4"
+          "versionLogicalId": "ConfirmSignupLambdaVersionFPcq1otaUnqHSSfdzaiaPyQiidMsHQwmkVTSwcxYo"
         },
         "saveUser": {
           "handler": "aws/lambdas/saveUser.handler",
@@ -1931,7 +1935,7 @@
           "timeout": 6,
           "runtime": "nodejs20.x",
           "vpc": {},
-          "versionLogicalId": "SaveUserLambdaVersionIF2hU3uRiZXrgD1XGZDOLT8GDbMll6sp5c6zxtKOwk"
+          "versionLogicalId": "SaveUserLambdaVersiondXC5Z4KJTj8IDUK4t6NJp8yvfVMex41XwgXHlic5dA"
         }
       }
     },
@@ -2143,7 +2147,7 @@
             "Properties": {
               "Code": {
                 "S3Bucket": "serverless-framework-deployments-us-east-1-e3c07911-961a",
-                "S3Key": "serverless/event-booking-app/dev/1750215007698-2025-06-18T02:50:07.698Z/event-booking-app.zip"
+                "S3Key": "serverless/event-booking-app/dev/1750382592842-2025-06-20T01:23:12.842Z/event-booking-app.zip"
               },
               "Handler": "aws/lambdas/getEvents.handler",
               "Runtime": "nodejs20.x",
@@ -2178,7 +2182,7 @@
             "Properties": {
               "Code": {
                 "S3Bucket": "serverless-framework-deployments-us-east-1-e3c07911-961a",
-                "S3Key": "serverless/event-booking-app/dev/1750215007698-2025-06-18T02:50:07.698Z/event-booking-app.zip"
+                "S3Key": "serverless/event-booking-app/dev/1750382592842-2025-06-20T01:23:12.842Z/event-booking-app.zip"
               },
               "Handler": "aws/lambdas/bookEvent.handler",
               "Runtime": "nodejs20.x",
@@ -2213,7 +2217,7 @@
             "Properties": {
               "Code": {
                 "S3Bucket": "serverless-framework-deployments-us-east-1-e3c07911-961a",
-                "S3Key": "serverless/event-booking-app/dev/1750215007698-2025-06-18T02:50:07.698Z/event-booking-app.zip"
+                "S3Key": "serverless/event-booking-app/dev/1750382592842-2025-06-20T01:23:12.842Z/event-booking-app.zip"
               },
               "Handler": "aws/lambdas/getRegistrations.handler",
               "Runtime": "nodejs20.x",
@@ -2248,7 +2252,7 @@
             "Properties": {
               "Code": {
                 "S3Bucket": "serverless-framework-deployments-us-east-1-e3c07911-961a",
-                "S3Key": "serverless/event-booking-app/dev/1750215007698-2025-06-18T02:50:07.698Z/event-booking-app.zip"
+                "S3Key": "serverless/event-booking-app/dev/1750382592842-2025-06-20T01:23:12.842Z/event-booking-app.zip"
               },
               "Handler": "aws/lambdas/signup.handler",
               "Runtime": "nodejs20.x",
@@ -2283,7 +2287,7 @@
             "Properties": {
               "Code": {
                 "S3Bucket": "serverless-framework-deployments-us-east-1-e3c07911-961a",
-                "S3Key": "serverless/event-booking-app/dev/1750215007698-2025-06-18T02:50:07.698Z/event-booking-app.zip"
+                "S3Key": "serverless/event-booking-app/dev/1750382592842-2025-06-20T01:23:12.842Z/event-booking-app.zip"
               },
               "Handler": "aws/lambdas/login.handler",
               "Runtime": "nodejs20.x",
@@ -2318,9 +2322,9 @@
             "Properties": {
               "Code": {
                 "S3Bucket": "serverless-framework-deployments-us-east-1-e3c07911-961a",
-                "S3Key": "serverless/event-booking-app/dev/1750215007698-2025-06-18T02:50:07.698Z/event-booking-app.zip"
+                "S3Key": "serverless/event-booking-app/dev/1750382592842-2025-06-20T01:23:12.842Z/event-booking-app.zip"
               },
-              "Handler": "aws/lambdas/confirmSignup.handler",
+              "Handler": "aws/lambdas/confirm-signup.handler",
               "Runtime": "nodejs20.x",
               "FunctionName": "event-booking-app-dev-confirmSignup",
               "MemorySize": 1024,
@@ -2333,7 +2337,8 @@
                   "COGNITO_CLIENT_ID": "4v4qbgptde4v367c05hd4gq2rf",
                   "COGNITO_CLIENT_SECRET": "<REDACTED>",
                   "USER_ID_INDEX": "userId-index",
-                  "SENDER_EMAIL": "mudge.andrew@gmail.com"
+                  "SENDER_EMAIL": "mudge.andrew@gmail.com",
+                  "NODE_OPTIONS": "--enable-source-maps"
                 }
               },
               "Role": {
@@ -2352,7 +2357,7 @@
             "Properties": {
               "Code": {
                 "S3Bucket": "serverless-framework-deployments-us-east-1-e3c07911-961a",
-                "S3Key": "serverless/event-booking-app/dev/1750215007698-2025-06-18T02:50:07.698Z/event-booking-app.zip"
+                "S3Key": "serverless/event-booking-app/dev/1750382592842-2025-06-20T01:23:12.842Z/event-booking-app.zip"
               },
               "Handler": "aws/lambdas/saveUser.handler",
               "Runtime": "nodejs20.x",
@@ -2382,74 +2387,74 @@
               "SaveUserLogGroup"
             ]
           },
-          "GetEventsLambdaVersiontLF7nvH5FSwhGLcJ5WGabKShsGcgZLqer4iM1dyLdTk": {
+          "GetEventsLambdaVersionHgGXwizU9y05CaMAcVpxDBYcbMSfaZCuRPTeI8Y83w": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "GetEventsLambdaFunction"
               },
-              "CodeSha256": "z1O/GtHSfbu0MuEY8d5tSCDVX0VMGSdlYxQq8nSkhwA="
+              "CodeSha256": "esF2ufugOC+EvOCm6FK524uPuV//mwvV8ze9lQ11Lgo="
             }
           },
-          "BookEventLambdaVersionL3fs6DbLgeZnU8kMEdDOnBNQ7XcpwP8Qnp91QVrkFaI": {
+          "BookEventLambdaVersionhmLzfCGDi1s2OviSKAKtU9W1kPu1J7GtMX81X7K8g": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "BookEventLambdaFunction"
               },
-              "CodeSha256": "z1O/GtHSfbu0MuEY8d5tSCDVX0VMGSdlYxQq8nSkhwA="
+              "CodeSha256": "esF2ufugOC+EvOCm6FK524uPuV//mwvV8ze9lQ11Lgo="
             }
           },
-          "GetRegistrationsLambdaVersionyItlZc7YhzRN18cgri4mZoHMHB3563iZs9tKFhyKJVY": {
+          "GetRegistrationsLambdaVersionagvkDjRWMJsJLNk2NdW5nfJsHymAf20cDKGKNT15k": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "GetRegistrationsLambdaFunction"
               },
-              "CodeSha256": "z1O/GtHSfbu0MuEY8d5tSCDVX0VMGSdlYxQq8nSkhwA="
+              "CodeSha256": "esF2ufugOC+EvOCm6FK524uPuV//mwvV8ze9lQ11Lgo="
             }
           },
-          "SignupLambdaVersioneEJZVzvlLaTuz6xhKiY5it7rynIeyA3eiLwo63xIw0": {
+          "SignupLambdaVersiont3lVR5JRUGtJeozpPZhh7qHNSVWaae5NtB2gSsWO7A": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "SignupLambdaFunction"
               },
-              "CodeSha256": "z1O/GtHSfbu0MuEY8d5tSCDVX0VMGSdlYxQq8nSkhwA="
+              "CodeSha256": "esF2ufugOC+EvOCm6FK524uPuV//mwvV8ze9lQ11Lgo="
             }
           },
-          "LoginLambdaVersioniI6PKRb7hHLStF0wD23TQVepF0HOoxoctzt8We2ZLY": {
+          "LoginLambdaVersionDUbwGYbHzuIHsMRJ2PjFFzAkYvXpr0QgQZMlD15EIA": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "LoginLambdaFunction"
               },
-              "CodeSha256": "z1O/GtHSfbu0MuEY8d5tSCDVX0VMGSdlYxQq8nSkhwA="
+              "CodeSha256": "esF2ufugOC+EvOCm6FK524uPuV//mwvV8ze9lQ11Lgo="
             }
           },
-          "ConfirmSignupLambdaVersion1c5ibRU3d3wFeJSfZ2WjUeO3eZyiUwE6CqGgzrFoZ4": {
+          "ConfirmSignupLambdaVersionFPcq1otaUnqHSSfdzaiaPyQiidMsHQwmkVTSwcxYo": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "ConfirmSignupLambdaFunction"
               },
-              "CodeSha256": "z1O/GtHSfbu0MuEY8d5tSCDVX0VMGSdlYxQq8nSkhwA="
+              "CodeSha256": "esF2ufugOC+EvOCm6FK524uPuV//mwvV8ze9lQ11Lgo="
             }
           },
-          "SaveUserLambdaVersionIF2hU3uRiZXrgD1XGZDOLT8GDbMll6sp5c6zxtKOwk": {
+          "SaveUserLambdaVersiondXC5Z4KJTj8IDUK4t6NJp8yvfVMex41XwgXHlic5dA": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "SaveUserLambdaFunction"
               },
-              "CodeSha256": "z1O/GtHSfbu0MuEY8d5tSCDVX0VMGSdlYxQq8nSkhwA="
+              "CodeSha256": "esF2ufugOC+EvOCm6FK524uPuV//mwvV8ze9lQ11Lgo="
             }
           },
           "ApiGatewayRestApi": {
@@ -3206,7 +3211,7 @@
               "SaveUserLambdaPermissionApiGateway"
             ]
           },
-          "ApiGatewayDeployment1750214994963": {
+          "ApiGatewayDeployment1750382576356": {
             "Type": "AWS::ApiGateway::Deployment",
             "Properties": {
               "RestApiId": {
@@ -3501,7 +3506,7 @@
           "GetEventsLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "GetEventsLambdaVersiontLF7nvH5FSwhGLcJ5WGabKShsGcgZLqer4iM1dyLdTk"
+              "Ref": "GetEventsLambdaVersionHgGXwizU9y05CaMAcVpxDBYcbMSfaZCuRPTeI8Y83w"
             },
             "Export": {
               "Name": "sls-event-booking-app-dev-GetEventsLambdaFunctionQualifiedArn"
@@ -3510,7 +3515,7 @@
           "BookEventLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "BookEventLambdaVersionL3fs6DbLgeZnU8kMEdDOnBNQ7XcpwP8Qnp91QVrkFaI"
+              "Ref": "BookEventLambdaVersionhmLzfCGDi1s2OviSKAKtU9W1kPu1J7GtMX81X7K8g"
             },
             "Export": {
               "Name": "sls-event-booking-app-dev-BookEventLambdaFunctionQualifiedArn"
@@ -3519,7 +3524,7 @@
           "GetRegistrationsLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "GetRegistrationsLambdaVersionyItlZc7YhzRN18cgri4mZoHMHB3563iZs9tKFhyKJVY"
+              "Ref": "GetRegistrationsLambdaVersionagvkDjRWMJsJLNk2NdW5nfJsHymAf20cDKGKNT15k"
             },
             "Export": {
               "Name": "sls-event-booking-app-dev-GetRegistrationsLambdaFunctionQualifiedArn"
@@ -3528,7 +3533,7 @@
           "SignupLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "SignupLambdaVersioneEJZVzvlLaTuz6xhKiY5it7rynIeyA3eiLwo63xIw0"
+              "Ref": "SignupLambdaVersiont3lVR5JRUGtJeozpPZhh7qHNSVWaae5NtB2gSsWO7A"
             },
             "Export": {
               "Name": "sls-event-booking-app-dev-SignupLambdaFunctionQualifiedArn"
@@ -3537,7 +3542,7 @@
           "LoginLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "LoginLambdaVersioniI6PKRb7hHLStF0wD23TQVepF0HOoxoctzt8We2ZLY"
+              "Ref": "LoginLambdaVersionDUbwGYbHzuIHsMRJ2PjFFzAkYvXpr0QgQZMlD15EIA"
             },
             "Export": {
               "Name": "sls-event-booking-app-dev-LoginLambdaFunctionQualifiedArn"
@@ -3546,7 +3551,7 @@
           "ConfirmSignupLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "ConfirmSignupLambdaVersion1c5ibRU3d3wFeJSfZ2WjUeO3eZyiUwE6CqGgzrFoZ4"
+              "Ref": "ConfirmSignupLambdaVersionFPcq1otaUnqHSSfdzaiaPyQiidMsHQwmkVTSwcxYo"
             },
             "Export": {
               "Name": "sls-event-booking-app-dev-ConfirmSignupLambdaFunctionQualifiedArn"
@@ -3555,7 +3560,7 @@
           "SaveUserLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "SaveUserLambdaVersionIF2hU3uRiZXrgD1XGZDOLT8GDbMll6sp5c6zxtKOwk"
+              "Ref": "SaveUserLambdaVersiondXC5Z4KJTj8IDUK4t6NJp8yvfVMex41XwgXHlic5dA"
             },
             "Export": {
               "Name": "sls-event-booking-app-dev-SaveUserLambdaFunctionQualifiedArn"
@@ -3600,7 +3605,7 @@
       "serviceProvider": null,
       "instanceParameters": null
     },
-    "serviceRawFile": "service: event-booking-app\r\nframeworkVersion: '4'\r\n\r\nprovider:\r\n  name: aws\r\n  runtime: nodejs20.x\r\n  region: us-east-1\r\n  environment:\r\n    EVENTS_TABLE: Events\r\n    BOOKINGS_TABLE: Registrations\r\n    USER_TABLE: YourUserTable\r\n    COGNITO_CLIENT_ID: 4v4qbgptde4v367c05hd4gq2rf\r\n    COGNITO_CLIENT_SECRET: kqh481640kr3jq48g05c96sch22jgokaate4r5ommrpoe6atkbc \r\n    USER_ID_INDEX: userId-index\r\n    SENDER_EMAIL: mudge.andrew@gmail.com   # <-- Added for SES\r\n\r\n  iam:\r\n    role:\r\n      statements:\r\n        - Effect: Allow\r\n          Action:\r\n            - dynamodb:GetItem\r\n            - dynamodb:PutItem\r\n            - dynamodb:UpdateItem\r\n            - dynamodb:Scan\r\n            - dynamodb:Query\r\n          Resource: arn:aws:dynamodb:us-east-1:*:table/*\r\n        - Effect: Allow\r\n          Action:\r\n            - cognito-idp:SignUp\r\n            - cognito-idp:AdminConfirmSignUp\r\n            - cognito-idp:InitiateAuth\r\n            - cognito-idp:ConfirmSignUp\r\n          Resource: \"*\"\r\n        - Effect: Allow\r\n          Action:\r\n            - ses:SendEmail\r\n            - ses:SendRawEmail\r\n          Resource: \"*\"   # Allow Lambda to send SES emails\r\n\r\nfunctions:\r\n  getEvents:\r\n    handler: aws/lambdas/getEvents.handler\r\n    events:\r\n      - http:\r\n          path: events\r\n          method: get\r\n          cors: true\r\n\r\n  bookEvent:\r\n    handler: aws/lambdas/bookEvent.handler\r\n    events:\r\n      - http:\r\n          path: book\r\n          method: post\r\n          cors: true\r\n\r\n  getRegistrations:\r\n    handler: aws/lambdas/getRegistrations.handler\r\n    events:\r\n      - http:\r\n          path: registrations\r\n          method: get\r\n          cors: true\r\n\r\n  signup:\r\n    handler: aws/lambdas/signup.handler\r\n    events:\r\n      - http:\r\n          path: signup\r\n          method: post\r\n          cors: true\r\n\r\n  login:\r\n    handler: aws/lambdas/login.handler\r\n    events:\r\n      - http:\r\n          path: login\r\n          method: post\r\n          cors: true\r\n\r\n  confirmSignup:\r\n    handler: aws/lambdas/confirmSignup.handler\r\n    events:\r\n      - http:\r\n          path: confirm-signup\r\n          method: post\r\n          cors: true\r\n\r\n  saveUser:\r\n    handler: aws/lambdas/saveUser.handler\r\n    events:\r\n      - http:\r\n          path: saveUser\r\n          method: post\r\n          cors: true\r\n",
+    "serviceRawFile": "service: event-booking-app\r\nframeworkVersion: '4'\r\n\r\nprovider:\r\n  name: aws\r\n  runtime: nodejs20.x\r\n  region: us-east-1\r\n  environment:\r\n    EVENTS_TABLE: Events\r\n    BOOKINGS_TABLE: Registrations\r\n    USER_TABLE: YourUserTable\r\n    COGNITO_CLIENT_ID: 4v4qbgptde4v367c05hd4gq2rf\r\n    COGNITO_CLIENT_SECRET: kqh481640kr3jq48g05c96sch22jgokaate4r5ommrpoe6atkbc \r\n    USER_ID_INDEX: userId-index\r\n    SENDER_EMAIL: mudge.andrew@gmail.com   # <-- Added for SES\r\n\r\n  iam:\r\n    role:\r\n      statements:\r\n        - Effect: Allow\r\n          Action:\r\n            - dynamodb:GetItem\r\n            - dynamodb:PutItem\r\n            - dynamodb:UpdateItem\r\n            - dynamodb:Scan\r\n            - dynamodb:Query\r\n          Resource: arn:aws:dynamodb:us-east-1:*:table/*\r\n        - Effect: Allow\r\n          Action:\r\n            - cognito-idp:SignUp\r\n            - cognito-idp:AdminConfirmSignUp\r\n            - cognito-idp:InitiateAuth\r\n            - cognito-idp:ConfirmSignUp\r\n          Resource: \"*\"\r\n        - Effect: Allow\r\n          Action:\r\n            - ses:SendEmail\r\n            - ses:SendRawEmail\r\n          Resource: \"*\"   # Allow Lambda to send SES emails\r\n\r\nfunctions:\r\n  getEvents:\r\n    handler: aws/lambdas/getEvents.handler\r\n    events:\r\n      - http:\r\n          path: events\r\n          method: get\r\n          cors: true\r\n\r\n  bookEvent:\r\n    handler: aws/lambdas/bookEvent.handler\r\n    events:\r\n      - http:\r\n          path: book\r\n          method: post\r\n          cors: true\r\n\r\n  getRegistrations:\r\n    handler: aws/lambdas/getRegistrations.handler\r\n    events:\r\n      - http:\r\n          path: registrations\r\n          method: get\r\n          cors: true\r\n\r\n  signup:\r\n    handler: aws/lambdas/signup.handler\r\n    events:\r\n      - http:\r\n          path: signup\r\n          method: post\r\n          cors: true\r\n\r\n  login:\r\n    handler: aws/lambdas/login.handler\r\n    events:\r\n      - http:\r\n          path: login\r\n          method: post\r\n          cors: true\r\n\r\n  confirmSignup:\r\n    handler: aws/lambdas/confirm-signup.handler\r\n    events:\r\n      - http:\r\n          path: confirm-signup\r\n          method: post\r\n          cors: true\r\n\r\n  saveUser:\r\n    handler: aws/lambdas/saveUser.handler\r\n    events:\r\n      - http:\r\n          path: saveUser\r\n          method: post\r\n          cors: true\r\n",
     "command": [
       "deploy"
     ],
@@ -3613,48 +3618,48 @@
     "serviceProviderAwsCfStackName": "event-booking-app-dev",
     "serviceProviderAwsCfStackId": "arn:aws:cloudformation:us-east-1:122610511543:stack/event-booking-app-dev/b856ce10-4a49-11f0-80a7-0ebac815dd1f",
     "serviceProviderAwsCfStackCreated": "2025-06-16T00:34:53.548Z",
-    "serviceProviderAwsCfStackUpdated": "2025-06-18T01:42:08.862Z",
+    "serviceProviderAwsCfStackUpdated": "2025-06-18T02:50:17.385Z",
     "serviceProviderAwsCfStackStatus": "UPDATE_COMPLETE",
     "serviceProviderAwsCfStackOutputs": [
       {
         "OutputKey": "ConfirmSignupLambdaFunctionQualifiedArn",
-        "OutputValue": "arn:aws:lambda:us-east-1:122610511543:function:event-booking-app-dev-confirmSignup:2",
+        "OutputValue": "arn:aws:lambda:us-east-1:122610511543:function:event-booking-app-dev-confirmSignup:3",
         "Description": "Current Lambda function version",
         "ExportName": "sls-event-booking-app-dev-ConfirmSignupLambdaFunctionQualifiedArn"
       },
       {
         "OutputKey": "GetRegistrationsLambdaFunctionQualifiedArn",
-        "OutputValue": "arn:aws:lambda:us-east-1:122610511543:function:event-booking-app-dev-getRegistrations:5",
+        "OutputValue": "arn:aws:lambda:us-east-1:122610511543:function:event-booking-app-dev-getRegistrations:6",
         "Description": "Current Lambda function version",
         "ExportName": "sls-event-booking-app-dev-GetRegistrationsLambdaFunctionQualifiedArn"
       },
       {
         "OutputKey": "SaveUserLambdaFunctionQualifiedArn",
-        "OutputValue": "arn:aws:lambda:us-east-1:122610511543:function:event-booking-app-dev-saveUser:2",
+        "OutputValue": "arn:aws:lambda:us-east-1:122610511543:function:event-booking-app-dev-saveUser:3",
         "Description": "Current Lambda function version",
         "ExportName": "sls-event-booking-app-dev-SaveUserLambdaFunctionQualifiedArn"
       },
       {
         "OutputKey": "BookEventLambdaFunctionQualifiedArn",
-        "OutputValue": "arn:aws:lambda:us-east-1:122610511543:function:event-booking-app-dev-bookEvent:8",
+        "OutputValue": "arn:aws:lambda:us-east-1:122610511543:function:event-booking-app-dev-bookEvent:9",
         "Description": "Current Lambda function version",
         "ExportName": "sls-event-booking-app-dev-BookEventLambdaFunctionQualifiedArn"
       },
       {
         "OutputKey": "SignupLambdaFunctionQualifiedArn",
-        "OutputValue": "arn:aws:lambda:us-east-1:122610511543:function:event-booking-app-dev-signup:2",
+        "OutputValue": "arn:aws:lambda:us-east-1:122610511543:function:event-booking-app-dev-signup:3",
         "Description": "Current Lambda function version",
         "ExportName": "sls-event-booking-app-dev-SignupLambdaFunctionQualifiedArn"
       },
       {
         "OutputKey": "GetEventsLambdaFunctionQualifiedArn",
-        "OutputValue": "arn:aws:lambda:us-east-1:122610511543:function:event-booking-app-dev-getEvents:8",
+        "OutputValue": "arn:aws:lambda:us-east-1:122610511543:function:event-booking-app-dev-getEvents:9",
         "Description": "Current Lambda function version",
         "ExportName": "sls-event-booking-app-dev-GetEventsLambdaFunctionQualifiedArn"
       },
       {
         "OutputKey": "LoginLambdaFunctionQualifiedArn",
-        "OutputValue": "arn:aws:lambda:us-east-1:122610511543:function:event-booking-app-dev-login:2",
+        "OutputValue": "arn:aws:lambda:us-east-1:122610511543:function:event-booking-app-dev-login:3",
         "Description": "Current Lambda function version",
         "ExportName": "sls-event-booking-app-dev-LoginLambdaFunctionQualifiedArn"
       },
@@ -3828,7 +3833,7 @@
           "Properties": {
             "Code": {
               "S3Bucket": "serverless-framework-deployments-us-east-1-e3c07911-961a",
-              "S3Key": "serverless/event-booking-app/dev/1750215007698-2025-06-18T02:50:07.698Z/event-booking-app.zip"
+              "S3Key": "serverless/event-booking-app/dev/1750382592842-2025-06-20T01:23:12.842Z/event-booking-app.zip"
             },
             "Handler": "aws/lambdas/getEvents.handler",
             "Runtime": "nodejs20.x",
@@ -3863,7 +3868,7 @@
           "Properties": {
             "Code": {
               "S3Bucket": "serverless-framework-deployments-us-east-1-e3c07911-961a",
-              "S3Key": "serverless/event-booking-app/dev/1750215007698-2025-06-18T02:50:07.698Z/event-booking-app.zip"
+              "S3Key": "serverless/event-booking-app/dev/1750382592842-2025-06-20T01:23:12.842Z/event-booking-app.zip"
             },
             "Handler": "aws/lambdas/bookEvent.handler",
             "Runtime": "nodejs20.x",
@@ -3898,7 +3903,7 @@
           "Properties": {
             "Code": {
               "S3Bucket": "serverless-framework-deployments-us-east-1-e3c07911-961a",
-              "S3Key": "serverless/event-booking-app/dev/1750215007698-2025-06-18T02:50:07.698Z/event-booking-app.zip"
+              "S3Key": "serverless/event-booking-app/dev/1750382592842-2025-06-20T01:23:12.842Z/event-booking-app.zip"
             },
             "Handler": "aws/lambdas/getRegistrations.handler",
             "Runtime": "nodejs20.x",
@@ -3933,7 +3938,7 @@
           "Properties": {
             "Code": {
               "S3Bucket": "serverless-framework-deployments-us-east-1-e3c07911-961a",
-              "S3Key": "serverless/event-booking-app/dev/1750215007698-2025-06-18T02:50:07.698Z/event-booking-app.zip"
+              "S3Key": "serverless/event-booking-app/dev/1750382592842-2025-06-20T01:23:12.842Z/event-booking-app.zip"
             },
             "Handler": "aws/lambdas/signup.handler",
             "Runtime": "nodejs20.x",
@@ -3968,7 +3973,7 @@
           "Properties": {
             "Code": {
               "S3Bucket": "serverless-framework-deployments-us-east-1-e3c07911-961a",
-              "S3Key": "serverless/event-booking-app/dev/1750215007698-2025-06-18T02:50:07.698Z/event-booking-app.zip"
+              "S3Key": "serverless/event-booking-app/dev/1750382592842-2025-06-20T01:23:12.842Z/event-booking-app.zip"
             },
             "Handler": "aws/lambdas/login.handler",
             "Runtime": "nodejs20.x",
@@ -4003,9 +4008,9 @@
           "Properties": {
             "Code": {
               "S3Bucket": "serverless-framework-deployments-us-east-1-e3c07911-961a",
-              "S3Key": "serverless/event-booking-app/dev/1750215007698-2025-06-18T02:50:07.698Z/event-booking-app.zip"
+              "S3Key": "serverless/event-booking-app/dev/1750382592842-2025-06-20T01:23:12.842Z/event-booking-app.zip"
             },
-            "Handler": "aws/lambdas/confirmSignup.handler",
+            "Handler": "aws/lambdas/confirm-signup.handler",
             "Runtime": "nodejs20.x",
             "FunctionName": "event-booking-app-dev-confirmSignup",
             "MemorySize": 1024,
@@ -4018,7 +4023,8 @@
                 "COGNITO_CLIENT_ID": "4v4qbgptde4v367c05hd4gq2rf",
                 "COGNITO_CLIENT_SECRET": "<REDACTED>",
                 "USER_ID_INDEX": "userId-index",
-                "SENDER_EMAIL": "mudge.andrew@gmail.com"
+                "SENDER_EMAIL": "mudge.andrew@gmail.com",
+                "NODE_OPTIONS": "--enable-source-maps"
               }
             },
             "Role": {
@@ -4037,7 +4043,7 @@
           "Properties": {
             "Code": {
               "S3Bucket": "serverless-framework-deployments-us-east-1-e3c07911-961a",
-              "S3Key": "serverless/event-booking-app/dev/1750215007698-2025-06-18T02:50:07.698Z/event-booking-app.zip"
+              "S3Key": "serverless/event-booking-app/dev/1750382592842-2025-06-20T01:23:12.842Z/event-booking-app.zip"
             },
             "Handler": "aws/lambdas/saveUser.handler",
             "Runtime": "nodejs20.x",
@@ -4067,74 +4073,74 @@
             "SaveUserLogGroup"
           ]
         },
-        "GetEventsLambdaVersiontLF7nvH5FSwhGLcJ5WGabKShsGcgZLqer4iM1dyLdTk": {
+        "GetEventsLambdaVersionHgGXwizU9y05CaMAcVpxDBYcbMSfaZCuRPTeI8Y83w": {
           "Type": "AWS::Lambda::Version",
           "DeletionPolicy": "Retain",
           "Properties": {
             "FunctionName": {
               "Ref": "GetEventsLambdaFunction"
             },
-            "CodeSha256": "z1O/GtHSfbu0MuEY8d5tSCDVX0VMGSdlYxQq8nSkhwA="
+            "CodeSha256": "esF2ufugOC+EvOCm6FK524uPuV//mwvV8ze9lQ11Lgo="
           }
         },
-        "BookEventLambdaVersionL3fs6DbLgeZnU8kMEdDOnBNQ7XcpwP8Qnp91QVrkFaI": {
+        "BookEventLambdaVersionhmLzfCGDi1s2OviSKAKtU9W1kPu1J7GtMX81X7K8g": {
           "Type": "AWS::Lambda::Version",
           "DeletionPolicy": "Retain",
           "Properties": {
             "FunctionName": {
               "Ref": "BookEventLambdaFunction"
             },
-            "CodeSha256": "z1O/GtHSfbu0MuEY8d5tSCDVX0VMGSdlYxQq8nSkhwA="
+            "CodeSha256": "esF2ufugOC+EvOCm6FK524uPuV//mwvV8ze9lQ11Lgo="
           }
         },
-        "GetRegistrationsLambdaVersionyItlZc7YhzRN18cgri4mZoHMHB3563iZs9tKFhyKJVY": {
+        "GetRegistrationsLambdaVersionagvkDjRWMJsJLNk2NdW5nfJsHymAf20cDKGKNT15k": {
           "Type": "AWS::Lambda::Version",
           "DeletionPolicy": "Retain",
           "Properties": {
             "FunctionName": {
               "Ref": "GetRegistrationsLambdaFunction"
             },
-            "CodeSha256": "z1O/GtHSfbu0MuEY8d5tSCDVX0VMGSdlYxQq8nSkhwA="
+            "CodeSha256": "esF2ufugOC+EvOCm6FK524uPuV//mwvV8ze9lQ11Lgo="
           }
         },
-        "SignupLambdaVersioneEJZVzvlLaTuz6xhKiY5it7rynIeyA3eiLwo63xIw0": {
+        "SignupLambdaVersiont3lVR5JRUGtJeozpPZhh7qHNSVWaae5NtB2gSsWO7A": {
           "Type": "AWS::Lambda::Version",
           "DeletionPolicy": "Retain",
           "Properties": {
             "FunctionName": {
               "Ref": "SignupLambdaFunction"
             },
-            "CodeSha256": "z1O/GtHSfbu0MuEY8d5tSCDVX0VMGSdlYxQq8nSkhwA="
+            "CodeSha256": "esF2ufugOC+EvOCm6FK524uPuV//mwvV8ze9lQ11Lgo="
           }
         },
-        "LoginLambdaVersioniI6PKRb7hHLStF0wD23TQVepF0HOoxoctzt8We2ZLY": {
+        "LoginLambdaVersionDUbwGYbHzuIHsMRJ2PjFFzAkYvXpr0QgQZMlD15EIA": {
           "Type": "AWS::Lambda::Version",
           "DeletionPolicy": "Retain",
           "Properties": {
             "FunctionName": {
               "Ref": "LoginLambdaFunction"
             },
-            "CodeSha256": "z1O/GtHSfbu0MuEY8d5tSCDVX0VMGSdlYxQq8nSkhwA="
+            "CodeSha256": "esF2ufugOC+EvOCm6FK524uPuV//mwvV8ze9lQ11Lgo="
           }
         },
-        "ConfirmSignupLambdaVersion1c5ibRU3d3wFeJSfZ2WjUeO3eZyiUwE6CqGgzrFoZ4": {
+        "ConfirmSignupLambdaVersionFPcq1otaUnqHSSfdzaiaPyQiidMsHQwmkVTSwcxYo": {
           "Type": "AWS::Lambda::Version",
           "DeletionPolicy": "Retain",
           "Properties": {
             "FunctionName": {
               "Ref": "ConfirmSignupLambdaFunction"
             },
-            "CodeSha256": "z1O/GtHSfbu0MuEY8d5tSCDVX0VMGSdlYxQq8nSkhwA="
+            "CodeSha256": "esF2ufugOC+EvOCm6FK524uPuV//mwvV8ze9lQ11Lgo="
           }
         },
-        "SaveUserLambdaVersionIF2hU3uRiZXrgD1XGZDOLT8GDbMll6sp5c6zxtKOwk": {
+        "SaveUserLambdaVersiondXC5Z4KJTj8IDUK4t6NJp8yvfVMex41XwgXHlic5dA": {
           "Type": "AWS::Lambda::Version",
           "DeletionPolicy": "Retain",
           "Properties": {
             "FunctionName": {
               "Ref": "SaveUserLambdaFunction"
             },
-            "CodeSha256": "z1O/GtHSfbu0MuEY8d5tSCDVX0VMGSdlYxQq8nSkhwA="
+            "CodeSha256": "esF2ufugOC+EvOCm6FK524uPuV//mwvV8ze9lQ11Lgo="
           }
         },
         "ApiGatewayRestApi": {
@@ -4891,7 +4897,7 @@
             "SaveUserLambdaPermissionApiGateway"
           ]
         },
-        "ApiGatewayDeployment1750214994963": {
+        "ApiGatewayDeployment1750382576356": {
           "Type": "AWS::ApiGateway::Deployment",
           "Properties": {
             "RestApiId": {
@@ -5186,7 +5192,7 @@
         "GetEventsLambdaFunctionQualifiedArn": {
           "Description": "Current Lambda function version",
           "Value": {
-            "Ref": "GetEventsLambdaVersiontLF7nvH5FSwhGLcJ5WGabKShsGcgZLqer4iM1dyLdTk"
+            "Ref": "GetEventsLambdaVersionHgGXwizU9y05CaMAcVpxDBYcbMSfaZCuRPTeI8Y83w"
           },
           "Export": {
             "Name": "sls-event-booking-app-dev-GetEventsLambdaFunctionQualifiedArn"
@@ -5195,7 +5201,7 @@
         "BookEventLambdaFunctionQualifiedArn": {
           "Description": "Current Lambda function version",
           "Value": {
-            "Ref": "BookEventLambdaVersionL3fs6DbLgeZnU8kMEdDOnBNQ7XcpwP8Qnp91QVrkFaI"
+            "Ref": "BookEventLambdaVersionhmLzfCGDi1s2OviSKAKtU9W1kPu1J7GtMX81X7K8g"
           },
           "Export": {
             "Name": "sls-event-booking-app-dev-BookEventLambdaFunctionQualifiedArn"
@@ -5204,7 +5210,7 @@
         "GetRegistrationsLambdaFunctionQualifiedArn": {
           "Description": "Current Lambda function version",
           "Value": {
-            "Ref": "GetRegistrationsLambdaVersionyItlZc7YhzRN18cgri4mZoHMHB3563iZs9tKFhyKJVY"
+            "Ref": "GetRegistrationsLambdaVersionagvkDjRWMJsJLNk2NdW5nfJsHymAf20cDKGKNT15k"
           },
           "Export": {
             "Name": "sls-event-booking-app-dev-GetRegistrationsLambdaFunctionQualifiedArn"
@@ -5213,7 +5219,7 @@
         "SignupLambdaFunctionQualifiedArn": {
           "Description": "Current Lambda function version",
           "Value": {
-            "Ref": "SignupLambdaVersioneEJZVzvlLaTuz6xhKiY5it7rynIeyA3eiLwo63xIw0"
+            "Ref": "SignupLambdaVersiont3lVR5JRUGtJeozpPZhh7qHNSVWaae5NtB2gSsWO7A"
           },
           "Export": {
             "Name": "sls-event-booking-app-dev-SignupLambdaFunctionQualifiedArn"
@@ -5222,7 +5228,7 @@
         "LoginLambdaFunctionQualifiedArn": {
           "Description": "Current Lambda function version",
           "Value": {
-            "Ref": "LoginLambdaVersioniI6PKRb7hHLStF0wD23TQVepF0HOoxoctzt8We2ZLY"
+            "Ref": "LoginLambdaVersionDUbwGYbHzuIHsMRJ2PjFFzAkYvXpr0QgQZMlD15EIA"
           },
           "Export": {
             "Name": "sls-event-booking-app-dev-LoginLambdaFunctionQualifiedArn"
@@ -5231,7 +5237,7 @@
         "ConfirmSignupLambdaFunctionQualifiedArn": {
           "Description": "Current Lambda function version",
           "Value": {
-            "Ref": "ConfirmSignupLambdaVersion1c5ibRU3d3wFeJSfZ2WjUeO3eZyiUwE6CqGgzrFoZ4"
+            "Ref": "ConfirmSignupLambdaVersionFPcq1otaUnqHSSfdzaiaPyQiidMsHQwmkVTSwcxYo"
           },
           "Export": {
             "Name": "sls-event-booking-app-dev-ConfirmSignupLambdaFunctionQualifiedArn"
@@ -5240,7 +5246,7 @@
         "SaveUserLambdaFunctionQualifiedArn": {
           "Description": "Current Lambda function version",
           "Value": {
-            "Ref": "SaveUserLambdaVersionIF2hU3uRiZXrgD1XGZDOLT8GDbMll6sp5c6zxtKOwk"
+            "Ref": "SaveUserLambdaVersiondXC5Z4KJTj8IDUK4t6NJp8yvfVMex41XwgXHlic5dA"
           },
           "Export": {
             "Name": "sls-event-booking-app-dev-SaveUserLambdaFunctionQualifiedArn"

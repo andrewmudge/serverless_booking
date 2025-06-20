@@ -83,12 +83,22 @@ export default function Events() {
   const handleBookNow = async (eventId: string) => {
     setError(null);
     const userId = getUserId();
-    const userEmail = getUserEmail(); // <-- add this
+    const userEmail = getUserEmail();
+
+    // Find the event details
+    const event = events.find(e => e.eventId === eventId);
 
     try {
       const res = await fetch(`${API_BASE}/book`, {
         method: 'POST',
-        body: JSON.stringify({ eventId, userId, userEmail }), // <-- include userEmail
+        body: JSON.stringify({
+          eventId,
+          userId,
+          userEmail,
+          title: event?.title,
+          day: event?.day,
+          time: event?.time,
+        }),
         headers: { 'Content-Type': 'application/json' }
       });
 
